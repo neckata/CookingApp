@@ -13,7 +13,7 @@ namespace CookingApp.Models
         [Column(nameof(Name))]
         public string Name { get; set; }
 
-        [Column(nameof(UserType)]
+        [Column(nameof(UserType))]
         public UserTypesEnum UserType { get; set; }
     }
  }
