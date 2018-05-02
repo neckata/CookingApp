@@ -11,7 +11,7 @@ namespace CookingApp.Views.MainPage
     {
         public PageTemplate()
         {
-            Master = new MenuPage();
+            Master = new MenuPage() { Title = "" };
             BindingContext = new MainPageViewModel();
             Detail = new NavigationPage(new MainPage())
             {

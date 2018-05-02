@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using CookingApp.Droid.Utils;
 using CookingApp.Interfaces;
 using Plugin.CurrentActivity;
 
