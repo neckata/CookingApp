@@ -9,7 +9,6 @@ namespace CookingApp
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        //test
         public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
 
         bool isBusy = false;
