@@ -9,8 +9,8 @@ namespace CookingApp
     {
         public AboutViewModel()
         {
-            Title = "About";
-
+            Title = "Test";
+            
             OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
         }
 
