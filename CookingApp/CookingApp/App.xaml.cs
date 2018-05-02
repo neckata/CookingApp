@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using CookingApp.Views.MainPage;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -9,11 +10,7 @@ namespace CookingApp
         public App()
         {
             InitializeComponent();
-
-            if (Device.RuntimePlatform == Device.iOS)
-                MainPage = new MainPage();
-            else
-                MainPage = new NavigationPage(new MainPage());
+            MainPage = new PageTemplate();
         }
     }
 }
