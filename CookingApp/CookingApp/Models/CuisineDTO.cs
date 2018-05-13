@@ -1,0 +1,15 @@
+﻿using SQLite;
+
+namespace CookingApp.Models
+{
+    [Table("CUISINETABLE")]
+    public class CuisineDTO
+    {
+        [PrimaryKey]
+        [Column(nameof(Code))]
+        public string Code { get; set; }
+
+        [Column(nameof(Description))]
+        public string Description { get; set; }
+    }
+}

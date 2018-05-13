@@ -39,9 +39,25 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DataBase.cs" />
+    <Compile Include="Enums\NotificationsTypesEnum.cs" />
+    <Compile Include="Enums\CommentTypesEnum.cs" />
+    <Compile Include="Enums\LanguagesTypesEnum.cs" />
     <Compile Include="Enums\UserTypesEnum.cs" />
     <Compile Include="Interfaces\ICloseProgram.cs" />
     <Compile Include="Interfaces\IFileHelper.cs" />
+    <Compile Include="Models\CookerCuisineDTO.cs" />
+    <Compile Include="Models\CuisineDTO.cs" />
+    <Compile Include="Models\ReceiptDTO.cs" />
+    <Compile Include="Models\MobileDeviceDTO.cs" />
+    <Compile Include="Models\SubscriptionDTO.cs" />
+    <Compile Include="Models\ChatDTO.cs" />
+    <Compile Include="Models\NotificationDTO.cs" />
+    <Compile Include="Models\AddressesDTO.cs" />
+    <Compile Include="Models\CommentDTO.cs" />
+    <Compile Include="Models\OrderDTO.cs" />
+    <Compile Include="Models\EmailDTO.cs" />
+    <Compile Include="Models\PhoneDTO.cs" />
+    <Compile Include="Models\CookerDTO.cs" />
     <Compile Include="Models\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourcesBulgarian.Designer.cs">
