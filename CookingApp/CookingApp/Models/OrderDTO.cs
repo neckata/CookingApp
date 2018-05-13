@@ -3,7 +3,7 @@
 namespace CookingApp.Models
 {
     [Table("ORDERTABLE")]
-    public class OrdersDTO
+    public class OrderDTO
     {
         [PrimaryKey,AutoIncrement]
         [Column(nameof(ID))]

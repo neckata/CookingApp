@@ -73,6 +73,15 @@ namespace CookingApp.Controls
         private void CreateTables()
         {
             _connection.CreateTable<UserDTO>();
+            _connection.CreateTable<SubscriptionDTO>();
+            _connection.CreateTable<ReceiptDTO>();
+            _connection.CreateTable<PhoneDTO>();
+            _connection.CreateTable<AddressesDTO>();
+            _connection.CreateTable<EmailDTO>();
+            _connection.CreateTable<OrderDTO>();
+            _connection.CreateTable<NotificationDTO>();
+            _connection.CreateTable<CuisineDTO>();
+            _connection.CreateTable<ChatDTO>();
         }
     }
 }

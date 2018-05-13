@@ -48,7 +48,6 @@
     <Compile Include="Models\CookerCuisineDTO.cs" />
     <Compile Include="Models\CuisineDTO.cs" />
     <Compile Include="Models\ReceiptDTO.cs" />
-    <Compile Include="Models\MobileDeviceDTO.cs" />
     <Compile Include="Models\SubscriptionDTO.cs" />
     <Compile Include="Models\ChatDTO.cs" />
     <Compile Include="Models\NotificationDTO.cs" />
@@ -139,6 +138,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
+    <Folder Include="ViewModels\CookersPage\" />
+    <Folder Include="ViewModels\NotificationsPage\" />
+    <Folder Include="ViewModels\OrdersPage\" />
+    <Folder Include="ViewModels\UserPage\" />
+    <Folder Include="Views\CookersPage\" />
+    <Folder Include="Views\NotificationsPage\" />
+    <Folder Include="Views\OrdersPage\" />
+    <Folder Include="Views\UserPage\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MainPage\MenuPage.xaml">

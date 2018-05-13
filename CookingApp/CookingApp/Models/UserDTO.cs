@@ -16,6 +16,12 @@ namespace CookingApp.Models
         [Column(nameof(UserType))]
         public UserTypesEnum UserType { get; set; }
 
+        [Column(nameof(IMEI))]
+        public string IMEI { get; set; }
+
+        [Column(nameof(FCM))]
+        public string FCM { get; set; }
+
         //Да се тегли всеки път
         [Column(nameof(Rating))]
         public double Rating { get; set; }
