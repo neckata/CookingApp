@@ -39,9 +39,13 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DataBase.cs" />
+    <Compile Include="Controls\Utility.cs" />
+    <Compile Include="Converters\InverseBoolenConverter.cs" />
+    <Compile Include="Enums\PageNavigateEnums.cs" />
     <Compile Include="Enums\NotificationsTypesEnum.cs" />
     <Compile Include="Enums\CommentTypesEnum.cs" />
     <Compile Include="Enums\LanguagesTypesEnum.cs" />
+    <Compile Include="Enums\LanguagesEnum.cs" />
     <Compile Include="Enums\UserTypesEnum.cs" />
     <Compile Include="Interfaces\ICloseProgram.cs" />
     <Compile Include="Interfaces\IFileHelper.cs" />
@@ -59,19 +63,31 @@
     <Compile Include="Models\CookerDTO.cs" />
     <Compile Include="Models\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\ResourcesRussian.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourcesRussian.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ResourcesBulgarian.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourcesBulgarian.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Resourcesenglish.Designer.cs">
+    <Compile Include="Resources\ResourcesEnglish1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resourcesenglish.resx</DependentUpon>
+      <DependentUpon>ResourcesEnglish.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\CookersPage\CookersPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\ObservableViewModel.cs" />
+    <Compile Include="ViewModels\NotificationsPage\NotificationsPageViewModel.cs" />
+    <Compile Include="ViewModels\OrdersPage\OrdersPageViewModel.cs" />
+    <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
+    <Compile Include="Views\CookersPage\CookersPage.xaml.cs">
+      <DependentUpon>CookersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainPage\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -79,19 +95,32 @@
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage\PageTemplate.cs" />
+    <Compile Include="Views\NotificationsPage\NotificationsPage.xaml.cs">
+      <DependentUpon>NotificationsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OrdersPage\OrdersPage.xaml.cs">
+      <DependentUpon>OrdersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserPage\UserPage.xaml.cs">
+      <DependentUpon>UserPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ResourcesRussian.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourcesRussian.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ResourcesBulgarian.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourcesBulgarian.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Resourcesenglish.resx">
+    <EmbeddedResource Include="Resources\ResourcesEnglish.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resourcesenglish.Designer.cs</LastGenOutput>
+      <LastGenOutput>ResourcesEnglish1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -138,14 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="ViewModels\CookersPage\" />
-    <Folder Include="ViewModels\NotificationsPage\" />
-    <Folder Include="ViewModels\OrdersPage\" />
-    <Folder Include="ViewModels\UserPage\" />
-    <Folder Include="Views\CookersPage\" />
-    <Folder Include="Views\NotificationsPage\" />
-    <Folder Include="Views\OrdersPage\" />
-    <Folder Include="Views\UserPage\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MainPage\MenuPage.xaml">
@@ -155,6 +176,30 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MainPage\MainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\CookersPage\CookersPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\NotificationsPage\NotificationsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\OrdersPage\OrdersPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\UserPage\UserPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
