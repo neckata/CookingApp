@@ -1,6 +1,8 @@
 ﻿using CookingApp.Interfaces;
 using CookingApp.ViewModels.MainPage;
+using Plugin.Multilingual;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -11,7 +13,8 @@ namespace CookingApp.Views.MainPage
     {
         public PageTemplate()
         {
-            Master = new MenuPage() { Title = "" };
+            CrossMultilingual.Current.CurrentCultureInfo = new CultureInfo("bg");
+            Master = new MenuPage();
             BindingContext = new MainPageViewModel();
             Detail = new NavigationPage(new MainPage())
             {

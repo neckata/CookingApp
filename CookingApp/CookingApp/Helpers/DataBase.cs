@@ -3,7 +3,7 @@ using CookingApp.Models;
 using SQLite;
 using Xamarin.Forms;
 
-namespace CookingApp.Controls
+namespace CookingApp.Helpers
 {
     public class DataBase
     {

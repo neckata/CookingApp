@@ -1,4 +1,6 @@
-﻿using CookingApp.Views.MainPage;
+﻿using CookingApp.Resources;
+using CookingApp.Views.MainPage;
+using Plugin.Multilingual;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,6 +12,7 @@ namespace CookingApp
         public App()
         {
             InitializeComponent();
+            AppResources.Culture = CrossMultilingual.Current.DeviceCultureInfo;
             MainPage = new PageTemplate();
         }
     }

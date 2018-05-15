@@ -1,5 +1,4 @@
 ﻿using CookingApp.Enums;
-using CookingApp.Resources;
 using CookingApp.Views.CookersPage;
 using CookingApp.Views.MainPage;
 using CookingApp.Views.NotificationsPage;
@@ -9,13 +8,10 @@ using System;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
-namespace CookingApp.Controls
+namespace CookingApp.Helpers
 {
     public static class Utility
     {
-
-        public static LanguagesEnum CurrentLanguage = LanguagesEnum.BG;
-
         public static T ParseEnum<T>(string value)
         {
             return (T)Enum.Parse(typeof(T), value);
@@ -33,30 +29,6 @@ namespace CookingApp.Controls
                 case PageNavigateEnums.UserPage: page = new UserPage(); break;
             }
             return page;
-        }
-
-        public static string Translate(string key)
-        {
-            string value = string.Empty;
-            switch (CurrentLanguage)
-            {
-                case LanguagesEnum.BG:
-                    {
-                        value = ResourcesBulgarian.ResourceManager.GetString(key);
-                        break;
-                    }
-                case LanguagesEnum.EN:
-                    {
-                        value = ResourcesEnglish.ResourceManager.GetString(key);
-                        break;
-                    }
-                case LanguagesEnum.RU:
-                    {
-                        value = ResourcesRussian.ResourceManager.GetString(key);
-                        break;
-                    }
-            }
-            return value;
         }
 
         public static class ValidateEmail
