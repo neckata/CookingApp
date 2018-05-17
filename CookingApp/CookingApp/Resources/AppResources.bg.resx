@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="addressesPageTitle" xml:space="preserve">
+    <value>Адреси</value>
+  </data>
   <data name="cookersPageTitle" xml:space="preserve">
     <value>Готвачи</value>
   </data>
@@ -129,7 +132,10 @@
   <data name="ordersPageTitle" xml:space="preserve">
     <value>Поръчки</value>
   </data>
+  <data name="recipesPageTitle" xml:space="preserve">
+    <value>Рецепти</value>
+  </data>
   <data name="userPageTitle" xml:space="preserve">
-    <value>Потребител</value>
+    <value>За мен</value>
   </data>
 </root>

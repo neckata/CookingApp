@@ -6,6 +6,8 @@
         CookersPage,
         NotificationsPage,
         OrdersPage,
-        UserPage
+        UserPage,
+        RecipesPage,
+        AddressesPage
     }
 }

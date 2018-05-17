@@ -5,6 +5,31 @@
              x:Class="CookingApp.Views.MainPage.MainPage"
              Title="{i:Translate mainPageTitle}">
     <ContentPage.Content>
+        <StackLayout Orientation="Vertical" BackgroundColor="#afceff">
+            <Image Source="chef.jpg" HorizontalOptions="FillAndExpand" HeightRequest="300"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0" Orientation="Horizontal" Margin="10,5,10,5" Padding="5">
+                    <Image Source="chefs.jpg" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="100">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Navigate}" CommandParameter="CookersPage"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Button Text="{i:Translate cookersPageTitle}" VerticalOptions="CenterAndExpand" FontSize="20" TextColor="#104aa8" BackgroundColor="#5fa8d3" Command="{Binding Navigate}" CommandParameter="CookersPage" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
 
+                <StackLayout Grid.Row="1" Margin="10,5,10,5" Orientation="Horizontal" Padding="5">
+                    <Image Source="cookbook.png" VerticalOptions="CenterAndExpand" WidthRequest="100" HeightRequest="100">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Navigate}" CommandParameter="RecipesPage"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Button Text="{i:Translate recipesPageTitle}" VerticalOptions="CenterAndExpand" FontSize="20" TextColor="#104aa8" BackgroundColor="#5fa8d3" Command="{Binding Navigate}" CommandParameter="RecipesPage" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,8 +1,10 @@
 ﻿using CookingApp.Enums;
+using CookingApp.Views.AddressesPage;
 using CookingApp.Views.CookersPage;
 using CookingApp.Views.MainPage;
 using CookingApp.Views.NotificationsPage;
 using CookingApp.Views.OrdersPage;
+using CookingApp.Views.ReceipsPage;
 using CookingApp.Views.UserPage;
 using System;
 using System.Text.RegularExpressions;
@@ -27,6 +29,8 @@ namespace CookingApp.Helpers
                 case PageNavigateEnums.NotificationsPage: page = new NotificationsPage(); break;
                 case PageNavigateEnums.OrdersPage: page = new OrdersPage(); break;
                 case PageNavigateEnums.UserPage: page = new UserPage(); break;
+                case PageNavigateEnums.AddressesPage: page = new AddressesPage(); break;
+                case PageNavigateEnums.RecipesPage: page = new ReceipsPage(); break;
             }
             return page;
         }

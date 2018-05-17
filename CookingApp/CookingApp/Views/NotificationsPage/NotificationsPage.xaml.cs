@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using CookingApp.ViewModels.NotificationsPage;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,6 +10,7 @@ namespace CookingApp.Views.NotificationsPage
         public NotificationsPage()
         {
             InitializeComponent();
+            this.BindingContext = new NotificationsPageViewModel();
         }
     }
 }

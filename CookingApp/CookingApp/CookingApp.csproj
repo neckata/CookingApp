@@ -81,13 +81,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.ru.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AddressesPage\AddressesPageViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\CookersPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\ObservableViewModel.cs" />
     <Compile Include="ViewModels\NotificationsPage\NotificationsPageViewModel.cs" />
     <Compile Include="ViewModels\OrdersPage\OrdersPageViewModel.cs" />
+    <Compile Include="ViewModels\ReceipsPage\ReceipsPageViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
+    <Compile Include="Views\AddressesPage\AddressesPage.xaml.cs">
+      <DependentUpon>AddressesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CookersPage\CookersPage.xaml.cs">
       <DependentUpon>CookersPage.xaml</DependentUpon>
     </Compile>
@@ -103,6 +108,9 @@
     </Compile>
     <Compile Include="Views\OrdersPage\OrdersPage.xaml.cs">
       <DependentUpon>OrdersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReceipsPage\ReceipsPage.xaml.cs">
+      <DependentUpon>ReceipsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserPage\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
@@ -220,6 +228,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\TranslateExtension.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AddressesPage\AddressesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ReceipsPage\ReceipsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.4.0.280\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.4.0.280\build\portable-win+net45+wp80+win81+wpa81\Xamarin.Forms.targets')" />
