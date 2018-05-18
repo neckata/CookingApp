@@ -43,14 +43,14 @@ namespace CookingApp.Views.MainPage
             }
         }
 
-        public async Task NavigateAsync(object id)
+        public async Task NavigateAsync(Page page)
         {
             if (IsNavigating)
                 return;
             IsNavigating = true;
             PreviousPageType = Detail.Navigation.NavigationStack.Last().GetType();
 
-            Page newPage = new Page();
+            Page newPage = page;
 
             if (newPage == null || newPage.GetType() == Detail.Navigation.NavigationStack.Last().GetType())
             {

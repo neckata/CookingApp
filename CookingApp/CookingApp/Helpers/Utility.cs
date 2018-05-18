@@ -1,4 +1,5 @@
 ﻿using CookingApp.Enums;
+using CookingApp.Resources;
 using CookingApp.Views.AddressesPage;
 using CookingApp.Views.CookersPage;
 using CookingApp.Views.MainPage;
@@ -24,13 +25,13 @@ namespace CookingApp.Helpers
             ContentPage page = new MainPage();
             switch (data)
             {
-                case PageNavigateEnums.CookersPage: page = new CookersPage(); break;
-                case PageNavigateEnums.MainPage: page = new MainPage(); break;
-                case PageNavigateEnums.NotificationsPage: page = new NotificationsPage(); break;
-                case PageNavigateEnums.OrdersPage: page = new OrdersPage(); break;
-                case PageNavigateEnums.UserPage: page = new UserPage(); break;
-                case PageNavigateEnums.AddressesPage: page = new AddressesPage(); break;
-                case PageNavigateEnums.RecipesPage: page = new ReceipsPage(); break;
+                case PageNavigateEnums.CookersPage: page = new CookersPage() {Title=AppResources.ResourceManager.GetString("cookersPageTitle") }; break;
+                case PageNavigateEnums.MainPage: page = new MainPage() { Title = AppResources.ResourceManager.GetString("mainPageTitle") }; break;
+                case PageNavigateEnums.NotificationsPage: page = new NotificationsPage() { Title = AppResources.ResourceManager.GetString("notifactionsPageTitle") }; break;
+                case PageNavigateEnums.OrdersPage: page = new OrdersPage() { Title = AppResources.ResourceManager.GetString("ordersPageTitle") }; break;
+                case PageNavigateEnums.UserPage: page = new UserPage() { Title = AppResources.ResourceManager.GetString("userPageTitle") }; break;
+                case PageNavigateEnums.AddressesPage: page = new AddressesPage() { Title = AppResources.ResourceManager.GetString("addressesPageTitle") }; break;
+                case PageNavigateEnums.RecipesPage: page = new ReceipsPage() { Title = AppResources.ResourceManager.GetString("recipesPageTitle") }; break;
             }
             return page;
         }

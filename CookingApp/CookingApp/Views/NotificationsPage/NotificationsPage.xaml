@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
-             x:Class="CookingApp.Views.NotificationsPage.NotificationsPage"
-             Title="{i:Translate notifactionsPageTitle}">
+             x:Class="CookingApp.Views.NotificationsPage.NotificationsPage">
     <ContentPage.Content>
         
     </ContentPage.Content>
