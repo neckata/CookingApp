@@ -47,6 +47,8 @@
     <Compile Include="Helpers\Utility.cs" />
     <Compile Include="Interfaces\ICloseProgram.cs" />
     <Compile Include="Interfaces\IFileHelper.cs" />
+    <Compile Include="Models\CuisineFilterDTO.cs" />
+    <Compile Include="Models\ReceipDTO.cs" />
     <Compile Include="Models\CookerCuisineDTO.cs" />
     <Compile Include="Models\CuisineDTO.cs" />
     <Compile Include="Models\ReceiptDTO.cs" />
@@ -81,6 +83,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.ru.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CuisinesModel.cs" />
     <Compile Include="ViewModels\AddressesPage\AddressesPageViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\CookersPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MainPageViewModel.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="ViewModels\NotificationsPage\NotificationsPageViewModel.cs" />
     <Compile Include="ViewModels\OrdersPage\OrdersPageViewModel.cs" />
     <Compile Include="ViewModels\ReceipsPage\ReceipsPageViewModel.cs" />
+    <Compile Include="ViewModels\ReceipsPage\ReceipViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
     <Compile Include="Views\AddressesPage\AddressesPage.xaml.cs">
       <DependentUpon>AddressesPage.xaml</DependentUpon>
@@ -172,7 +176,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.bg.resx">

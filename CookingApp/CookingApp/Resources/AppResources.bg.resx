@@ -123,6 +123,12 @@
   <data name="cookersPageTitle" xml:space="preserve">
     <value>Готвачи</value>
   </data>
+  <data name="lblChooseCuisine" xml:space="preserve">
+    <value>Изберете тип кухня</value>
+  </data>
+  <data name="lblChooseCuisineFilter" xml:space="preserve">
+    <value>Изберете категория на рецептите</value>
+  </data>
   <data name="mainPageTitle" xml:space="preserve">
     <value>Поръчване на готвачи</value>
   </data>

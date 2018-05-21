@@ -4,6 +4,12 @@
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
              x:Class="CookingApp.Views.ReceipsPage.ReceipsPage">
     <ContentPage.Content>
-
+        <StackLayout BackgroundColor="#afceff">
+            <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineFilter}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+            <Picker x:Name="cuisines" IsVisible="False" ItemsSource="{Binding Cuisines}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisine}" Title="{i:Translate lblChooseCuisine}" SelectedIndexChanged="Picker_SelectedIndexChanged_1"/>
+            <ScrollView x:Name="receips" IsVisible="False">
+                
+            </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
