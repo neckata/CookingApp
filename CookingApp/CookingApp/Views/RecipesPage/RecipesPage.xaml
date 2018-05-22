@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
+             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
+             x:Class="CookingApp.Views.RecipesPage.RecipesPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#afceff">
+            <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineFilter}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+            <Picker x:Name="cuisines" IsVisible="False" ItemsSource="{Binding Cuisines}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisine}" Title="{i:Translate lblChooseCuisine}" SelectedIndexChanged="Picker_SelectedIndexChanged_1"/>
+            <ScrollView x:Name="Recipes" IsVisible="False">
+                <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Recipes}">
+                    <controls:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
+                                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                                    <Label Text="{Binding Title}"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{i:Translate lblTimeToCook}"/>
+                                        <Label Text="{Binding TimeToCook}"/>
+                                        <Label Text="{i:Translate lblMinutes}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{i:Translate lblPortions}"/>
+                                        <Label Text="{Binding Portions}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </DataTemplate>
+                    </controls:RepeaterView.ItemTemplate>
+                </controls:RepeaterView>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

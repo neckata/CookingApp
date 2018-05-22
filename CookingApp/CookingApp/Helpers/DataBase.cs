@@ -74,7 +74,7 @@ namespace CookingApp.Helpers
         {
             _connection.CreateTable<UserDTO>();
             _connection.CreateTable<SubscriptionDTO>();
-            _connection.CreateTable<ReceiptDTO>();
+            _connection.CreateTable<RecipeCookerDTO>();
             _connection.CreateTable<PhoneDTO>();
             _connection.CreateTable<AddressesDTO>();
             _connection.CreateTable<EmailDTO>();

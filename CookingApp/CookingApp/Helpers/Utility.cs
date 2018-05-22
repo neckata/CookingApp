@@ -5,7 +5,7 @@ using CookingApp.Views.CookersPage;
 using CookingApp.Views.MainPage;
 using CookingApp.Views.NotificationsPage;
 using CookingApp.Views.OrdersPage;
-using CookingApp.Views.ReceipsPage;
+using CookingApp.Views.RecipesPage;
 using CookingApp.Views.UserPage;
 using System;
 using System.Text.RegularExpressions;
@@ -31,7 +31,7 @@ namespace CookingApp.Helpers
                 case PageNavigateEnums.OrdersPage: page = new OrdersPage() { Title = AppResources.ResourceManager.GetString("ordersPageTitle") }; break;
                 case PageNavigateEnums.UserPage: page = new UserPage() { Title = AppResources.ResourceManager.GetString("userPageTitle") }; break;
                 case PageNavigateEnums.AddressesPage: page = new AddressesPage() { Title = AppResources.ResourceManager.GetString("addressesPageTitle") }; break;
-                case PageNavigateEnums.RecipesPage: page = new ReceipsPage() { Title = AppResources.ResourceManager.GetString("recipesPageTitle") }; break;
+                case PageNavigateEnums.RecipesPage: page = new RecipesPage() { Title = AppResources.ResourceManager.GetString("recipesPageTitle") }; break;
             }
             return page;
         }

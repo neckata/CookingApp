@@ -3,18 +3,18 @@ using CookingApp.Services;
 using CookingApp.ViewModels.MainPage;
 using System.Collections.Generic;
 
-namespace CookingApp.ViewModels.ReceipsPage
+namespace CookingApp.ViewModels.RecipesPage
 {
-    public class ReceipsPageViewModel : ObservableViewModel
+    public class RecipesPageViewModel : ObservableViewModel
     {
-        public ReceipsPageViewModel()
+        public RecipesPageViewModel()
         {
-            Receips = new List<ReceipViewModel>();
+            Recipes = new List<RecipeViewModel>();
             Cuisines = new List<CuisineDTO>();
             CuisineFilters = model.GetCuisineFilters();
         }
 
-        private CuisinesModel model = new CuisinesModel();
+        private RecipesModel model = new RecipesModel();
 
         public CuisineFilterDTO SelectedCuisineFilter { get; set; }
 
@@ -24,7 +24,7 @@ namespace CookingApp.ViewModels.ReceipsPage
 
         public List<CuisineDTO> Cuisines { get; set; }
 
-        public List<ReceipViewModel> Receips { get; set; }
+        public List<RecipeViewModel> Recipes { get; set; }
 
         public void FillCuisineFilters()
         {
@@ -53,12 +53,17 @@ namespace CookingApp.ViewModels.ReceipsPage
             }
 
             OnPropertyChangedModel(nameof(Cuisines));
+            Recipes = new List<RecipeViewModel>();
+            OnPropertyChangedModel(nameof(Recipes));
         }
 
-        public void FillReceipsData()
+        public void FillRecipesData()
         {
-            Receips = model.GetAllReceips();
-            OnPropertyChangedModel(nameof(Receips));
+            if (SelectedCuisine != null)
+            {
+                Recipes = model.GetAllRecipes(SelectedCuisine.Code);
+                OnPropertyChangedModel(nameof(Recipes));
+            }
         }
     }
 }

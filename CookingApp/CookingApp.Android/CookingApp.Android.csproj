@@ -195,10 +195,6 @@
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
     <AndroidResource Include="Resources\layout\Toolbar.axml" />
     <AndroidResource Include="Resources\values\styles.xml" />
-    <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
-    <AndroidResource Include="Resources\drawable-hdpi\icon.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CookingApp\CookingApp.csproj">
@@ -212,6 +208,11 @@
     <AndroidResource Include="Resources\drawable\cooking.jpg" />
     <AndroidResource Include="Resources\drawable\chef.png" />
     <AndroidResource Include="Resources\drawable\chefs.png" />
+    <AndroidResource Include="Resources\drawable\Cook.png" />
+    <AndroidResource Include="Resources\drawable\LoadingScreen.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\Cook.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Cook.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Cook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Android.Support.Animated.Vector.Drawable.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Animated.Vector.Drawable.targets" Condition="Exists('..\..\packages\Xamarin.Android.Support.Animated.Vector.Drawable.25.4.0.2\build\MonoAndroid70\Xamarin.Android.Support.Animated.Vector.Drawable.targets')" />

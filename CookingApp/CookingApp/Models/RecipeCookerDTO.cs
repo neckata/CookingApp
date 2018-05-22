@@ -3,8 +3,8 @@
 namespace CookingApp.Models
 {
     //Запазват се само рецептите на готвача който е вписан, изпозлва се за parse На JSON
-    [Table("RECEIPTTABLE")]
-    public class ReceiptDTO
+    [Table("RECIPETTABLE")]
+    public class RecipeCookerDTO
     {
         [PrimaryKey,AutoIncrement]
         [Column(nameof(ID))]

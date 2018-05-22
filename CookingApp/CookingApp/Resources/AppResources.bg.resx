@@ -129,6 +129,15 @@
   <data name="lblChooseCuisineFilter" xml:space="preserve">
     <value>Изберете категория на рецептите</value>
   </data>
+  <data name="lblMinutes" xml:space="preserve">
+    <value>минути</value>
+  </data>
+  <data name="lblPortions" xml:space="preserve">
+    <value>Порции :</value>
+  </data>
+  <data name="lblTimeToCook" xml:space="preserve">
+    <value>Време за приготвяне :</value>
+  </data>
   <data name="mainPageTitle" xml:space="preserve">
     <value>Поръчване на готвачи</value>
   </data>
