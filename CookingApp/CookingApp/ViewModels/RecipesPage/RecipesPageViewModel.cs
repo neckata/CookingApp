@@ -1,7 +1,12 @@
 ﻿using CookingApp.Models;
 using CookingApp.Services;
 using CookingApp.ViewModels.MainPage;
+using CookingApp.Views.MainPage;
+using CookingApp.Views.RecipesPage;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace CookingApp.ViewModels.RecipesPage
 {
@@ -11,10 +16,10 @@ namespace CookingApp.ViewModels.RecipesPage
         {
             Recipes = new List<RecipeViewModel>();
             Cuisines = new List<CuisineDTO>();
-            CuisineFilters = model.GetCuisineFilters();
+            CuisineFilters = _model.GetCuisineFilters();
         }
 
-        private RecipesModel model = new RecipesModel();
+        private RecipesModel _model = new RecipesModel();
 
         public CuisineFilterDTO SelectedCuisineFilter { get; set; }
 
@@ -32,22 +37,22 @@ namespace CookingApp.ViewModels.RecipesPage
             {
                 case ("TYPE"):
                     {
-                        Cuisines = model.GetAllCuisinesTypes();
+                        Cuisines = _model.GetAllCuisinesTypes();
                         break;
                     }
                 case ("COUNTRY"):
                     {
-                        Cuisines = model.GetAllCuisinesCountries();
+                        Cuisines = _model.GetAllCuisinesCountries();
                         break;
                     }
                 case ("COOKINGTYPE"):
                     {
-                        Cuisines = model.GetAllCuisinesCookingType();
+                        Cuisines = _model.GetAllCuisinesCookingType();
                         break;
                     }
                 case ("SEASON"):
                     {
-                        Cuisines = model.GetAllCuisinesSeasons();
+                        Cuisines = _model.GetAllCuisinesSeasons();
                         break;
                     }
             }
@@ -61,8 +66,20 @@ namespace CookingApp.ViewModels.RecipesPage
         {
             if (SelectedCuisine != null)
             {
-                Recipes = model.GetAllRecipes(SelectedCuisine.Code);
+                Recipes = _model.GetAllRecipes(SelectedCuisine.Code);
                 OnPropertyChangedModel(nameof(Recipes));
+            }
+        }
+
+        public ICommand Navigate
+        {
+            get
+            {
+                return new Command<int>(async (para) =>
+                {
+                    RecipeViewModel recipe = Recipes.FirstOrDefault(x => x.ID == para);
+                    await PageTemplate.CurrentPage.NavigateAsync(new SingleRecipePage(recipe) { Title = recipe.Title });
+                });
             }
         }
     }

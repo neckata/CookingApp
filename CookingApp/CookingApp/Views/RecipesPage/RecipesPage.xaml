@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
              xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
-             x:Class="CookingApp.Views.RecipesPage.RecipesPage">
+             x:Class="CookingApp.Views.RecipesPage.RecipesPage"
+             x:Name="RecipePage">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#afceff">
             <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineFilter}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
@@ -13,6 +14,9 @@
                     <controls:RepeaterView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer  Command="{Binding Source={x:Reference Name=RecipePage}, Path=BindingContext.Navigate}" CommandParameter="{Binding ID}"/>
+                                </StackLayout.GestureRecognizers>
                                 <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
                                 <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding Title}"/>

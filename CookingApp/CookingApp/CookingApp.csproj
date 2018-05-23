@@ -94,6 +94,7 @@
     <Compile Include="ViewModels\OrdersPage\OrdersPageViewModel.cs" />
     <Compile Include="ViewModels\RecipesPage\RecipesPageViewModel.cs" />
     <Compile Include="ViewModels\RecipesPage\RecipeViewModel.cs" />
+    <Compile Include="ViewModels\RecipesPage\SingleRecipeViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
     <Compile Include="Views\AddressesPage\AddressesPage.xaml.cs">
       <DependentUpon>AddressesPage.xaml</DependentUpon>
@@ -116,6 +117,9 @@
     </Compile>
     <Compile Include="Views\RecipesPage\RecipesPage.xaml.cs">
       <DependentUpon>RecipesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecipesPage\SingleRecipePage.xaml.cs">
+      <DependentUpon>SingleRecipePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserPage\UserPage.xaml.cs">
       <DependentUpon>UserPage.xaml</DependentUpon>
@@ -175,7 +179,12 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\RecipesPage\SingleRecipePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\AppResources.bg.resx">
       <Generator>ResXFileCodeGenerator</Generator>

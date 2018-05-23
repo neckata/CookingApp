@@ -1,9 +1,6 @@
-﻿using CookingApp.ViewModels.MainPage;
-using System;
-
-namespace CookingApp.ViewModels.RecipesPage
+﻿namespace CookingApp.ViewModels.RecipesPage
 {
-    public class RecipeViewModel : ObservableViewModel
+    public class RecipeViewModel
     {
         public int ID { get; set; }
 

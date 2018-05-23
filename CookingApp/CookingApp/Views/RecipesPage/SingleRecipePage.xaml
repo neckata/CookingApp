@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
+             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
+             x:Class="CookingApp.Views.RecipesPage.SingleRecipePage">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="#afceff">
+            <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
+                <Image Source="{Binding Recipe.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
+                <StackLayout Orientation="Horizontal" Margin="5,0,0,0">
+                    <Label Text="{i:Translate lblTimeToCook}"/>
+                    <Label Text="{Binding Recipe.TimeToCook}"/>
+                    <Label Text="{i:Translate lblMinutes}"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="5,0,0,0">
+                    <Label Text="{i:Translate lblPortions}"/>
+                    <Label Text="{Binding Recipe.Portions}"/>
+                </StackLayout>
+                <Label Text="{i:Translate lblNecessaryIngredients}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
+                <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding NecessaryIngredients}" Margin="5,0,0,0">
+                    <controls:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding .}"/>
+                        </DataTemplate>
+                    </controls:RepeaterView.ItemTemplate>
+                </controls:RepeaterView>
+                <Label Text="{i:Translate lblHowToCook}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
+                <Label Text="{Binding HowToCook}" Margin="5,0,0,0"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
