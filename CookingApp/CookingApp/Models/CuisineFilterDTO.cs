@@ -1,8 +1,10 @@
-﻿namespace CookingApp.Models
+﻿using CookingApp.Enums;
+
+namespace CookingApp.Models
 {
     public class CuisineFilterDTO
     {
-        public string Code { get; set; }
+        public CuisineTypeEnums Code { get; set; }
 
         public string Description { get; set; }
     }

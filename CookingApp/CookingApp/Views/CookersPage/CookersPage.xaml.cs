@@ -12,5 +12,19 @@ namespace CookingApp.Views.CookersPage
             InitializeComponent();
             this.BindingContext = new CookersPageViewModel();
         }
+
+        private void Picker_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            ((CookersPageViewModel)this.BindingContext).FillCuisineFilters();
+            this.Cuisines.IsVisible = true;
+            this.Cookers.IsVisible = false;
+        }
+
+        private void Picker_SelectedIndexChanged_1(object sender, System.EventArgs e)
+        {
+            ((CookersPageViewModel)this.BindingContext).FillCookers();
+            this.Cuisines.IsVisible = true;
+            this.Cookers.IsVisible = true;
+        }
     }
 }

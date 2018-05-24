@@ -156,7 +156,22 @@
   <data name="recipesPageTitle" xml:space="preserve">
     <value>Рецепти</value>
   </data>
+  <data name="lblChooseCuisineCookers" xml:space="preserve">
+    <value>Изберете кухня</value>
+  </data>
   <data name="userPageTitle" xml:space="preserve">
     <value>За мен</value>
+  </data>
+  <data name="lblLeva" xml:space="preserve">
+    <value>лв.</value>
+  </data>
+  <data name="lblOrders" xml:space="preserve">
+    <value>Брой поръчки :</value>
+  </data>
+  <data name="lblPricing" xml:space="preserve">
+    <value>Заплащане на час :</value>
+  </data>
+  <data name="lblRating" xml:space="preserve">
+    <value>Рейтинг :</value>
   </data>
 </root>

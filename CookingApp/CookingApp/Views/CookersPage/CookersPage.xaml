@@ -2,8 +2,42 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
-             x:Class="CookingApp.Views.CookersPage.CookersPage">
+             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
+             x:Class="CookingApp.Views.CookersPage.CookersPage"
+             x:Name="RecipePage">
     <ContentPage.Content>
-
+        <StackLayout BackgroundColor="#afceff">
+            <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineCookers}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+            <Picker x:Name="Cuisines" IsVisible="False" ItemsSource="{Binding Cuisines}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisine}" Title="{i:Translate lblChooseCuisine}" SelectedIndexChanged="Picker_SelectedIndexChanged_1"/>
+            <ScrollView x:Name="Cookers" IsVisible="False">
+                <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Cookers}">
+                    <controls:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal" BackgroundColor="#d6e4f9">
+                                <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
+                                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Description}" LineBreakMode="WordWrap" FontAttributes="Italic"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{i:Translate lblRating}" FontAttributes="Bold"/>
+                                        <Label Text="{Binding Rating}"/>
+                                        <Label Text="/ 10"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>
+                                        <Label Text="{Binding OrdersCount}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{i:Translate lblPricing}" FontAttributes="Bold"/>
+                                        <Label Text="{Binding HoursPricing}"/>
+                                        <Label Text="{i:Translate lblLeva}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </DataTemplate>
+                    </controls:RepeaterView.ItemTemplate>
+                </controls:RepeaterView>
+            </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

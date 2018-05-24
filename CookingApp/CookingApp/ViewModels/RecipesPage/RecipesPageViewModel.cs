@@ -1,4 +1,5 @@
-﻿using CookingApp.Models;
+﻿using CookingApp.Enums;
+using CookingApp.Models;
 using CookingApp.Services;
 using CookingApp.ViewModels.MainPage;
 using CookingApp.Views.MainPage;
@@ -35,22 +36,22 @@ namespace CookingApp.ViewModels.RecipesPage
         {
             switch (SelectedCuisineFilter.Code)
             {
-                case ("TYPE"):
+                case (CuisineTypeEnums.Type):
                     {
                         Cuisines = _model.GetAllCuisinesTypes();
                         break;
                     }
-                case ("COUNTRY"):
+                case (CuisineTypeEnums.Country):
                     {
                         Cuisines = _model.GetAllCuisinesCountries();
                         break;
                     }
-                case ("COOKINGTYPE"):
+                case (CuisineTypeEnums.CookingType):
                     {
                         Cuisines = _model.GetAllCuisinesCookingType();
                         break;
                     }
-                case ("SEASON"):
+                case (CuisineTypeEnums.Season):
                     {
                         Cuisines = _model.GetAllCuisinesSeasons();
                         break;

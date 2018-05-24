@@ -13,20 +13,20 @@
                 <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Recipes}">
                     <controls:RepeaterView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Orientation="Horizontal">
+                            <StackLayout Orientation="Horizontal" BackgroundColor="#d6e4f9">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer  Command="{Binding Source={x:Reference Name=RecipePage}, Path=BindingContext.Navigate}" CommandParameter="{Binding ID}"/>
                                 </StackLayout.GestureRecognizers>
                                 <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
                                 <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
-                                    <Label Text="{Binding Title}"/>
+                                    <Label Text="{Binding Title}" FontAttributes="Bold"/>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="{i:Translate lblTimeToCook}"/>
+                                        <Label Text="{i:Translate lblTimeToCook}" FontAttributes="Bold"/>
                                         <Label Text="{Binding TimeToCook}"/>
                                         <Label Text="{i:Translate lblMinutes}"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal">
-                                        <Label Text="{i:Translate lblPortions}"/>
+                                        <Label Text="{i:Translate lblPortions}" FontAttributes="Bold"/>
                                         <Label Text="{Binding Portions}"/>
                                     </StackLayout>
                                 </StackLayout>

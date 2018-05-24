@@ -43,6 +43,7 @@
     <Compile Include="Enums\PageNavigateEnums.cs" />
     <Compile Include="Enums\NotificationsTypesEnum.cs" />
     <Compile Include="Enums\CommentTypesEnum.cs" />
+    <Compile Include="Enums\CuisineTypeEnums.cs" />
     <Compile Include="Enums\UserTypesEnum.cs" />
     <Compile Include="Helpers\DataBase.cs" />
     <Compile Include="Helpers\Utility.cs" />
@@ -84,9 +85,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.ru.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CookersModel.cs" />
     <Compile Include="Services\RecipesModel.cs" />
     <Compile Include="ViewModels\AddressesPage\AddressesPageViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\CookersPageViewModel.cs" />
+    <Compile Include="ViewModels\CookersPage\CookerViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\ObservableViewModel.cs" />

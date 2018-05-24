@@ -1,4 +1,5 @@
-﻿using CookingApp.Models;
+﻿using CookingApp.Enums;
+using CookingApp.Models;
 using CookingApp.ViewModels.RecipesPage;
 using System.Collections.Generic;
 
@@ -60,10 +61,10 @@ namespace CookingApp.Services
         {
             List<CuisineFilterDTO> data = new List<CuisineFilterDTO>()
             {
-                new CuisineFilterDTO(){Code="TYPE",Description = "Тип Кухня"},
-                new CuisineFilterDTO(){Code="COUNTRY",Description = "Интернационална Кухня"},
-                new CuisineFilterDTO(){Code="COOKINGTYPE",Description = "Начин на обработка"},
-                new CuisineFilterDTO(){Code="SEASON",Description = "Сезонна Кухня"}
+                new CuisineFilterDTO(){Code=CuisineTypeEnums.Type,Description = "Тип Кухня"},
+                new CuisineFilterDTO(){Code=CuisineTypeEnums.Country,Description = "Интернационална Кухня"},
+                new CuisineFilterDTO(){Code=CuisineTypeEnums.CookingType,Description = "Начин на обработка"},
+                new CuisineFilterDTO(){Code=CuisineTypeEnums.Season,Description = "Сезонна Кухня"}
             };
 
             return data;
