@@ -9,7 +9,16 @@ namespace CookingApp.Models
         [Column(nameof(ID))]
         public int ID { get; set; }
 
-        [Column(nameof(Address))]
-        public string Address { get; set; }
+        [Column(nameof(AddressName))]
+        public string AddressName { get; set; }
+
+        [Column(nameof(City))]
+        public string City { get; set; }
+
+        [Column(nameof(Neighborhood))]
+        public string Neighborhood { get; set; }
+
+        [Column(nameof(Street))]
+        public string Street { get; set; }
     }
 }

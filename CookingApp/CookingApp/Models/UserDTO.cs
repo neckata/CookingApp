@@ -29,6 +29,15 @@ namespace CookingApp.Models
         [Column(nameof(Name))]
         public string Name { get; set; }
 
+        [Column(nameof(Family))]
+        public string Family { get; set; }
+
+        [Column(nameof(Email))]
+        public string Email { get; set; }
+
+        [Column(nameof(Phone))]
+        public string Phone { get; set; }
+
         //Само за готвач полета, той си ги променя
 
         [Column(nameof(Description))]

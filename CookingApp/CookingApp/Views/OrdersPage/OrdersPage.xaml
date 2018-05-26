@@ -4,6 +4,7 @@
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
              x:Class="CookingApp.Views.OrdersPage.OrdersPage">
     <ContentPage.Content>
-     
+        <ScrollView BackgroundColor="{StaticResource Primary}">
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

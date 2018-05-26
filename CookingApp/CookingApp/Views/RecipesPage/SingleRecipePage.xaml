@@ -5,7 +5,7 @@
              xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
              x:Class="CookingApp.Views.RecipesPage.SingleRecipePage">
     <ContentPage.Content>
-        <ScrollView BackgroundColor="#afceff">
+        <ScrollView BackgroundColor="{StaticResource Primary}">
             <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
                 <Image Source="{Binding Recipe.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
                 <StackLayout Orientation="Horizontal" Margin="5,0,0,0">

@@ -2,8 +2,50 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
+             xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
              x:Class="CookingApp.Views.UserPage.UserPage">
     <ContentPage.Content>
+        <ScrollView BackgroundColor="{StaticResource Primary}">
+            <StackLayout Orientation="Vertical" Margin="10">
+                <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
+                    <StackLayout Orientation="Horizontal">
+                        <iconize:IconImage Icon="fa-user" IconSize="26" IconColor="Black" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Margin="5,5,5,0"/>
+                        <Label Text="{i:Translate lblUserData}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
 
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
+                        <Label Text="{i:Translate lblUserName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
+                        <StackLayout BackgroundColor="Black">
+                            <Entry Text="{Binding Name}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
+                        </StackLayout>
+                        <Label IsVisible="{Binding NameValidation}" Text="{i:Translate lblNameValidation}" TextColor="Red" FontSize="16" FontAttributes="Italic" Margin="10,0,0,0"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
+                        <Label Text="{i:Translate lblUserFamily}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
+                        <StackLayout BackgroundColor="Black">
+                            <Entry Text="{Binding Family}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
+                        <Label Text="{i:Translate lblPhone}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
+                        <StackLayout BackgroundColor="Black">
+                            <Entry Text="{Binding Phone}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" Keyboard="Numeric"/>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
+                        <Label Text="{i:Translate lblEmail}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
+                        <StackLayout BackgroundColor="Black">
+                            <Entry Text="{Binding Email}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" Keyboard="Email"/>
+                        </StackLayout>
+                        <Label IsVisible="{Binding EmailValidation}" Text="{i:Translate lblEmailValidation}" TextColor="Red" FontSize="16" FontAttributes="Italic"  Margin="10,0,0,0"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <Button Text="{i:Translate lblSave}" Command="{Binding SaveCommand}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="0,0,0,5"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

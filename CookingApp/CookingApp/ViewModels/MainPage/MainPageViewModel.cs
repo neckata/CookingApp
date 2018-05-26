@@ -1,5 +1,7 @@
 ﻿using CookingApp.Enums;
 using CookingApp.Helpers;
+using CookingApp.Interfaces;
+using CookingApp.Models;
 using CookingApp.Views.MainPage;
 using System.Windows.Input;
 using Xamarin.Forms;

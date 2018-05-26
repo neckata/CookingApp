@@ -1,5 +1,8 @@
 ﻿using CookingApp.Enums;
 using CookingApp.Helpers;
+using CookingApp.Interfaces;
+using CookingApp.Models;
+using CookingApp.Resources;
 using CookingApp.Views.MainPage;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -10,7 +13,7 @@ namespace CookingApp.ViewModels.MainPage
     {
         public MenuPageViewModel()
         {
-           
+            ReloadUser();
         }
 
         public string Name { get; set; }
@@ -28,6 +31,21 @@ namespace CookingApp.ViewModels.MainPage
                     await PageTemplate.CurrentPage.NavigateAsync(Utility.PageParser(page));
                 });
             }
+        }
+
+        public void ReloadUser()
+        {
+            UserDTO user = DataBase.Instance.Query<UserDTO>().FirstOrDefault();
+            if (user == null)
+            {
+                user = new UserDTO { UserType = UserTypesEnum.Client, UserName = "AnonymousUser",Email="email@mail.com",Name=AppResources.ResourceManager.GetString("lblAnonymousUser"),
+                    IMEI = DependencyService.Get<IDevice>().GetIdentifier(), FCM = "FCM" };
+                DataBase.Instance.Add(user);
+            }
+            Name = string.Format("{0} {1}", user.Name, user.Family);
+            Email = user.Email;
+            OnPropertyChangedModel(nameof(Name));
+            OnPropertyChangedModel(nameof(Email));
         }
     }
 }

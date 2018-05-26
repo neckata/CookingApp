@@ -5,7 +5,7 @@
              x:Class="CookingApp.Views.MainPage.MainPage"
              Title="{i:Translate mainPageTitle}">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" BackgroundColor="#afceff">
+        <StackLayout Orientation="Vertical" BackgroundColor="{StaticResource Primary}">
             <Image Source="chef.jpg" HorizontalOptions="FillAndExpand" HeightRequest="300"/>
             <Grid>
                 <Grid.RowDefinitions>
@@ -18,7 +18,7 @@
                             <TapGestureRecognizer Command="{Binding Navigate}" CommandParameter="CookersPage"/>
                         </Image.GestureRecognizers>
                     </Image>
-                    <Button Text="{i:Translate cookersPageTitle}" VerticalOptions="CenterAndExpand" FontSize="20" TextColor="#104aa8" BackgroundColor="#5fa8d3" Command="{Binding Navigate}" CommandParameter="CookersPage" HorizontalOptions="FillAndExpand"/>
+                    <Button Text="{i:Translate cookersPageTitle}" VerticalOptions="CenterAndExpand" FontSize="20" TextColor="{StaticResource TextColor}" BackgroundColor="{StaticResource ButtonColor}" Command="{Binding Navigate}" CommandParameter="CookersPage" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
 
                 <StackLayout Grid.Row="1" Margin="10,5,10,5" Orientation="Horizontal" Padding="5">
@@ -27,7 +27,7 @@
                             <TapGestureRecognizer Command="{Binding Navigate}" CommandParameter="RecipesPage"/>
                         </Image.GestureRecognizers>
                     </Image>
-                    <Button Text="{i:Translate recipesPageTitle}" VerticalOptions="CenterAndExpand" FontSize="20" TextColor="#104aa8" BackgroundColor="#5fa8d3" Command="{Binding Navigate}" CommandParameter="RecipesPage" HorizontalOptions="FillAndExpand"/>
+                    <Button Text="{i:Translate recipesPageTitle}" VerticalOptions="CenterAndExpand" FontSize="20" TextColor="{StaticResource TextColor}" BackgroundColor="{StaticResource ButtonColor}" Command="{Binding Navigate}" CommandParameter="RecipesPage" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
             </Grid>
         </StackLayout>

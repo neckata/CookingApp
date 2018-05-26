@@ -174,4 +174,52 @@
   <data name="lblRating" xml:space="preserve">
     <value>Рейтинг :</value>
   </data>
+  <data name="lblAnonymousUser" xml:space="preserve">
+    <value>Анонимен Потребител</value>
+  </data>
+  <data name="lblEmail" xml:space="preserve">
+    <value>Електронна поща</value>
+  </data>
+  <data name="lblEmailValidation" xml:space="preserve">
+    <value>Моля въведете коректна електронна поща</value>
+  </data>
+  <data name="lblNameValidation" xml:space="preserve">
+    <value>Моля въведете име</value>
+  </data>
+  <data name="lblPhone" xml:space="preserve">
+    <value>Телефон</value>
+  </data>
+  <data name="lblSave" xml:space="preserve">
+    <value>Запис</value>
+  </data>
+  <data name="lblSaveSuccess" xml:space="preserve">
+    <value>Данните бяза запазени успешно</value>
+  </data>
+  <data name="lblUserData" xml:space="preserve">
+    <value>Данни за потребителя</value>
+  </data>
+  <data name="lblUserFamily" xml:space="preserve">
+    <value>Фамилно Име</value>
+  </data>
+  <data name="lblUserName" xml:space="preserve">
+    <value>Име</value>
+  </data>
+  <data name="lblAddressName" xml:space="preserve">
+    <value>Име на адреса</value>
+  </data>
+  <data name="lblCity" xml:space="preserve">
+    <value>Град</value>
+  </data>
+  <data name="lblDeleteSuccess" xml:space="preserve">
+    <value>Успешно изтриване</value>
+  </data>
+  <data name="lblNeighborhood" xml:space="preserve">
+    <value>Квартал</value>
+  </data>
+  <data name="lblNewAddress" xml:space="preserve">
+    <value>Добави Нов Адрес</value>
+  </data>
+  <data name="lblStreet" xml:space="preserve">
+    <value>Улица</value>
+  </data>
 </root>

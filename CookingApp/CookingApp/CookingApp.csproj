@@ -49,6 +49,7 @@
     <Compile Include="Helpers\Utility.cs" />
     <Compile Include="Interfaces\ICloseProgram.cs" />
     <Compile Include="Interfaces\IFileHelper.cs" />
+    <Compile Include="Interfaces\IDevice.cs" />
     <Compile Include="Models\CuisineFilterDTO.cs" />
     <Compile Include="Models\RecipeDTO.cs" />
     <Compile Include="Models\CookerCuisineDTO.cs" />
@@ -60,8 +61,6 @@
     <Compile Include="Models\AddressesDTO.cs" />
     <Compile Include="Models\CommentDTO.cs" />
     <Compile Include="Models\OrderDTO.cs" />
-    <Compile Include="Models\EmailDTO.cs" />
-    <Compile Include="Models\PhoneDTO.cs" />
     <Compile Include="Models\CookerDTO.cs" />
     <Compile Include="Models\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +86,7 @@
     </Compile>
     <Compile Include="Services\CookersModel.cs" />
     <Compile Include="Services\RecipesModel.cs" />
+    <Compile Include="ViewModels\AddressesPage\AddressViewModel.cs" />
     <Compile Include="ViewModels\AddressesPage\AddressesPageViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\CookersPageViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\CookerViewModel.cs" />

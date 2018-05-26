@@ -6,14 +6,14 @@
              x:Class="CookingApp.Views.CookersPage.CookersPage"
              x:Name="RecipePage">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#afceff">
+        <StackLayout BackgroundColor="{StaticResource Primary}">
             <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineCookers}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
             <Picker x:Name="Cuisines" IsVisible="False" ItemsSource="{Binding Cuisines}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisine}" Title="{i:Translate lblChooseCuisine}" SelectedIndexChanged="Picker_SelectedIndexChanged_1"/>
             <ScrollView x:Name="Cookers" IsVisible="False">
                 <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Cookers}">
                     <controls:RepeaterView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="#d6e4f9">
+                            <StackLayout Orientation="Horizontal"  BackgroundColor="{StaticResource BorderColor}">
                                 <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
                                 <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding Name}" FontAttributes="Bold"/>

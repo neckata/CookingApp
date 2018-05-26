@@ -5,15 +5,15 @@
              x:Class="CookingApp.Views.MainPage.MenuPage"
              Title="{i:Translate mainPageTitle}">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" BackgroundColor="#5fa8d3">
+        <StackLayout Orientation="Vertical" BackgroundColor="{StaticResource Primary}">
             <Image Source="cooking.jpg" HorizontalOptions="FillAndExpand" HeightRequest="200" WidthRequest="300"/>
             <StackLayout Margin="0,5,0,0" Orientation="Vertical">
-                <Label Text="{Binding Name}" FontSize="22" FontAttributes="Bold" Margin="10,0,0,0"/>
-                <Label Text="{Binding Email}" FontSize="20" FontAttributes="Italic" Margin="10,0,0,0"/>
-                <Button Text="{i:Translate userPageTitle}" Command="{Binding Navigate}" CommandParameter="UserPage" FontSize="20" FontAttributes="Bold" Margin="5"/>
-                <Button Text="{i:Translate addressesPageTitle}" Command="{Binding Navigate}" CommandParameter="AddressesPage" FontSize="20" FontAttributes="Bold" Margin="5"/>
-                <Button Text="{i:Translate ordersPageTitle}" Command="{Binding Navigate}" CommandParameter="OrdersPage" FontSize="20" FontAttributes="Bold" Margin="5"/>
-                <Button Text="{i:Translate notifactionsPageTitle}" Command="{Binding Navigate}" CommandParameter="NotificationsPage" FontSize="20" FontAttributes="Bold" Margin="5"/>
+                <Label Text="{Binding Name}" FontSize="Large" FontAttributes="Bold" Margin="10,0,0,0"/>
+                <Label Text="{Binding Email}" FontSize="Medium" FontAttributes="Italic" Margin="10,0,0,0"/>
+                <Button Text="{i:Translate userPageTitle}" Command="{Binding Navigate}" CommandParameter="UserPage" FontSize="20" FontAttributes="Bold" Margin="5" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}"/>
+                <Button Text="{i:Translate addressesPageTitle}" Command="{Binding Navigate}" CommandParameter="AddressesPage" FontSize="20" FontAttributes="Bold" Margin="5" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}"/>
+                <Button Text="{i:Translate ordersPageTitle}" Command="{Binding Navigate}" CommandParameter="OrdersPage" FontSize="20" FontAttributes="Bold" Margin="5" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}"/>
+                <Button Text="{i:Translate notifactionsPageTitle}" Command="{Binding Navigate}" CommandParameter="NotificationsPage" FontSize="20" FontAttributes="Bold" Margin="5" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content> 

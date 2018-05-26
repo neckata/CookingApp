@@ -2,8 +2,52 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
+             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
+             x:Name ="Page"
              x:Class="CookingApp.Views.AddressesPage.AddressesPage">
     <ContentPage.Content>
+        <ScrollView BackgroundColor="{StaticResource Primary}">
+            <StackLayout Orientation="Vertical" Margin="10">
+                <controls:RepeaterView ItemsSource="{Binding Addresses,Mode=TwoWay}">
+                    <controls:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
+                                <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
 
+                                    <Label Text="{i:Translate lblAddressName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
+                                    <Entry Text="{Binding Name}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
+
+                                    <Label Text="{i:Translate lblCity}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
+                                    <Entry Text="{Binding City}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
+
+                                    <Label Text="{i:Translate lblNeighborhood}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
+                                    <Entry Text="{Binding Neighborhood}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
+
+                                    <Label Text="{i:Translate lblStreet}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
+                                    <Entry Text="{Binding Street}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
+
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="Accept.png" HorizontalOptions="CenterAndExpand">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer  Command="{Binding Path=BindingContext.Save, Source={x:Reference Page}}" CommandParameter="{Binding ID}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                        <Image Source="cross.png" HorizontalOptions="CenterAndExpand">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer  Command="{Binding Path=BindingContext.Delete, Source={x:Reference Page}}" CommandParameter="{Binding ID}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </StackLayout>
+
+                                </StackLayout>
+                            </StackLayout>
+                        </DataTemplate>
+                    </controls:RepeaterView.ItemTemplate>
+                </controls:RepeaterView>
+
+                <Button Text="{i:Translate lblNewAddress}" VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Command="{Binding AddAddress}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" Margin="0,0,0,5"/>
+
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

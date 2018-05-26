@@ -6,14 +6,14 @@
              x:Class="CookingApp.Views.RecipesPage.RecipesPage"
              x:Name="RecipePage">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#afceff">
+        <StackLayout BackgroundColor="{StaticResource Primary}">
             <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineFilter}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
             <Picker x:Name="cuisines" IsVisible="False" ItemsSource="{Binding Cuisines}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisine}" Title="{i:Translate lblChooseCuisine}" SelectedIndexChanged="Picker_SelectedIndexChanged_1"/>
             <ScrollView x:Name="Recipes" IsVisible="False">
                 <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Recipes}">
                     <controls:RepeaterView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="#d6e4f9">
+                            <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource BorderColor}">
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer  Command="{Binding Source={x:Reference Name=RecipePage}, Path=BindingContext.Navigate}" CommandParameter="{Binding ID}"/>
                                 </StackLayout.GestureRecognizers>

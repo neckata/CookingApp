@@ -18,7 +18,7 @@ namespace CookingApp.Views.MainPage
             BindingContext = new MainPageViewModel();
             Detail = new NavigationPage(new MainPage())
             {
-                BarBackgroundColor = Color.Blue,
+                BarBackgroundColor = (Color)App.Current.Resources["ButtonColor"],
                 BarTextColor = Color.White
             };
             CurrentPage = this;
