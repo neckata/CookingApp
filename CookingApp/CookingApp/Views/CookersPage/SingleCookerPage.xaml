@@ -4,6 +4,7 @@
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
              xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
              x:Class="CookingApp.Views.CookersPage.SingleCookerPage"
+             xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
              x:Name="CookerPage">
     <ContentPage.Content>
         <ScrollView BackgroundColor="{StaticResource Primary}">
@@ -13,9 +14,8 @@
                     <Label Text="{Binding Cooker.Name}" FontAttributes="Bold"/>
                     <Label Text="{Binding Cooker.Description}" LineBreakMode="WordWrap" FontAttributes="Italic"/>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="{i:Translate lblRating}" FontAttributes="Bold"/>
-                        <Label Text="{Binding Cooker.Rating}"/>
-                        <Label Text="/ 10"/>
+                        <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                        <rating:SfRating x:Name="rating" Value="{Binding Cooker.Rating}" ItemCount="5" ItemSize="24" Precision="Exact"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>
