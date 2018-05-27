@@ -166,7 +166,7 @@
     <value>лв.</value>
   </data>
   <data name="lblOrders" xml:space="preserve">
-    <value>Брой поръчки :</value>
+    <value>Брой изпълнени поръчки :</value>
   </data>
   <data name="lblPricing" xml:space="preserve">
     <value>Заплащане на час :</value>
@@ -221,5 +221,8 @@
   </data>
   <data name="lblStreet" xml:space="preserve">
     <value>Улица</value>
+  </data>
+  <data name="lblRecipesCanCook" xml:space="preserve">
+    <value>Ястия, които мога да сготвя:</value>
   </data>
 </root>

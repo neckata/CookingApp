@@ -4,7 +4,7 @@
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
              xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
              x:Class="CookingApp.Views.CookersPage.CookersPage"
-             x:Name="RecipePage">
+             x:Name="CookersPage">
     <ContentPage.Content>
         <StackLayout BackgroundColor="{StaticResource Primary}">
             <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineCookers}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
@@ -14,6 +14,9 @@
                     <controls:RepeaterView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Orientation="Horizontal"  BackgroundColor="{StaticResource BorderColor}">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer  Command="{Binding Source={x:Reference Name=CookersPage}, Path=BindingContext.Navigate}" CommandParameter="{Binding ID}"/>
+                                </StackLayout.GestureRecognizers>
                                 <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
                                 <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
                                     <Label Text="{Binding Name}" FontAttributes="Bold"/>

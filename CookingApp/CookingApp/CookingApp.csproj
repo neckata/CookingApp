@@ -90,6 +90,7 @@
     <Compile Include="ViewModels\AddressesPage\AddressesPageViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\CookersPageViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\CookerViewModel.cs" />
+    <Compile Include="ViewModels\CookersPage\SingleCookerViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\ObservableViewModel.cs" />
@@ -104,6 +105,9 @@
     </Compile>
     <Compile Include="Views\CookersPage\CookersPage.xaml.cs">
       <DependentUpon>CookersPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CookersPage\SingleCookerPage.xaml.cs">
+      <DependentUpon>SingleCookerPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -251,6 +255,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\RecipesPage\RecipesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\CookersPage\SingleCookerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

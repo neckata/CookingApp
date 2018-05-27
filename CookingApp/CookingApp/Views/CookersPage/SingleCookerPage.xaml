@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
+             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
+             x:Class="CookingApp.Views.CookersPage.SingleCookerPage"
+             x:Name="CookerPage">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="{StaticResource Primary}">
+            <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
+                <Image Source="{Binding Cooker.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
+                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                    <Label Text="{Binding Cooker.Name}" FontAttributes="Bold"/>
+                    <Label Text="{Binding Cooker.Description}" LineBreakMode="WordWrap" FontAttributes="Italic"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{i:Translate lblRating}" FontAttributes="Bold"/>
+                        <Label Text="{Binding Cooker.Rating}"/>
+                        <Label Text="/ 10"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>
+                        <Label Text="{Binding Cooker.OrdersCount}"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{i:Translate lblPricing}" FontAttributes="Bold"/>
+                        <Label Text="{Binding Cooker.HoursPricing}"/>
+                        <Label Text="{i:Translate lblLeva}"/>
+                    </StackLayout>
+                </StackLayout>
+                <Label Text="{i:Translate lblRecipesCanCook}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
+                <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RecipesCanCook}" Margin="5,0,0,0">
+                    <controls:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource BorderColor}">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer  Command="{Binding Source={x:Reference Name=CookerPage}, Path=BindingContext.Navigate}" CommandParameter="{Binding ID}"/>
+                                </StackLayout.GestureRecognizers>
+                                <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
+                                <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Large" VerticalTextAlignment="Center"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </controls:RepeaterView.ItemTemplate>
+                </controls:RepeaterView>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
