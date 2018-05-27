@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
+             xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+             x:Class="CookingApp.Views.UserPage.UserCookerPage">
+    <ContentPage.Content>
+        <ScrollView BackgroundColor="{StaticResource Primary}">
+            <StackLayout Orientation="Vertical" Margin="10">
+                <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
+                    <StackLayout Orientation="Horizontal">
+                        <iconize:IconImage Icon="fa-info" IconSize="26" IconColor="Black" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Margin="5,5,5,0"/>
+                        <Label Text="{i:Translate lblCookerInfo}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
+                        <Label Text="{i:Translate lblUserName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
+                        <StackLayout BackgroundColor="Black">
+                            <Entry Text="{Binding UserName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" IsPassword="True"/>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
+                        <Label Text="{i:Translate lblPassword}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
+                        <StackLayout BackgroundColor="Black">
+                            <Entry Text="{Binding Password}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+
+                <Button Text="{i:Translate lblLogin}" Command="{Binding Login}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="0,0,0,5"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

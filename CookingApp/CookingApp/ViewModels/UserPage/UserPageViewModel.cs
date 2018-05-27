@@ -4,6 +4,7 @@ using CookingApp.Models;
 using CookingApp.Resources;
 using CookingApp.ViewModels.MainPage;
 using CookingApp.Views.MainPage;
+using CookingApp.Views.UserPage;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -51,6 +52,17 @@ namespace CookingApp.ViewModels.UserPage
                         ((MenuPageViewModel)(((MenuPage)PageTemplate.CurrentPage.Master).BindingContext)).ReloadUser();
                         await PageTemplate.CurrentPage.NavigateMainPageAsync();
                     }
+                });
+            }
+        }
+
+        public ICommand Navigate
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    await PageTemplate.CurrentPage.NavigateAsync(new UserCookerPage() { Title = AppResources.ResourceManager.GetString("lblCookerInfo") });
                 });
             }
         }

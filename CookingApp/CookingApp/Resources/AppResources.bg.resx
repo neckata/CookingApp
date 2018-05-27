@@ -225,4 +225,19 @@
   <data name="lblRecipesCanCook" xml:space="preserve">
     <value>Ястия, които мога да сготвя:</value>
   </data>
+  <data name="lblCookerInfo" xml:space="preserve">
+    <value>Данни за готвач</value>
+  </data>
+  <data name="lblCookersMenu" xml:space="preserve">
+    <value>Вход за готвачи</value>
+  </data>
+  <data name="lblForCookers" xml:space="preserve">
+    <value>За готвачи</value>
+  </data>
+  <data name="lblLogin" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="lblPassword" xml:space="preserve">
+    <value>Парола</value>
+  </data>
 </root>

@@ -9,6 +9,14 @@
             <StackLayout Orientation="Vertical" Margin="10">
                 <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
                     <StackLayout Orientation="Horizontal">
+                        <iconize:IconImage Icon="fa-briefcase" IconSize="26" IconColor="Black" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Margin="5,5,5,0"/>
+                        <Label Text="{i:Translate lblForCookers}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                    <Button Text="{i:Translate lblCookersMenu}" Command="{Binding Navigate}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Margin="0,0,0,5"/>
+                </StackLayout>
+
+                    <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
+                    <StackLayout Orientation="Horizontal">
                         <iconize:IconImage Icon="fa-user" IconSize="26" IconColor="Black" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Margin="5,5,5,0"/>
                         <Label Text="{i:Translate lblUserData}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
                     </StackLayout>
