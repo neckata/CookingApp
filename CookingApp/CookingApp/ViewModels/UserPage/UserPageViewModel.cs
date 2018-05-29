@@ -2,6 +2,7 @@
 using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.Resources;
+using CookingApp.Services;
 using CookingApp.ViewModels.MainPage;
 using CookingApp.Views.MainPage;
 using CookingApp.Views.UserPage;
@@ -14,13 +15,10 @@ namespace CookingApp.ViewModels.UserPage
     {
         public UserPageViewModel()
         {
-
-            UserDTO user = DataBase.Instance.Query<UserDTO>().First();
-            Name = user.Name;
-            Family = user.Family;
-            Phone = user.Phone;
-            Email = user.Email;
+            ReloadUser();
         }
+
+        private UserModel _model = new UserModel();
 
         public bool NameValidation { get; set; }
 
@@ -42,7 +40,7 @@ namespace CookingApp.ViewModels.UserPage
                 {
                     if (Validate())
                     {
-                        UserDTO user = DataBase.Instance.Query<UserDTO>().First();
+                        UserDTO user = _model.GetUser();
                         user.Name = Name;
                         user.Phone = Phone;
                         user.Email = Email;
@@ -106,6 +104,20 @@ namespace CookingApp.ViewModels.UserPage
             if (!ValidateEmail()) valid = false;
             if (!ValidateName()) valid = false;
             return valid;
+        }
+
+        public void ReloadUser()
+        {
+            UserDTO user = _model.GetUser();
+            Name = user.Name;
+            Family = user.Family;
+            Phone = user.Phone;
+            Email = user.Email;
+
+            OnPropertyChangedModel(nameof(Name));
+            OnPropertyChangedModel(nameof(Family));
+            OnPropertyChangedModel(nameof(Phone));
+            OnPropertyChangedModel(nameof(Email));
         }
     }
 }

@@ -43,6 +43,9 @@ namespace CookingApp.Models
         [Column(nameof(Description))]
         public string Description { get; set; }
 
+        [Column(nameof(Image))]
+        public string Image { get; set; }
+
         [Column(nameof(OrdersCount))]
         public int OrdersCount { get; set; }
 

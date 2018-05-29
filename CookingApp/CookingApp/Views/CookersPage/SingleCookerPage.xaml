@@ -15,7 +15,7 @@
                     <Label Text="{Binding Cooker.Description}" LineBreakMode="WordWrap" FontAttributes="Italic"/>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
-                        <rating:SfRating x:Name="rating" Value="{Binding Cooker.Rating}" ItemCount="5" ItemSize="24" Precision="Exact"/>
+                        <rating:SfRating Value="{Binding Cooker.Rating}" IsEnabled="False" ItemCount="5" ItemSize="24" Precision="Exact"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>

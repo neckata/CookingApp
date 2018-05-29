@@ -240,4 +240,7 @@
   <data name="lblPassword" xml:space="preserve">
     <value>Парола</value>
   </data>
+  <data name="lblLogout" xml:space="preserve">
+    <value>Изход</value>
+  </data>
 </root>

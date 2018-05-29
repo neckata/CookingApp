@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="Services\CookersModel.cs" />
     <Compile Include="Services\RecipesModel.cs" />
+    <Compile Include="Services\UserModel.cs" />
     <Compile Include="ViewModels\AddressesPage\AddressViewModel.cs" />
     <Compile Include="ViewModels\AddressesPage\AddressesPageViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\CookersPageViewModel.cs" />

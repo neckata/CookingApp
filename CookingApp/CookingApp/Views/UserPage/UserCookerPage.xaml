@@ -3,7 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
              xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+             xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
+             xmlns:converter="clr-namespace:CookingApp.Converters"
              x:Class="CookingApp.Views.UserPage.UserCookerPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:InvertBoolenConverter x:Key="InvertBoolenConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView BackgroundColor="{StaticResource Primary}">
             <StackLayout Orientation="Vertical" Margin="10">
@@ -16,19 +23,38 @@
                     <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
                         <Label Text="{i:Translate lblUserName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
                         <StackLayout BackgroundColor="Black">
-                            <Entry Text="{Binding UserName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" IsPassword="True"/>
+                            <Entry Text="{Binding UserName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
                         </StackLayout>
                     </StackLayout>
 
-                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5" IsVisible="{Binding IsUserLogged, Converter={StaticResource InvertBoolenConverter}}">
                         <Label Text="{i:Translate lblPassword}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
                         <StackLayout BackgroundColor="Black">
-                            <Entry Text="{Binding Password}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
+                            <Entry Text="{Binding Password}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" IsPassword="True"/>
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
 
-                <Button Text="{i:Translate lblLogin}" Command="{Binding Login}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="0,0,0,5"/>
+                <Button Text="{i:Translate lblLogin}" IsVisible="{Binding IsUserLogged, Converter={StaticResource InvertBoolenConverter}}" Command="{Binding Login}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" Margin="0,0,0,5"/>
+                <Button Text="{i:Translate lblLogout}" IsVisible="{Binding IsUserLogged}" Command="{Binding Logout}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" Margin="0,0,0,5"/>
+
+                <Image Source="{Binding Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
+                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                    <Editor Text="{Binding Description}" HeightRequest="100"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                        <rating:SfRating Value="{Binding Rating}" IsEnabled="False" ItemCount="5" ItemSize="24" Precision="Exact"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>
+                        <Label Text="{Binding OrdersCount}"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{i:Translate lblPricing}" FontAttributes="Bold"/>
+                        <Entry Text="{Binding HoursPricing}" VerticalOptions="StartAndExpand" WidthRequest="40"/>
+                        <Label Text="{i:Translate lblLeva}"/>
+                    </StackLayout>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
