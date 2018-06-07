@@ -202,7 +202,7 @@
     <value>Фамилно Име</value>
   </data>
   <data name="lblUserName" xml:space="preserve">
-    <value>Име</value>
+    <value>Псевдоним</value>
   </data>
   <data name="lblAddressName" xml:space="preserve">
     <value>Име на адреса</value>
@@ -242,5 +242,11 @@
   </data>
   <data name="lblLogout" xml:space="preserve">
     <value>Изход</value>
+  </data>
+  <data name="lblChangePicture" xml:space="preserve">
+    <value>Смяна на снимката</value>
+  </data>
+  <data name="lblName" xml:space="preserve">
+    <value>Име</value>
   </data>
 </root>

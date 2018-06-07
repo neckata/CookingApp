@@ -38,6 +38,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ExpandableEditor.cs" />
     <Compile Include="Controls\RepeaterView.cs" />
     <Compile Include="Converters\InverseBoolenConverter.cs" />
     <Compile Include="Enums\PageNavigateEnums.cs" />

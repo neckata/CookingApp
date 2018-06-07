@@ -2,9 +2,11 @@
 using CookingApp.Services;
 using CookingApp.ViewModels.MainPage;
 using CookingApp.Views.MainPage;
-using System.Linq;
+using CookingApp.Helpers;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Acr.UserDialogs;
+using CookingApp.Resources;
 
 namespace CookingApp.ViewModels.UserPage
 {
@@ -30,6 +32,8 @@ namespace CookingApp.ViewModels.UserPage
         public double HoursPricing { get; set; }
 
         public double Rating { get; set; }
+
+        public int OrdersCount { get; set; }
 
         public string Image { get; set; }
 
@@ -75,6 +79,32 @@ namespace CookingApp.ViewModels.UserPage
             }
         }
 
+        public ICommand Save
+        {
+            get
+            {
+                return new Command(async() =>
+                {
+                    UserDTO user = _model.GetUser();
+                    user.Description = Description;
+                    user.HoursPricing = HoursPricing;
+                    DataBase.Instance.Update(user);
+                    await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
+                });
+            }
+        }
+
+        public ICommand ChangePicture
+        {
+            get
+            {
+                return new Command(() =>
+                {
+
+                });
+            }
+        }
+
         private void ReloadUser()
         {
             UserDTO user = _model.GetUser();
@@ -83,7 +113,9 @@ namespace CookingApp.ViewModels.UserPage
             Image = user.Image;
             Description = user.Description;
             Rating = user.Rating;
+            OrdersCount = user.OrdersCount;
             OnPropertyChangedModel(nameof(IsWorking));
+            OnPropertyChangedModel(nameof(OrdersCount));
             OnPropertyChangedModel(nameof(Rating));
             OnPropertyChangedModel(nameof(HoursPricing));
             OnPropertyChangedModel(nameof(Image));

@@ -5,6 +5,7 @@
              xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
              xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
              xmlns:converter="clr-namespace:CookingApp.Converters"
+             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
              x:Class="CookingApp.Views.UserPage.UserCookerPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -23,14 +24,14 @@
                     <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
                         <Label Text="{i:Translate lblUserName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
                         <StackLayout BackgroundColor="Black">
-                            <Entry Text="{Binding UserName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
+                            <Entry Text="{Binding UserName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" IsEnabled="{Binding IsUserLogged, Converter={StaticResource InvertBoolenConverter}}"/>
                         </StackLayout>
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5" IsVisible="{Binding IsUserLogged, Converter={StaticResource InvertBoolenConverter}}">
                         <Label Text="{i:Translate lblPassword}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="20"/>
                         <StackLayout BackgroundColor="Black">
-                            <Entry Text="{Binding Password}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" IsPassword="True"/>
+                            <Entry Text="{Binding Password}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" IsPassword="True" IsEnabled="{Binding IsUserLogged, Converter={StaticResource InvertBoolenConverter}}"/>
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
@@ -38,9 +39,11 @@
                 <Button Text="{i:Translate lblLogin}" IsVisible="{Binding IsUserLogged, Converter={StaticResource InvertBoolenConverter}}" Command="{Binding Login}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" Margin="0,0,0,5"/>
                 <Button Text="{i:Translate lblLogout}" IsVisible="{Binding IsUserLogged}" Command="{Binding Logout}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" Margin="0,0,0,5"/>
 
-                <Image Source="{Binding Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
-                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
-                    <Editor Text="{Binding Description}" HeightRequest="100"/>
+                <Image Source="{Binding Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0" IsVisible="{Binding IsUserLogged}"/>
+                <Button Text="{i:Translate lblChangePicture}" IsVisible="{Binding IsUserLogged}" Command="{Binding ChangePicture}" 
+                        BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" IsVisible="{Binding IsUserLogged}">
+                    <controls:ExpandableEditor Text="{Binding Description}"/>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
                         <rating:SfRating Value="{Binding Rating}" IsEnabled="False" ItemCount="5" ItemSize="24" Precision="Exact"/>
@@ -50,11 +53,13 @@
                         <Label Text="{Binding OrdersCount}"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="{i:Translate lblPricing}" FontAttributes="Bold"/>
-                        <Entry Text="{Binding HoursPricing}" VerticalOptions="StartAndExpand" WidthRequest="40"/>
-                        <Label Text="{i:Translate lblLeva}"/>
+                        <Label Text="{i:Translate lblPricing}" FontAttributes="Bold" VerticalOptions="EndAndExpand"/>
+                        <Entry Text="{Binding HoursPricing}" VerticalOptions="StartAndExpand" WidthRequest="40" Keyboard="Numeric" />
+                        <Label Text="{i:Translate lblLeva}" VerticalOptions="EndAndExpand"/>
                     </StackLayout>
                 </StackLayout>
+                <Button Text="{i:Translate lblSave}" IsVisible="{Binding IsUserLogged}" Command="{Binding Save}" 
+                        BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
