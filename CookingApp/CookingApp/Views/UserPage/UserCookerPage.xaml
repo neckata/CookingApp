@@ -48,14 +48,14 @@
                         <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
                         <rating:SfRating Value="{Binding Rating}" IsEnabled="False" ItemCount="5" ItemSize="24" Precision="Exact"/>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
                         <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>
-                        <Label Text="{Binding OrdersCount}"/>
+                        <Label Text="{Binding OrdersCount}" VerticalOptions="CenterAndExpand"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="{i:Translate lblPricing}" FontAttributes="Bold" VerticalOptions="EndAndExpand"/>
-                        <Entry Text="{Binding HoursPricing}" VerticalOptions="StartAndExpand" WidthRequest="40" Keyboard="Numeric" />
-                        <Label Text="{i:Translate lblLeva}" VerticalOptions="EndAndExpand"/>
+                        <Label Text="{i:Translate lblPricing}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"/>
+                        <Entry Text="{Binding HoursPricing}" VerticalOptions="StartAndExpand" WidthRequest="50" Keyboard="Numeric" />
+                        <Label Text="{i:Translate lblLeva}" VerticalOptions="CenterAndExpand"/>
                     </StackLayout>
                 </StackLayout>
                 <Button Text="{i:Translate lblSave}" IsVisible="{Binding IsUserLogged}" Command="{Binding Save}" 

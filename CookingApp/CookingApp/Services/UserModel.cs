@@ -38,6 +38,7 @@ namespace CookingApp.Services
         {
             UserDTO user = GetUser();
             user.UserType = Enums.UserTypesEnum.Client;
+            DataBase.Instance.Update(user);
             return true;
         }
 

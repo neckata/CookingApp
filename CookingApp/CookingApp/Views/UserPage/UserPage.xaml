@@ -8,9 +8,9 @@
         <ScrollView BackgroundColor="{StaticResource Primary}">
             <StackLayout Orientation="Vertical" Margin="10">
                 <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <iconize:IconImage Icon="fa-briefcase" IconSize="26" IconColor="Black" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Margin="5,5,0,5"/>
-                        <Button Text="{i:Translate lblForCookers}" Command="{Binding Navigate}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" Margin="0,5,5,5" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="0">
+                        <iconize:IconImage Icon="fa-briefcase" IconSize="26" IconColor="Black" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Margin="5"/>
+                        <Button Text="{i:Translate lblForCookers}" Command="{Binding Navigate}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" Margin="5" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
                     </StackLayout>
                 </StackLayout>
 
