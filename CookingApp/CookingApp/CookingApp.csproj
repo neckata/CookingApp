@@ -101,6 +101,8 @@
     <Compile Include="ViewModels\RecipesPage\RecipesPageViewModel.cs" />
     <Compile Include="ViewModels\RecipesPage\RecipeViewModel.cs" />
     <Compile Include="ViewModels\RecipesPage\SingleRecipeViewModel.cs" />
+    <Compile Include="ViewModels\UserPage\CuisineTypeViewModel.cs" />
+    <Compile Include="ViewModels\UserPage\CuisineViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserCookerPageViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
     <Compile Include="Views\AddressesPage\AddressesPage.xaml.cs">

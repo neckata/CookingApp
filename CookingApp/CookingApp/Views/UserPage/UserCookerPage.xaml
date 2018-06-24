@@ -39,10 +39,12 @@
                 <Button Text="{i:Translate lblLogin}" IsVisible="{Binding IsUserLogged, Converter={StaticResource InvertBoolenConverter}}" Command="{Binding Login}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" Margin="0,0,0,5"/>
                 <Button Text="{i:Translate lblLogout}" IsVisible="{Binding IsUserLogged}" Command="{Binding Logout}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" Margin="0,0,0,5"/>
 
-                <Image Source="{Binding Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0" IsVisible="{Binding IsUserLogged}"/>
-                <Button Text="{i:Translate lblChangePicture}" IsVisible="{Binding IsUserLogged}" Command="{Binding ChangePicture}" 
+                <StackLayout Orientation="Vertical" IsVisible="{Binding IsUserLogged}">
+                
+                <Image Source="{Binding Image}" VerticalOptions="StartAndExpand" WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
+                <Button Text="{i:Translate lblChangePicture}" Command="{Binding ChangePicture}" 
                         BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
-                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" IsVisible="{Binding IsUserLogged}">
+                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
                     <controls:ExpandableEditor Text="{Binding Description}"/>
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
@@ -58,8 +60,32 @@
                         <Label Text="{i:Translate lblLeva}" VerticalOptions="CenterAndExpand"/>
                     </StackLayout>
                 </StackLayout>
-                <Button Text="{i:Translate lblSave}" IsVisible="{Binding IsUserLogged}" Command="{Binding Save}" 
-                        BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                
+                <Label Text="{i:Translate lblCuisine}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"/>
+                <controls:RepeaterView ItemsSource="{Binding CuisineTypes,Mode=TwoWay}">
+                    <controls:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
+                                <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
+                                    <Label Text="{Binding Description}"/>
+                                    <controls:RepeaterView ItemsSource="{Binding Cuisines,Mode=TwoWay}">
+                                        <controls:RepeaterView.ItemTemplate>
+                                            <DataTemplate>
+                                                    <StackLayout Orientation="Horizontal">
+                                                        <Switch IsToggled="{Binding IsSelected}"></Switch>
+                                                        <Label Text="{Binding Description}"/>
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                        </controls:RepeaterView.ItemTemplate>
+                                    </controls:RepeaterView>
+                                </StackLayout>
+                            </StackLayout>
+                        </DataTemplate>
+                    </controls:RepeaterView.ItemTemplate>
+                </controls:RepeaterView>
+
+                <Button Text="{i:Translate lblSave}" Command="{Binding Save}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

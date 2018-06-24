@@ -232,7 +232,7 @@
     <value>Вход за готвачи</value>
   </data>
   <data name="lblForCookers" xml:space="preserve">
-    <value>За готвачи</value>
+    <value>Вход за готвачи</value>
   </data>
   <data name="lblLogin" xml:space="preserve">
     <value>Вход</value>
@@ -248,5 +248,8 @@
   </data>
   <data name="lblName" xml:space="preserve">
     <value>Име</value>
+  </data>
+  <data name="lblCuisine" xml:space="preserve">
+    <value>Опит в типове кухни :</value>
   </data>
 </root>

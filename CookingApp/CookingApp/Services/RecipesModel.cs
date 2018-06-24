@@ -1,4 +1,5 @@
 ﻿using CookingApp.Enums;
+using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.ViewModels.RecipesPage;
 using System.Collections.Generic;
@@ -6,68 +7,15 @@ using System.Collections.Generic;
 namespace CookingApp.Services
 {
     public class RecipesModel
-    {
-        public List<CuisineDTO> GetAllCuisinesTypes()
+    { 
+        public List<CuisineDTO> GetCuisines(CuisineTypeEnums type)
         {
-            List<CuisineDTO> data = new List<CuisineDTO>()
-            {
-                new CuisineDTO(){Code="VEGAN",Description="Веганска Кухня"},
-                new CuisineDTO(){Code="VEGE",Description="Вегетариански Ястия"},
-                new CuisineDTO(){Code="DIETIC",Description="Диетична Кухня"}
-            };
-
-            return data;
-        }
-
-
-        public List<CuisineDTO> GetAllCuisinesCountries()
-        {
-            List<CuisineDTO> data = new List<CuisineDTO>()
-            {
-                new CuisineDTO(){Code="AVST",Description="Австралийска Кухня"},
-                new CuisineDTO(){Code="AU",Description="Австрийска Кухня"},
-                new CuisineDTO(){Code="ALB",Description="Албанска Кухня"}
-            };
-
-            return data;
-        }
-
-        public List<CuisineDTO> GetAllCuisinesCookingType()
-        {
-            List<CuisineDTO> data = new List<CuisineDTO>()
-            {
-                new CuisineDTO(){Code="NOCOOK",Description="Без Термична Обработка"},
-                new CuisineDTO(){Code="BALAN",Description="Ястия за Бланширане"},
-                new CuisineDTO(){Code="VAREN",Description="Ястия за Варене"}
-            };
-
-            return data;
-        }
-
-        public List<CuisineDTO> GetAllCuisinesSeasons()
-        {
-            List<CuisineDTO> data = new List<CuisineDTO>()
-            {
-                new CuisineDTO(){Code="AUTUMN",Description="Есенни Ястия"},
-                new CuisineDTO(){Code="WINTER",Description="Зимни Ястия"},
-                new CuisineDTO(){Code="SRPING",Description="Пролетни Ястия"},
-                 new CuisineDTO(){Code="SUMMER",Description="Летни Ястия"}
-            };
-
-            return data;
+            return new List<CuisineDTO>(DataBase.Instance.Query<CuisineDTO>().Where(x => x.CuisineTypeCode == type));
         }
 
         public List<CuisineFilterDTO> GetCuisineFilters()
         {
-            List<CuisineFilterDTO> data = new List<CuisineFilterDTO>()
-            {
-                new CuisineFilterDTO(){Code=CuisineTypeEnums.Type,Description = "Тип Кухня"},
-                new CuisineFilterDTO(){Code=CuisineTypeEnums.Country,Description = "Интернационална Кухня"},
-                new CuisineFilterDTO(){Code=CuisineTypeEnums.CookingType,Description = "Начин на обработка"},
-                new CuisineFilterDTO(){Code=CuisineTypeEnums.Season,Description = "Сезонна Кухня"}
-            };
-
-            return data;
+            return new List<CuisineFilterDTO>(DataBase.Instance.Query<CuisineFilterDTO>());
         }
 
         public List<RecipeViewModel> GetAllRecipes(string cuisineCode)

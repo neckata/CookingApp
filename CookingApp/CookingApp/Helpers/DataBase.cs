@@ -17,6 +17,7 @@ namespace CookingApp.Helpers
             service = DependencyService.Get<IFileHelper>();
             _connection = new SQLiteConnection(service.GetLocalFilePath("cooking.db"));
             CreateTables();
+           
         }
 
         public static DataBase Instance
@@ -80,6 +81,7 @@ namespace CookingApp.Helpers
             _connection.CreateTable<NotificationDTO>();
             _connection.CreateTable<CuisineDTO>();
             _connection.CreateTable<ChatDTO>();
+            _connection.CreateTable<CuisineFilterDTO>();
         }
     }
 }

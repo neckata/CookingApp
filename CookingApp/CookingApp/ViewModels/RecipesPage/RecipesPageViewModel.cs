@@ -1,5 +1,4 @@
-﻿using CookingApp.Enums;
-using CookingApp.Models;
+﻿using CookingApp.Models;
 using CookingApp.Services;
 using CookingApp.ViewModels.MainPage;
 using CookingApp.Views.MainPage;
@@ -34,30 +33,7 @@ namespace CookingApp.ViewModels.RecipesPage
 
         public void FillCuisineFilters()
         {
-            switch (SelectedCuisineFilter.Code)
-            {
-                case (CuisineTypeEnums.Type):
-                    {
-                        Cuisines = _model.GetAllCuisinesTypes();
-                        break;
-                    }
-                case (CuisineTypeEnums.Country):
-                    {
-                        Cuisines = _model.GetAllCuisinesCountries();
-                        break;
-                    }
-                case (CuisineTypeEnums.CookingType):
-                    {
-                        Cuisines = _model.GetAllCuisinesCookingType();
-                        break;
-                    }
-                case (CuisineTypeEnums.Season):
-                    {
-                        Cuisines = _model.GetAllCuisinesSeasons();
-                        break;
-                    }
-            }
-
+            Cuisines = _model.GetCuisines(SelectedCuisineFilter.Code);
             OnPropertyChangedModel(nameof(Cuisines));
             Recipes = new List<RecipeViewModel>();
             OnPropertyChangedModel(nameof(Recipes));

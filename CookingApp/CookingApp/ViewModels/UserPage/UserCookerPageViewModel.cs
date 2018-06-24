@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Acr.UserDialogs;
 using CookingApp.Resources;
+using System.Collections.ObjectModel;
 
 namespace CookingApp.ViewModels.UserPage
 {
@@ -38,6 +39,8 @@ namespace CookingApp.ViewModels.UserPage
         public string Image { get; set; }
 
         public bool IsUserLogged { get; set; }
+
+        public ObservableCollection<CuisineTypeViewModel> CuisineTypes { get; set; }
 
         public ICommand Login
         {
@@ -114,6 +117,10 @@ namespace CookingApp.ViewModels.UserPage
             Description = user.Description;
             Rating = user.Rating;
             OrdersCount = user.OrdersCount;
+
+            CuisineTypes = new ObservableCollection<CuisineTypeViewModel>(_model.GetUserCuisineTypes());
+
+            OnPropertyChangedModel(nameof(CuisineTypes));
             OnPropertyChangedModel(nameof(IsWorking));
             OnPropertyChangedModel(nameof(OrdersCount));
             OnPropertyChangedModel(nameof(Rating));
