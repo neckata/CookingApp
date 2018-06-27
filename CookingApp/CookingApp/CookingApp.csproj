@@ -51,6 +51,7 @@
     <Compile Include="Interfaces\ICloseProgram.cs" />
     <Compile Include="Interfaces\IFileHelper.cs" />
     <Compile Include="Interfaces\IDevice.cs" />
+    <Compile Include="Models\CuisineSelectedDTO.cs" />
     <Compile Include="Models\CuisineFilterDTO.cs" />
     <Compile Include="Models\RecipeDTO.cs" />
     <Compile Include="Models\CookerCuisineDTO.cs" />

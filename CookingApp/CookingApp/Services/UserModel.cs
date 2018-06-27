@@ -30,15 +30,16 @@ namespace CookingApp.Services
                 Rating = 4
             };
 
-            List<CuisineDTO> userCuisines = new List<CuisineDTO>() {new CuisineDTO() { Code = "VEGAN" }, new CuisineDTO() { Code = "DIETIC" } , new CuisineDTO() { Code = "AU" }, new CuisineDTO() { Code = "NOCOOK" },
-              new CuisineDTO() { Code = "VAREN" }, new CuisineDTO() { Code = "WINTER" }, new CuisineDTO() { Code = "SUMMER" }};
+            List<CuisineSelectedDTO> userCuisines = new List<CuisineSelectedDTO>()
+            {
+                new CuisineSelectedDTO() { Code = "VEGAN" }, new CuisineSelectedDTO() { Code = "DIETIC" } ,  new CuisineSelectedDTO() { Code = "WINTER" },
+                new CuisineSelectedDTO() { Code = "AU" }, new CuisineSelectedDTO() { Code = "NOCOOK" }, new CuisineSelectedDTO() { Code = "VAREN" }, new CuisineSelectedDTO() { Code = "SUMMER" }
+            };
+
+            ClearUserCuisines();
 
             foreach (var item in userCuisines)
-            {
-                var cuisine = DataBase.Instance.Query<CuisineDTO>().Single(x => x.Code == item.Code);
-                cuisine.IsSelected = true;
-                DataBase.Instance.Update(cuisine);
-            }
+                DataBase.Instance.Add(item);
 
             UserDTO user = GetUser();
             user.UserType = Enums.UserTypesEnum.Cooker;
@@ -63,14 +64,15 @@ namespace CookingApp.Services
             UserDTO user = GetUser();
             user.UserType = Enums.UserTypesEnum.Client;
             DataBase.Instance.Update(user);
-
-            foreach(var item in DataBase.Instance.Query<CuisineDTO>())
-            {
-                item.IsSelected = false;
-                DataBase.Instance.Update(item);
-            }
-
+            ClearUserCuisines();
             return true;
+        }
+
+        public void ClearUserCuisines()
+        {
+            var cuisines = DataBase.Instance.Query<CuisineSelectedDTO>();
+            foreach (var item in cuisines)
+                DataBase.Instance.Delete<CuisineSelectedDTO>(item.Code);
         }
 
         public UserDTO GetUser()
@@ -85,7 +87,12 @@ namespace CookingApp.Services
             {
                 var cuisineType = new CuisineTypeViewModel() { Description = item.Description, Code = item.Code };
                 foreach (var item2 in DataBase.Instance.Query<CuisineDTO>().Where(x => x.CuisineTypeCode == item.Code))
-                    cuisineType.Cuisines.Add(new CuisineViewModel() { Code = item2.Code, Description = item2.Description, IsSelected = item2.IsSelected });
+                    cuisineType.Cuisines.Add(new CuisineViewModel()
+                    {
+                        Code = item2.Code,
+                        Description = item2.Description,
+                        IsSelected = DataBase.Instance.Query<CuisineSelectedDTO>().SingleOrDefault(x => x.Code == item2.Code) != null
+                    });
                 data.Add(cuisineType);
             }
 

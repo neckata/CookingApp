@@ -82,6 +82,7 @@ namespace CookingApp.Helpers
             _connection.CreateTable<CuisineDTO>();
             _connection.CreateTable<ChatDTO>();
             _connection.CreateTable<CuisineFilterDTO>();
+            _connection.CreateTable<CuisineSelectedDTO>();
         }
     }
 }

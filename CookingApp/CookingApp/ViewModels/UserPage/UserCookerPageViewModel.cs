@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Acr.UserDialogs;
 using CookingApp.Resources;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace CookingApp.ViewModels.UserPage
 {
@@ -92,6 +93,14 @@ namespace CookingApp.ViewModels.UserPage
                     user.Description = Description;
                     user.HoursPricing = HoursPricing;
                     DataBase.Instance.Update(user);
+
+                    _model.ClearUserCuisines();
+                    foreach(var item in CuisineTypes)
+                    {
+                        foreach (var item2 in item.Cuisines.Where(x => x.IsSelected))
+                            DataBase.Instance.Add(new CuisineSelectedDTO() { Code=item2.Code});
+                    }
+
                     await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
                 });
             }

@@ -3,6 +3,7 @@ using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.Views.MainPage;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -35,6 +36,14 @@ namespace CookingApp.ViewModels.MainPage
 
         public void LoadNomenclatures()
         {
+            var selectedCuisines = DataBase.Instance.Query<CuisineSelectedDTO>().ToList();
+
+            foreach (var item in DataBase.Instance.Query<CuisineFilterDTO>())
+                DataBase.Instance.Delete<CuisineFilterDTO>(item.Code);
+
+            foreach (var item in DataBase.Instance.Query<CuisineDTO>())
+                DataBase.Instance.Delete<CuisineDTO>(item.Code);
+
             List<CuisineFilterDTO> cuisineFilterDTOs = new List<CuisineFilterDTO>()
             {
                 new CuisineFilterDTO(){Code=CuisineTypeEnums.Type,Description = "Тип Кухня"},
@@ -64,7 +73,19 @@ namespace CookingApp.ViewModels.MainPage
             };
 
             foreach (var item in cuisineDTOs)
+            {
                 DataBase.Instance.Add(item);
+
+                for (int i = 0; i < selectedCuisines.Count; i++)
+                    if (selectedCuisines[i].Code == item.Code)
+                    {
+                        selectedCuisines.Remove(selectedCuisines[0]);
+                        i--;
+                    }
+            }
+
+            foreach (var item in selectedCuisines)
+                DataBase.Instance.Delete<CuisineSelectedDTO>(item.Code);
         }
     }
 }

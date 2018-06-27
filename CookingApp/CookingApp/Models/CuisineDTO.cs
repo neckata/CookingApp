@@ -13,9 +13,6 @@ namespace CookingApp.Models
         [Column(nameof(CuisineTypeCode))]
         public CuisineTypeEnums CuisineTypeCode { get; set; }
 
-        [Column(nameof(IsSelected))]
-        public bool IsSelected { get; set; }
-
         [Column(nameof(Description))]
         public string Description { get; set; }
     }

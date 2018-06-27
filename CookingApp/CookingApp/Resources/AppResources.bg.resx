@@ -223,7 +223,7 @@
     <value>Улица</value>
   </data>
   <data name="lblRecipesCanCook" xml:space="preserve">
-    <value>Ястия, които мога да сготвя:</value>
+    <value>Специалитети, които мога да сготвя:</value>
   </data>
   <data name="lblCookerInfo" xml:space="preserve">
     <value>Данни за готвач</value>
@@ -250,6 +250,6 @@
     <value>Име</value>
   </data>
   <data name="lblCuisine" xml:space="preserve">
-    <value>Опит в типове кухни :</value>
+    <value>Опит в кухни :</value>
   </data>
 </root>

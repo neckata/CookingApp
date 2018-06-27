@@ -10,7 +10,7 @@
                 <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Padding="0">
                         <iconize:IconImage Icon="fa-briefcase" IconSize="26" IconColor="Black" HorizontalOptions="Start" VerticalOptions="CenterAndExpand" Margin="5"/>
-                        <Button Text="{i:Translate lblForCookers}" Command="{Binding Navigate}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" Margin="5" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                        <Button Text="{i:Translate lblForCookers}" Command="{Binding Navigate}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" Margin="5" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
                     </StackLayout>
                 </StackLayout>
 

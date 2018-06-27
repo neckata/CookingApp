@@ -40,51 +40,62 @@
                 <Button Text="{i:Translate lblLogout}" IsVisible="{Binding IsUserLogged}" Command="{Binding Logout}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" Margin="0,0,0,5"/>
 
                 <StackLayout Orientation="Vertical" IsVisible="{Binding IsUserLogged}">
-                
-                <Image Source="{Binding Image}" VerticalOptions="StartAndExpand" WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
-                <Button Text="{i:Translate lblChangePicture}" Command="{Binding ChangePicture}" 
+
+                    <Image Source="{Binding Image}" VerticalOptions="StartAndExpand" WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
+                    <Button Text="{i:Translate lblChangePicture}" Command="{Binding ChangePicture}" 
                         BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
-                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
-                    <controls:ExpandableEditor Text="{Binding Description}"/>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
-                        <rating:SfRating Value="{Binding Rating}" IsEnabled="False" ItemCount="5" ItemSize="24" Precision="Exact"/>
+                    <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                        <controls:ExpandableEditor Text="{Binding Description}"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                            <rating:SfRating Value="{Binding Rating}" IsEnabled="False" ItemCount="5" ItemSize="24" Precision="Exact"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
+                            <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>
+                            <Label Text="{Binding OrdersCount}" VerticalOptions="CenterAndExpand"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{i:Translate lblPricing}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"/>
+                            <Entry Text="{Binding HoursPricing}" VerticalOptions="StartAndExpand" WidthRequest="50" Keyboard="Numeric" />
+                            <Label Text="{i:Translate lblLeva}" VerticalOptions="CenterAndExpand"/>
+                        </StackLayout>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal" Margin="0,10,0,0">
-                        <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>
-                        <Label Text="{Binding OrdersCount}" VerticalOptions="CenterAndExpand"/>
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{i:Translate lblPricing}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"/>
-                        <Entry Text="{Binding HoursPricing}" VerticalOptions="StartAndExpand" WidthRequest="50" Keyboard="Numeric" />
-                        <Label Text="{i:Translate lblLeva}" VerticalOptions="CenterAndExpand"/>
-                    </StackLayout>
-                </StackLayout>
-                
-                <Label Text="{i:Translate lblCuisine}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"/>
-                <controls:RepeaterView ItemsSource="{Binding CuisineTypes,Mode=TwoWay}">
-                    <controls:RepeaterView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
-                                <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
-                                    <Label Text="{Binding Description}"/>
-                                    <controls:RepeaterView ItemsSource="{Binding Cuisines,Mode=TwoWay}">
-                                        <controls:RepeaterView.ItemTemplate>
-                                            <DataTemplate>
+
+                    <Label Text="{i:Translate lblCuisine}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"/>
+                    <controls:RepeaterView ItemsSource="{Binding CuisineTypes,Mode=TwoWay}">
+                        <controls:RepeaterView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
+                                    <StackLayout Orientation="Vertical">
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ChangeVisibility}"/>
+                                            </StackLayout.GestureRecognizers>
+                                            <Label Text="{Binding Description}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
+                                            <iconize:IconImage Icon="fa-arrow-up" IsVisible="{Binding IsVisible}" HorizontalOptions="EndAndExpand" IconSize="20" Margin="5"/>
+                                            <iconize:IconImage Icon="fa-arrow-down" IsVisible="{Binding IsVisible, Converter={StaticResource InvertBoolenConverter}}" HorizontalOptions="EndAndExpand" IconSize="20" Margin="5"/>
+                                        </StackLayout>
+                                        <controls:RepeaterView ItemsSource="{Binding Cuisines,Mode=TwoWay}" BackgroundColor="White" Margin="5" Padding="5" IsVisible="{Binding IsVisible}">
+                                            <controls:RepeaterView.ItemTemplate>
+                                                <DataTemplate>
                                                     <StackLayout Orientation="Horizontal">
-                                                        <Switch IsToggled="{Binding IsSelected}"></Switch>
-                                                        <Label Text="{Binding Description}"/>
+                                                        <Switch IsToggled="{Binding IsSelected}"/>
+                                                        <Label Text="{Binding Description}">
+                                                            <Label.GestureRecognizers>
+                                                                <TapGestureRecognizer Command="{Binding ChangeIsSelected}"/>
+                                                            </Label.GestureRecognizers>
+                                                        </Label>
                                                     </StackLayout>
                                                 </DataTemplate>
-                                        </controls:RepeaterView.ItemTemplate>
-                                    </controls:RepeaterView>
+                                            </controls:RepeaterView.ItemTemplate>
+                                        </controls:RepeaterView>
+                                    </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
-                        </DataTemplate>
-                    </controls:RepeaterView.ItemTemplate>
-                </controls:RepeaterView>
+                            </DataTemplate>
+                        </controls:RepeaterView.ItemTemplate>
+                    </controls:RepeaterView>
 
-                <Button Text="{i:Translate lblSave}" Command="{Binding Save}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                    <Button Text="{i:Translate lblSave}" Command="{Binding Save}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>
