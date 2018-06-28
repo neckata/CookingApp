@@ -5,7 +5,7 @@ namespace CookingApp.Models
     [Table("ADDRESSTABLE")]
     public class AddressesDTO
     {
-        [PrimaryKey,AutoIncrement]
+        [PrimaryKey, AutoIncrement]
         [Column(nameof(ID))]
         public int ID { get; set; }
 
