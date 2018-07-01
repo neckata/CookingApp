@@ -1,7 +1,12 @@
-﻿using CookingApp.Models;
+﻿using CookingApp.Enums;
+using CookingApp.Helpers;
+using CookingApp.Models;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.RecipesPage;
+using CookingApp.ViewModels.UserPage;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace CookingApp.Services
 {
@@ -29,11 +34,11 @@ namespace CookingApp.Services
         {
             List<RecipeDTO> data = new List<RecipeDTO>()
             {
-                new RecipeDTO(){ID=1,Title="Ягодова Панакота",Image="http://recepti.gotvach.bg/files/lib/600x350/starawberry-pannacotta.jpg"},
-                new RecipeDTO(){ID=2,Title="Домати Конкасе",Image="http://recepti.gotvach.bg/files/lib/600x350/sandvichi_domati_new.jpg"},
-                new RecipeDTO(){ID=3,Title="Крем карамел",Image="http://recepti.gotvach.bg/files/lib/600x350/krem4.jpg"},
-                new RecipeDTO(){ID=4,Title="Айс Кола",Image="http://recepti.gotvach.bg/files/lib/600x350/icecola.jpg"},
-                new RecipeDTO(){ID=5,Title="Постни Вегански Хапки",Image="http://recepti.gotvach.bg/files/lib/600x350/postni-vegan-hapki-basil2.JPG"}
+                new RecipeDTO(){ID=1,Title="Ягодова Панакота",Image="http://recepti.gotvach.bg/files/lib/600x350/starawberry-pannacotta.jpg",TimeToCook=8,Portions=6},
+                new RecipeDTO(){ID=2,Title="Домати Конкасе",Image="http://recepti.gotvach.bg/files/lib/600x350/sandvichi_domati_new.jpg",TimeToCook=45,Portions=4},
+                new RecipeDTO(){ID=3,Title="Крем карамел",Image="http://recepti.gotvach.bg/files/lib/600x350/krem4.jpg",TimeToCook=75,Portions=8},
+                new RecipeDTO(){ID=4,Title="Айс Кола",Image="http://recepti.gotvach.bg/files/lib/600x350/icecola.jpg",TimeToCook=5,Portions=2},
+                new RecipeDTO(){ID=5,Title="Постни Вегански Хапки",Image="http://recepti.gotvach.bg/files/lib/600x350/postni-vegan-hapki-basil2.JPG",TimeToCook=20,Portions=7}
             };
 
             List<RecipeViewModel> recipes = new List<RecipeViewModel>();
@@ -41,6 +46,31 @@ namespace CookingApp.Services
                 recipes.Add(new RecipeViewModel() { ID = item.ID, Image = item.Image, TimeToCook = item.TimeToCook, Title = item.Title, Portions = item.Portions });
 
             return recipes;
+        }
+
+        public ObservableCollection<CuisineTypeViewModel> GetCookerCuisisnes(int cookerID)
+        {
+            List<CuisineDTO> data = new List<CuisineDTO>()
+            {
+                 new CuisineDTO{Code="VEGAN"}, new CuisineDTO{Code="DIETIC"}, new CuisineDTO{Code="AVST"},
+                 new CuisineDTO{Code="AU"},new CuisineDTO{Code="NOCOOK"}, new CuisineDTO{Code="AUTUMN"}, new CuisineDTO{Code="WINTER"},
+            };
+
+            var cuisines = DataBase.Instance.Query<CuisineFilterDTO>();
+            var cuisinesTypes = DataBase.Instance.Query<CuisineDTO>();
+
+            ObservableCollection<CuisineTypeViewModel> list = new ObservableCollection<CuisineTypeViewModel>();
+
+            foreach (var item in cuisines)
+                list.Add(new CuisineTypeViewModel() { Code = item.Code, Description = item.Description, Cuisines = new List<CuisineViewModel>()});
+
+            foreach (var item in data)
+            {
+                var cuisineType = cuisinesTypes.Single(x => x.Code == item.Code);
+                list.Single(x => x.Code == cuisineType.CuisineTypeCode).Cuisines.Add(new CuisineViewModel { Description = cuisineType.Description });
+            }
+
+            return new ObservableCollection<CuisineTypeViewModel>(list.Where(x => x.Cuisines.Count > 0));
         }
     }
 }
