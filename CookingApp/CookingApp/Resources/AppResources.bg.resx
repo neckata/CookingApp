@@ -258,4 +258,31 @@
   <data name="lblOrder" xml:space="preserve">
     <value>Поръчай ме</value>
   </data>
+  <data name="lblDate" xml:space="preserve">
+    <value>Дата</value>
+  </data>
+  <data name="lblDateOrder" xml:space="preserve">
+    <value>За кога е поръчката ?</value>
+  </data>
+  <data name="lblOrderSuccess" xml:space="preserve">
+    <value>Успешно запитване за порръчане на готвач</value>
+  </data>
+  <data name="lblPlaceOrder" xml:space="preserve">
+    <value>За къде е поръчката ?</value>
+  </data>
+  <data name="lblProductsIncluded" xml:space="preserve">
+    <value>Включени продукти</value>
+  </data>
+  <data name="lblSelectAddress" xml:space="preserve">
+    <value>Изберете адрес</value>
+  </data>
+  <data name="lblTime" xml:space="preserve">
+    <value>Час</value>
+  </data>
+  <data name="lblUserSpecific" xml:space="preserve">
+    <value>Данни за поръчителя</value>
+  </data>
+  <data name="newAddress" xml:space="preserve">
+    <value>Нов Адрес</value>
+  </data>
 </root>

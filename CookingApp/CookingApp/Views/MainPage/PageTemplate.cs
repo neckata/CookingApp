@@ -61,6 +61,16 @@ namespace CookingApp.Views.MainPage
             DisposeNavigation();
         }
 
+        public async Task NavigateBack()
+        {
+            if (IsNavigating)
+                return;
+            IsNavigating = true;
+
+            await Detail.Navigation.PopAsync();
+            DisposeNavigation();
+        }
+
         public async Task NavigateMainPageAsync()
         {
             if (IsNavigating)

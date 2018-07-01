@@ -102,6 +102,7 @@ namespace CookingApp.ViewModels.UserPage
                     }
 
                     await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
+                    await PageTemplate.CurrentPage.NavigateBack();
                 });
             }
         }

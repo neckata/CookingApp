@@ -2,6 +2,7 @@
 using CookingApp.ViewModels.MainPage;
 using CookingApp.ViewModels.RecipesPage;
 using CookingApp.ViewModels.UserPage;
+using CookingApp.Views.CookersPage;
 using CookingApp.Views.MainPage;
 using CookingApp.Views.RecipesPage;
 using System.Collections.Generic;
@@ -17,9 +18,15 @@ namespace CookingApp.ViewModels.CookersPage
         public SingleCookerViewModel(CookerViewModel model)
         {
             Cooker = model;
-            RecipesCanCook = _model.GetCookerRecipes(model.ID);
-            CuisineTypes = _model.GetCookerCuisisnes(model.ID);
+            cookerID = model.ID;
+            cookerName = model.Name;
+            RecipesCanCook = _model.GetCookerRecipes(cookerID);
+            CuisineTypes = _model.GetCookerCuisisnes(cookerID);        
         }
+
+        private int cookerID;
+
+        private string cookerName;
 
         private CookersModel _model = new CookersModel();
 
@@ -47,8 +54,7 @@ namespace CookingApp.ViewModels.CookersPage
             {
                 return new Command(async () =>
                 {
-                    //RecipeViewModel recipe = RecipesCanCook.FirstOrDefault(x => x.ID == para);
-                    //await PageTemplate.CurrentPage.NavigateAsync(new SingleRecipePage(recipe) { Title = recipe.Title });
+                    await PageTemplate.CurrentPage.NavigateAsync(new OrderPage(cookerID) { Title = cookerName });
                 });
             }
         }
