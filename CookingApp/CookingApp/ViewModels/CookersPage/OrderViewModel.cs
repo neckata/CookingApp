@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace CookingApp.ViewModels.CookersPage
 {
@@ -17,7 +18,10 @@ namespace CookingApp.ViewModels.CookersPage
         public OrderViewModel(int cookerID)
         {
             LoadData();
+            _cookerID = cookerID;
         }
+
+        private int _cookerID;
 
         private string _selectedAddress;
 
@@ -28,6 +32,8 @@ namespace CookingApp.ViewModels.CookersPage
         public bool EmailValidation { get; set; }
 
         public bool NameEmailVisibility { get; set; }
+
+        public bool IsAddresEnabled { get; set; }
 
         public bool ProductsIncluded { get; set; }
 
@@ -69,17 +75,20 @@ namespace CookingApp.ViewModels.CookersPage
                     Neighborhood = address.Neighborhood;
                     City = address.City;
                     Street = address.City;
+                    IsAddresEnabled = false;
                 }
                 else
                 {
-                    AddressName = AppResources.ResourceManager.GetString("newAddress");
+                    AddressName = string.Empty;
                     Neighborhood = string.Empty;
                     City = string.Empty;
                     Street = string.Empty;
+                    IsAddresEnabled = true;
                 }
 
                 NameEmailVisibility = true;
 
+                OnPropertyChangedModel(nameof(IsAddresEnabled));
                 OnPropertyChangedModel(nameof(NameEmailVisibility));
                 OnPropertyChangedModel(nameof(AddressName));
                 OnPropertyChangedModel(nameof(Neighborhood));
@@ -96,9 +105,32 @@ namespace CookingApp.ViewModels.CookersPage
             {
                 return new Command(async () =>
                 {
-                    //TODO order
-                    await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderSuccess"));
-                    await PageTemplate.CurrentPage.NavigateBack();
+                    var address = DataBase.Instance.Query<AddressesDTO>().FirstOrDefault(x => x.AddressName == _selectedAddress);
+
+                    var order = new OrderDTO()
+                    {
+                        ClientID = DataBase.Instance.Query<UserDTO>().SingleOrDefault().ID,
+                        Date = Date,
+                        Time = Time, ProductsIncluded = ProductsIncluded,
+                        CookerID = _cookerID
+                    };
+                    if (address != null)
+                        order.AddressID = address.ID;
+                    else
+                    {
+                        order.AddressName = AddressName;
+                        order.City = City;
+                        order.Neighborhood = Neighborhood;
+                    }
+
+                    bool isSend = _model.MakeOrder(order);
+                    if (isSend)
+                    {
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderSuccess"));
+                        await PageTemplate.CurrentPage.NavigateBack();
+                    }
+                    else
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderFail"));
                 });
             }
         }
@@ -117,6 +149,7 @@ namespace CookingApp.ViewModels.CookersPage
 
         private void LoadData()
         {
+            IsAddresEnabled = true;
             MinimumDate = DateTime.Now;
 
             UserDTO user = DataBase.Instance.Query<UserDTO>().First();
@@ -125,6 +158,7 @@ namespace CookingApp.ViewModels.CookersPage
             Phone = user.Phone;
             Email = user.Email;
 
+            OnPropertyChangedModel(nameof(IsAddresEnabled));
             OnPropertyChangedModel(nameof(Name));
             OnPropertyChangedModel(nameof(Family));
             OnPropertyChangedModel(nameof(Phone));

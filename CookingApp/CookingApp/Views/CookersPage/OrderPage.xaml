@@ -33,7 +33,7 @@
 
                     <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
                         <Label Text="{i:Translate lblAddressName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
-                        <Entry Text="{Binding AddressName}" IsEnabled="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
+                        <Entry Text="{Binding AddressName}" IsEnabled="{Binding IsAddresEnabledIsAddresEnabled}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
 
                         <Label Text="{i:Translate lblCity}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
                         <Entry Text="{Binding City}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>

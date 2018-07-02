@@ -72,5 +72,12 @@ namespace CookingApp.Services
 
             return new ObservableCollection<CuisineTypeViewModel>(list.Where(x => x.Cuisines.Count > 0));
         }
+
+        public bool MakeOrder(OrderDTO order)
+        {
+            //TODO
+            DataBase.Instance.Add(order);
+            return true;
+        }
     }
 }
