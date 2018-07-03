@@ -2,9 +2,48 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
+             xmlns:converter="clr-namespace:CookingApp.Converters"
+             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
+             x:Name ="Page"
              x:Class="CookingApp.Views.OrdersPage.OrdersPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:InvertBoolenConverter x:Key="InvertBoolenConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView BackgroundColor="{StaticResource Primary}">
+            <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <controls:RepeaterView VerticalOptions="Fill" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Orders}" IsVisible="{Binding NoOrders, Converter={StaticResource InvertBoolenConverter}}">
+                    <controls:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="5,5,5,10" Orientation="Vertical">
+                                <Label Text="{Binding CookerName}" FontSize="22" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{i:Translate lblProductsIncluded}"  IsVisible="{Binding ProductsIncluded}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{i:Translate lblNotProductsIncluded}" IsVisible="{Binding ProductsIncluded, Converter={StaticResource InvertBoolenConverter}}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{i:Translate lblAddress}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Address}" FontSize="20" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{i:Translate lblDate}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Date}" FontSize="20" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+
+                                <StackLayout Orientation="Horizontal" Margin="0" Padding="0">
+                                    <Image Source="send.png" HorizontalOptions="CenterAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer  Command="{Binding Path=BindingContext.Send, Source={x:Reference Page}}" CommandParameter="{Binding ID}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                    <Image Source="cross.png" HorizontalOptions="CenterAndExpand">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer  Command="{Binding Path=BindingContext.Delete, Source={x:Reference Page}}" CommandParameter="{Binding ID}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </StackLayout>
+                        </DataTemplate>
+                    </controls:RepeaterView.ItemTemplate>
+                </controls:RepeaterView>
+                <Label Text="{i:Translate lblNoOrders}" IsVisible="{Binding NoOrders}" FontSize="30" TextColor="{StaticResource TextColor}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" LineBreakMode="WordWrap"/>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

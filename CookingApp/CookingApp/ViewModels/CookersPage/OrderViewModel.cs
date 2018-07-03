@@ -15,15 +15,16 @@ namespace CookingApp.ViewModels.CookersPage
 {
     public class OrderViewModel : ObservableViewModel
     {
-        public OrderViewModel(int cookerID)
+        public OrderViewModel(int cookerID,string cookerName)
         {
             LoadData();
             _cookerID = cookerID;
+            _cookerName = cookerName;
         }
 
         private int _cookerID;
 
-        private string _selectedAddress;
+        private string _selectedAddress ,_cookerName;
 
         private CookersModel _model = new CookersModel();
 
@@ -106,13 +107,13 @@ namespace CookingApp.ViewModels.CookersPage
                 return new Command(async () =>
                 {
                     var address = DataBase.Instance.Query<AddressesDTO>().FirstOrDefault(x => x.AddressName == _selectedAddress);
-
+                    
                     var order = new OrderDTO()
                     {
-                        ClientID = DataBase.Instance.Query<UserDTO>().SingleOrDefault().ID,
                         Date = Date,
                         Time = Time, ProductsIncluded = ProductsIncluded,
-                        CookerID = _cookerID
+                        CookerID = _cookerID,
+                        CookerName = _cookerName
                     };
                     if (address != null)
                         order.AddressID = address.ID;
@@ -121,6 +122,7 @@ namespace CookingApp.ViewModels.CookersPage
                         order.AddressName = AddressName;
                         order.City = City;
                         order.Neighborhood = Neighborhood;
+                        order.Street = Street;
                     }
 
                     bool isSend = _model.MakeOrder(order);

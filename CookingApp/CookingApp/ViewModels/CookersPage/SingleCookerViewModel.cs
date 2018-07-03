@@ -54,7 +54,7 @@ namespace CookingApp.ViewModels.CookersPage
             {
                 return new Command(async () =>
                 {
-                    await PageTemplate.CurrentPage.NavigateAsync(new OrderPage(cookerID) { Title = cookerName });
+                    await PageTemplate.CurrentPage.NavigateAsync(new OrderPage(cookerID, cookerName) { Title = cookerName });
                 });
             }
         }

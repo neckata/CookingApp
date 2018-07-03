@@ -13,8 +13,8 @@ namespace CookingApp.Models
         [Column(nameof(CookerID))]
         public int CookerID { get; set; }
 
-        [Column(nameof(ClientID))]
-        public int ClientID { get; set; }
+        [Column(nameof(CookerName))]
+        public string CookerName { get; set; }
 
         [Column(nameof(ProductsIncluded))]
         public bool ProductsIncluded { get; set; }
