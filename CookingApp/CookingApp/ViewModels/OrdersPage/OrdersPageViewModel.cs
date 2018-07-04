@@ -1,6 +1,8 @@
-﻿using CookingApp.Helpers;
-using CookingApp.Services;
+﻿using CookingApp.Services;
+using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.MainPage;
+using CookingApp.Views.CookersPage;
+using CookingApp.Views.MainPage;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -21,24 +23,14 @@ namespace CookingApp.ViewModels.OrdersPage
 
         public ObservableCollection<SingleOrderViewModel> Orders { get; set; }
 
-        public ICommand Send
+        public ICommand OpenCooker
         {
             get
             {
                 return new Command<int>(async (para) =>
                 {
-                   
-                });
-            }
-        }
-
-        public ICommand Delete
-        {
-            get
-            {
-                return new Command<int>(async (para) =>
-                {
-                   
+                    CookerViewModel cooker = _model.GetCooker(para);
+                    await PageTemplate.CurrentPage.NavigateAsync(new SingleCookerPage(cooker) { Title = cooker.Name });
                 });
             }
         }

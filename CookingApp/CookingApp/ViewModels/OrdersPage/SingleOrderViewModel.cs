@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CookingApp.Services;
+using System;
 
 namespace CookingApp.ViewModels.OrdersPage
 {
@@ -8,6 +9,8 @@ namespace CookingApp.ViewModels.OrdersPage
         {
             Date = new DateTime(date.Year, date.Month, date.Day, time.Hours, time.Minutes, time.Seconds);
         }
+
+        private OrdersModel _model = new OrdersModel();
 
         public DateTime Date { get; set; }
 

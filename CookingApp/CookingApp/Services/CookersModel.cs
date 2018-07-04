@@ -1,5 +1,4 @@
-﻿using CookingApp.Enums;
-using CookingApp.Helpers;
+﻿using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.RecipesPage;
