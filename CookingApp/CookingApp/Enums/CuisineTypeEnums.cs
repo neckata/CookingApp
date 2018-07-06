@@ -3,8 +3,8 @@
     public enum CuisineTypeEnums
     {
         Type,
-        Country,
-        CookingType,
+        Nationality,
+        Treatment,
         Season
     }
 }

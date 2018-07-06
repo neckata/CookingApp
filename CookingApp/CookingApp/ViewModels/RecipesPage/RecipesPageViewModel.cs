@@ -39,11 +39,11 @@ namespace CookingApp.ViewModels.RecipesPage
             OnPropertyChangedModel(nameof(Recipes));
         }
 
-        public void FillRecipesData()
+        public async void FillRecipesData()
         {
             if (SelectedCuisine != null)
             {
-                Recipes = _model.GetAllRecipes(SelectedCuisine.Code);
+                Recipes = await _model.GetAllRecipes(SelectedCuisine.Code);
                 OnPropertyChangedModel(nameof(Recipes));
             }
         }

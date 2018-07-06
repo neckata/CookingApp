@@ -45,18 +45,23 @@
     <Compile Include="Enums\NotificationsTypesEnum.cs" />
     <Compile Include="Enums\CommentTypesEnum.cs" />
     <Compile Include="Enums\CuisineTypeEnums.cs" />
+    <Compile Include="Enums\RestfulMethodsEnum.cs" />
     <Compile Include="Enums\UserTypesEnum.cs" />
     <Compile Include="Helpers\DataBase.cs" />
+    <Compile Include="Helpers\RestfulClient.cs" />
+    <Compile Include="Helpers\RestfulClientUrls.cs" />
     <Compile Include="Helpers\Utility.cs" />
     <Compile Include="Interfaces\ICloseProgram.cs" />
     <Compile Include="Interfaces\IFileHelper.cs" />
     <Compile Include="Interfaces\IDevice.cs" />
     <Compile Include="Models\CuisineSelectedDTO.cs" />
     <Compile Include="Models\CuisineFilterDTO.cs" />
+    <Compile Include="Models\PostRequestModel.cs" />
     <Compile Include="Models\RecipeDTO.cs" />
     <Compile Include="Models\CookerCuisineDTO.cs" />
     <Compile Include="Models\CuisineDTO.cs" />
     <Compile Include="Models\RecipeCookerDTO.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\SubscriptionDTO.cs" />
     <Compile Include="Models\ChatDTO.cs" />
     <Compile Include="Models\NotificationDTO.cs" />
@@ -162,6 +167,9 @@
     </Reference>
     <Reference Include="FormsPlugin.Iconize, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.FormsPlugin.Iconize.1.0.10\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\FormsPlugin.Iconize.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Plugin.Iconize, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xam.Plugin.Iconize.1.0.10\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Plugin.Iconize.dll</HintPath>

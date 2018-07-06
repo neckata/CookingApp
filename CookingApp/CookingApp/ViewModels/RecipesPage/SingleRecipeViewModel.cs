@@ -9,8 +9,7 @@ namespace CookingApp.ViewModels.RecipesPage
         public SingleRecipeViewModel(RecipeViewModel model)
         {
             Recipe = model;
-            NecessaryIngredients = _model.GetNecessaryIngredients(model.ID);
-            HowToCook = _model.GetHowToCook(model.ID);
+            FillData();
         }
 
         private RecipesModel _model = new RecipesModel();
@@ -20,5 +19,14 @@ namespace CookingApp.ViewModels.RecipesPage
         public List<string> NecessaryIngredients { get; set; }
 
         public string HowToCook { get; set; }
+
+        private  async void FillData()
+        {
+            RecipeViewModel data = await _model.GetOtherInformation(Recipe.ID);
+            NecessaryIngredients = data.NecessaryIngredients;
+            HowToCook = data.HowToCook;
+            OnPropertyChangedModel(nameof(NecessaryIngredients));
+            OnPropertyChangedModel(nameof(HowToCook));
+        }
     }
 }

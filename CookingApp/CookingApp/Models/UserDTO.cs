@@ -13,6 +13,9 @@ namespace CookingApp.Models
         [Column(nameof(UserName))]
         public string UserName { get; set; }
 
+        [Column(nameof(Password))]
+        public string Password { get; set; }
+
         [Column(nameof(UserType))]
         public UserTypesEnum UserType { get; set; }
 

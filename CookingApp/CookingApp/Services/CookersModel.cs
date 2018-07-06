@@ -51,8 +51,8 @@ namespace CookingApp.Services
         {
             List<CuisineDTO> data = new List<CuisineDTO>()
             {
-                 new CuisineDTO{Code="VEGAN"}, new CuisineDTO{Code="DIETIC"}, new CuisineDTO{Code="AVST"},
-                 new CuisineDTO{Code="AU"},new CuisineDTO{Code="NOCOOK"}, new CuisineDTO{Code="AUTUMN"}, new CuisineDTO{Code="WINTER"},
+                 new CuisineDTO{Code="CUISITA"}, new CuisineDTO{Code="SUMMER"}, new CuisineDTO{Code="CUISMED"},
+                 new CuisineDTO{Code="DISHGRILL"},new CuisineDTO{Code="CUISBG"},
             };
 
             var cuisines = DataBase.Instance.Query<CuisineFilterDTO>();
@@ -61,7 +61,7 @@ namespace CookingApp.Services
             ObservableCollection<CuisineTypeViewModel> list = new ObservableCollection<CuisineTypeViewModel>();
 
             foreach (var item in cuisines)
-                list.Add(new CuisineTypeViewModel() { Code = item.Code, Description = item.Description, Cuisines = new List<CuisineViewModel>()});
+                list.Add(new CuisineTypeViewModel() { Code = item.Code, Description = item.Description, Cuisines = new List<CuisineViewModel>() });
 
             foreach (var item in data)
             {

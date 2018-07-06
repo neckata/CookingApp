@@ -297,4 +297,10 @@
   <data name="lblNotProductsIncluded" xml:space="preserve">
     <value>Лично набавяне на продукти</value>
   </data>
+  <data name="noServer" xml:space="preserve">
+    <value>Сървърът не е активен</value>
+  </data>
+  <data name="notSuccessfulMethod" xml:space="preserve">
+    <value>Неуспешна комуникация със сървъра</value>
+  </data>
 </root>

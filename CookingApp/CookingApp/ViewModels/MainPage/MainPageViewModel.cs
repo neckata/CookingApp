@@ -34,58 +34,43 @@ namespace CookingApp.ViewModels.MainPage
             }
         }
 
-        public void LoadNomenclatures()
+        public async void LoadNomenclatures()
         {
-            var selectedCuisines = DataBase.Instance.Query<CuisineSelectedDTO>().ToList();
+            RestfulClient client = new RestfulClient();
 
-            foreach (var item in DataBase.Instance.Query<CuisineFilterDTO>())
-                DataBase.Instance.Delete<CuisineFilterDTO>(item.Code);
-
-            foreach (var item in DataBase.Instance.Query<CuisineDTO>())
-                DataBase.Instance.Delete<CuisineDTO>(item.Code);
-
-            List<CuisineFilterDTO> cuisineFilterDTOs = new List<CuisineFilterDTO>()
+            List<CuisineFilterDTO> cuisineFilterDTOs = await client.GetDataAsync<List<CuisineFilterDTO>>(GetActionMethods.CuisinesFilters); 
+            if(cuisineFilterDTOs.Count > 0)
             {
-                new CuisineFilterDTO(){Code=CuisineTypeEnums.Type,Description = "Тип Кухня"},
-                new CuisineFilterDTO(){Code=CuisineTypeEnums.Country,Description = "Интернационална Кухня"},
-                new CuisineFilterDTO(){Code=CuisineTypeEnums.CookingType,Description = "Начин на обработка"},
-                new CuisineFilterDTO(){Code=CuisineTypeEnums.Season,Description = "Сезонна Кухня"}
-            };
+                foreach (var item in DataBase.Instance.Query<CuisineFilterDTO>())
+                    DataBase.Instance.Delete<CuisineFilterDTO>(item.Code);
 
-            foreach (var item in cuisineFilterDTOs)
-                DataBase.Instance.Add(item);
-
-            List<CuisineDTO> cuisineDTOs = new List<CuisineDTO>()
-            {
-                 new CuisineDTO(){Code="VEGAN",Description="Веганска Кухня",CuisineTypeCode =CuisineTypeEnums.Type},
-                 new CuisineDTO(){Code="VEGE",Description="Вегетариански Ястия",CuisineTypeCode =CuisineTypeEnums.Type},
-                 new CuisineDTO(){Code="DIETIC",Description="Диетична Кухня",CuisineTypeCode =CuisineTypeEnums.Type},
-                 new CuisineDTO(){Code="AVST",Description="Австралийска Кухня",CuisineTypeCode =CuisineTypeEnums.Country},
-                 new CuisineDTO(){Code="AU",Description="Австрийска Кухня",CuisineTypeCode =CuisineTypeEnums.Country},
-                 new CuisineDTO(){Code="ALB",Description="Албанска Кухня",CuisineTypeCode =CuisineTypeEnums.Country},
-                 new CuisineDTO(){Code="NOCOOK",Description="Без Термична Обработка",CuisineTypeCode =CuisineTypeEnums.CookingType},
-                 new CuisineDTO(){Code="BALAN",Description="Ястия за Бланширане",CuisineTypeCode =CuisineTypeEnums.CookingType},
-                 new CuisineDTO(){Code="VAREN",Description="Ястия за Варене",CuisineTypeCode =CuisineTypeEnums.CookingType},
-                 new CuisineDTO(){Code="AUTUMN",Description="Есенни Ястия",CuisineTypeCode =CuisineTypeEnums.Season},
-                 new CuisineDTO(){Code="WINTER",Description="Зимни Ястия",CuisineTypeCode =CuisineTypeEnums.Season},
-                 new CuisineDTO(){Code="SRPING",Description="Пролетни Ястия",CuisineTypeCode =CuisineTypeEnums.Season},
-                 new CuisineDTO(){Code="SUMMER",Description="Летни Ястия",CuisineTypeCode =CuisineTypeEnums.Season}
-            };
-
-            foreach (var item in cuisineDTOs)
-            {
-                DataBase.Instance.Add(item);
-
-                for (int i = 0; i < selectedCuisines.Count; i++)
-                    if (selectedCuisines[i].Code == item.Code)
-                    {
-                        selectedCuisines.Remove(selectedCuisines[0]);
-                        i--;
-                    }
+                foreach (var item in cuisineFilterDTOs)
+                    DataBase.Instance.Add(item);
             }
 
-            foreach (var item in selectedCuisines)
-                DataBase.Instance.Delete<CuisineSelectedDTO>(item.Code);
+            List<CuisineDTO> cuisineDTOs = await client.GetDataAsync<List<CuisineDTO>>(GetActionMethods.Cuisines);
+            if (cuisineDTOs.Count > 0)
+            {
+                var selectedCuisines = DataBase.Instance.Query<CuisineSelectedDTO>().ToList();
+
+                foreach (var item in DataBase.Instance.Query<CuisineDTO>())
+                    DataBase.Instance.Delete<CuisineDTO>(item.Code);
+
+                foreach (var item in cuisineDTOs)
+                {
+                    DataBase.Instance.Add(item);
+
+                    for (int i = 0; i < selectedCuisines.Count; i++)
+                        if (selectedCuisines[i].Code == item.Code)
+                        {
+                            selectedCuisines.Remove(selectedCuisines[0]);
+                            i--;
+                        }
+                }
+
+                foreach (var item in selectedCuisines)
+                    DataBase.Instance.Delete<CuisineSelectedDTO>(item.Code);
+            }
         }
     }
 }
