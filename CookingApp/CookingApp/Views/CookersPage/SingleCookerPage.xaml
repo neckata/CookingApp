@@ -7,6 +7,7 @@
              xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
              xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
              xmlns:converter="clr-namespace:CookingApp.Converters"
+             xmlns:controls1="clr-namespace:CookingApp.Controls"
              x:Name="CookerPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -16,6 +17,22 @@
     <ContentPage.Content>
         <ScrollView BackgroundColor="{StaticResource Primary}">
             <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
+
+                <controls:RepeaterView ItemsSource="{Binding TimeTable}" Margin="5">
+                    <controls:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0" Padding="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.25*"/>
+                                    <ColumnDefinition Width="0.75*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Day}" VerticalTextAlignment="Center"/>
+                                <controls1:TimeTableRow ItemsSource="{Binding Hours}" Grid.Column="1" BackgroundColor="Black" Padding="0" Margin="0"/>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:RepeaterView.ItemTemplate>
+                </controls:RepeaterView>
+
                 <Image Source="{Binding Cooker.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
                 <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
                     <Label Text="{Binding Cooker.Name}" FontAttributes="Bold"/>

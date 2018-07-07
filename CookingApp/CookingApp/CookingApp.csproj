@@ -40,6 +40,7 @@
     </Compile>
     <Compile Include="Controls\ExpandableEditor.cs" />
     <Compile Include="Controls\RepeaterView.cs" />
+    <Compile Include="Controls\TimeTableRow.cs" />
     <Compile Include="Converters\InverseBoolenConverter.cs" />
     <Compile Include="Enums\PageNavigateEnums.cs" />
     <Compile Include="Enums\NotificationsTypesEnum.cs" />
@@ -101,6 +102,8 @@
     <Compile Include="ViewModels\CookersPage\CookerViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\OrderViewModel.cs" />
     <Compile Include="ViewModels\CookersPage\SingleCookerViewModel.cs" />
+    <Compile Include="ViewModels\CookersPage\TimeTableCellViewModel.cs" />
+    <Compile Include="ViewModels\CookersPage\TimeTableRowViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MainPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\MenuPageViewModel.cs" />
     <Compile Include="ViewModels\MainPage\ObservableViewModel.cs" />
