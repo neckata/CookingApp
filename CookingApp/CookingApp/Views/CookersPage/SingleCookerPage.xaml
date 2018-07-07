@@ -17,41 +17,6 @@
     <ContentPage.Content>
         <ScrollView BackgroundColor="{StaticResource Primary}">
             <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.25*"/>
-                        <ColumnDefinition Width="0.75*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.20*"/>
-                            <ColumnDefinition Width="0.20*"/>
-                            <ColumnDefinition Width="0.25*"/>
-                            <ColumnDefinition Width="0.35*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Text="0:00" HorizontalOptions="Start"/>
-                        <Label Grid.Column="1" Text="8:00" HorizontalOptions="Start"/>
-                        <Label Grid.Column="2" Text="14:00" HorizontalOptions="Start"/>
-                        <Label Grid.Column="3" Text="20:00" HorizontalOptions="Start"/>
-                        <Label Grid.Column="3" Text="24:00" HorizontalOptions="End"/>
-                    </Grid>
-                </Grid>
-                <controls:RepeaterView ItemsSource="{Binding TimeTable}" Margin="5">
-                    <controls:RepeaterView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.25*"/>
-                                    <ColumnDefinition Width="0.75*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Text="{Binding Day}" VerticalTextAlignment="Center"/>
-                                <controls1:TimeTableRow ItemsSource="{Binding Hours}" Grid.Column="1"/>
-                            </Grid>
-                        </DataTemplate>
-                    </controls:RepeaterView.ItemTemplate>
-                </controls:RepeaterView>
-
                 <Image Source="{Binding Cooker.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
                 <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
                     <Label Text="{Binding Cooker.Name}" FontAttributes="Bold"/>
@@ -70,6 +35,43 @@
                         <Label Text="{i:Translate lblLeva}"/>
                     </StackLayout>
                 </StackLayout>
+
+                <Label Text="{i:Translate lblTimeTable}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.25*"/>
+                        <ColumnDefinition Width="0.75*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.20*"/>
+                            <ColumnDefinition Width="0.20*"/>
+                            <ColumnDefinition Width="0.20*"/>
+                            <ColumnDefinition Width="0.20*"/>
+                            <ColumnDefinition Width="0.20*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label  Grid.Column="0" Text="0:00" HorizontalOptions="Start" FontAttributes="Italic"/>
+                        <Label Grid.Column="1" Text="6:00" HorizontalOptions="Start" FontAttributes="Italic"/>
+                        <Label Grid.Column="2" Text="12:00" HorizontalOptions="Center" FontAttributes="Italic"/>
+                        <Label Grid.Column="3" Text="18:00" HorizontalOptions="End" FontAttributes="Italic"/>
+                        <Label Grid.Column="4" Text="24:00" HorizontalOptions="End" FontAttributes="Italic"/>
+                    </Grid>
+                </Grid>
+                <controls:RepeaterView ItemsSource="{Binding TimeTable}" Margin="5">
+                    <controls:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.25*"/>
+                                    <ColumnDefinition Width="0.75*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Day}" VerticalTextAlignment="Center"/>
+                                <controls1:TimeTableRow ItemsSource="{Binding Hours}" Grid.Column="1"/>
+                            </Grid>
+                        </DataTemplate>
+                    </controls:RepeaterView.ItemTemplate>
+                </controls:RepeaterView>
 
                 <Label Text="{i:Translate lblCuisineCanMake}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
                 <controls:RepeaterView ItemsSource="{Binding CuisineTypes}" Margin="5">

@@ -303,4 +303,7 @@
   <data name="notSuccessfulMethod" xml:space="preserve">
     <value>Неуспешна комуникация със сървъра</value>
   </data>
+  <data name="lblTimeTable" xml:space="preserve">
+    <value>Разписание</value>
+  </data>
 </root>

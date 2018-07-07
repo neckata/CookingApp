@@ -1,7 +1,7 @@
-﻿namespace CookingApp.ViewModels.CookersPage
+﻿namespace CookingApp.Models
 {
-    public class TimeTableCellViewModel
-    { 
+    public class TimeTableCellDTO
+    {
         public double Percentage { get; set; }
 
         public bool IsTaken { get; set; }

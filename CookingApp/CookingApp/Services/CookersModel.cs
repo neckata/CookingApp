@@ -72,6 +72,115 @@ namespace CookingApp.Services
             return new ObservableCollection<CuisineTypeViewModel>(list.Where(x => x.Cuisines.Count > 0));
         }
 
+        public List<TimeTableRowViewModel> GetTimeTable(int cookerID)
+        {
+            var data = new List<TimeTableRowDTO>()
+            {
+                new TimeTableRowDTO()
+                {
+                    Day="Понеделник",
+                    Hours= new List<TimeTableCellDTO>()
+                    {
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true,  Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
+                    }
+                },
+                new TimeTableRowDTO()
+                {
+                    Day="Вторник",
+                    Hours= new List<TimeTableCellDTO>()
+                    {
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
+                    }
+                },
+                new TimeTableRowDTO()
+                {
+                    Day="Сряда",
+                    Hours= new List<TimeTableCellDTO>()
+                    {
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true,  Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
+                    }
+                },
+                new TimeTableRowDTO()
+                {
+                    Day="Четврътък",
+                    Hours= new List<TimeTableCellDTO>()
+                    {
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
+                    }
+                },
+                new TimeTableRowDTO()
+                {
+                    Day="Петък",
+                    Hours= new List<TimeTableCellDTO>()
+                    {
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true,  Percentage=0.075, IsWorking=true},
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
+                    }
+                },
+                new TimeTableRowDTO()
+                {
+                    Day="Събота",
+                    Hours= new List<TimeTableCellDTO>()
+                    {
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=1, IsWorking=false},
+                    }
+                },
+                new TimeTableRowDTO()
+                {
+                    Day="Неделя",
+                    Hours= new List<TimeTableCellDTO>()
+                    {
+                       new TimeTableCellDTO() { IsTaken=true, Percentage=1, IsWorking=false},
+                    }
+                }
+            };
+
+
+            List<TimeTableRowViewModel> list = new List<TimeTableRowViewModel>();
+            foreach (var item in data)
+            {
+                var vm = new TimeTableRowViewModel()
+                {
+                    Day = item.Day,
+                    Hours = new List<TimeTableCellViewModel>()
+                };
+                foreach (var cell in item.Hours)
+                    vm.Hours.Add(new TimeTableCellViewModel()
+                    {
+                        IsTaken = cell.IsTaken,
+                        IsWorking = cell.IsWorking,
+                        Percentage = cell.Percentage
+                    });
+                list.Add(vm);
+            }
+
+            return list;
+        }
+
         public bool MakeOrder(OrderDTO order)
         {
             //TODO
