@@ -9,5 +9,7 @@
         public double Percentage { get; set; }
 
         public bool IsTaken { get; set; }
+
+        public bool IsWorking { get; set; }
     }
 }

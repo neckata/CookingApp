@@ -31,12 +31,12 @@ namespace CookingApp.ViewModels.CookersPage
                     Day="Понеделник",
                     Hours= new List<TimeTableCellViewModel>()
                     {
-                       new TimeTableCellViewModel() { FromHour=0, ToHours=8, IsTaken=true, Percentage=0.3},
-                       new TimeTableCellViewModel() { FromHour=8, ToHours=12, IsTaken=false, Percentage=0.15},
-                       new TimeTableCellViewModel() { FromHour=12, ToHours=14, IsTaken=true, Percentage=0.075},
-                       new TimeTableCellViewModel() { FromHour=14, ToHours=18, IsTaken=false, Percentage=0.15},
-                       new TimeTableCellViewModel() { FromHour=18, ToHours=20, IsTaken=true,  Percentage=0.075},
-                       new TimeTableCellViewModel() { FromHour=20, ToHours=24, IsTaken=true, Percentage=0.15},
+                       new TimeTableCellViewModel() { FromHour=0, ToHours=8, IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellViewModel() { FromHour=8, ToHours=12, IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=12, ToHours=14, IsTaken=true, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=14, ToHours=18, IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=18, ToHours=20, IsTaken=true,  Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=20, ToHours=24, IsTaken=true, Percentage=0.15, IsWorking=false},
                     }
                 },
                 new TimeTableRowViewModel()
@@ -44,13 +44,67 @@ namespace CookingApp.ViewModels.CookersPage
                     Day="Вторник",
                     Hours= new List<TimeTableCellViewModel>()
                     {
-                       new TimeTableCellViewModel() { FromHour=0, ToHours=8, IsTaken=true, Percentage=0.3},
-                       new TimeTableCellViewModel() { FromHour=8, ToHours=10, IsTaken=false, Percentage=0.075},
-                       new TimeTableCellViewModel() { FromHour=10, ToHours=14, IsTaken=true, Percentage=0.15},
-                       new TimeTableCellViewModel() { FromHour=14, ToHours=16, IsTaken=false, Percentage=0.075},
-                       new TimeTableCellViewModel() { FromHour=16, ToHours=18, IsTaken=true, Percentage=0.075},
-                       new TimeTableCellViewModel() { FromHour=18, ToHours=20, IsTaken=true,  Percentage=0.075},
-                       new TimeTableCellViewModel() { FromHour=20, ToHours=24, IsTaken=true, Percentage=0.15},
+                       new TimeTableCellViewModel() { FromHour=0, ToHours=8, IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellViewModel() { FromHour=8, ToHours=10, IsTaken=false, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=10, ToHours=14, IsTaken=true, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=14, ToHours=16, IsTaken=false, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=16, ToHours=20, IsTaken=true, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=20, ToHours=24, IsTaken=true, Percentage=0.15, IsWorking=false},
+                    }
+                },
+                new TimeTableRowViewModel()
+                {
+                    Day="Сряда",
+                    Hours= new List<TimeTableCellViewModel>()
+                    {
+                       new TimeTableCellViewModel() { FromHour=0, ToHours=8, IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellViewModel() { FromHour=8, ToHours=12, IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=12, ToHours=14, IsTaken=true, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=14, ToHours=18, IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=18, ToHours=20, IsTaken=true,  Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=20, ToHours=24, IsTaken=true, Percentage=0.15, IsWorking=false},
+                    }
+                },
+                new TimeTableRowViewModel()
+                {
+                    Day="Четврътък",
+                    Hours= new List<TimeTableCellViewModel>()
+                    {
+                       new TimeTableCellViewModel() { FromHour=0, ToHours=8, IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellViewModel() { FromHour=8, ToHours=10, IsTaken=false, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=10, ToHours=14, IsTaken=true, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=14, ToHours=16, IsTaken=false, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=16, ToHours=20, IsTaken=true, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=20, ToHours=24, IsTaken=true, Percentage=0.15, IsWorking=false},
+                    }
+                },
+                new TimeTableRowViewModel()
+                {
+                    Day="Петък",
+                    Hours= new List<TimeTableCellViewModel>()
+                    {
+                       new TimeTableCellViewModel() { FromHour=0, ToHours=8, IsTaken=true, Percentage=0.3, IsWorking=false},
+                       new TimeTableCellViewModel() { FromHour=8, ToHours=12, IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=12, ToHours=14, IsTaken=true, Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=14, ToHours=18, IsTaken=false, Percentage=0.15, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=18, ToHours=20, IsTaken=true,  Percentage=0.075, IsWorking=true},
+                       new TimeTableCellViewModel() { FromHour=20, ToHours=24, IsTaken=true, Percentage=0.15, IsWorking=false},
+                    }
+                },
+                new TimeTableRowViewModel()
+                {
+                    Day="Събота",
+                    Hours= new List<TimeTableCellViewModel>()
+                    {
+                       new TimeTableCellViewModel() { FromHour=0, ToHours=24, IsTaken=true, Percentage=1, IsWorking=false},
+                    }
+                },
+                new TimeTableRowViewModel()
+                {
+                    Day="Неделя",
+                    Hours= new List<TimeTableCellViewModel>()
+                    {
+                       new TimeTableCellViewModel() { FromHour=0, ToHours=24, IsTaken=true, Percentage=1, IsWorking=false},
                     }
                 }
             };

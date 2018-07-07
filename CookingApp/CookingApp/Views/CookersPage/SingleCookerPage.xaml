@@ -18,16 +18,35 @@
         <ScrollView BackgroundColor="{StaticResource Primary}">
             <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.25*"/>
+                        <ColumnDefinition Width="0.75*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.20*"/>
+                            <ColumnDefinition Width="0.20*"/>
+                            <ColumnDefinition Width="0.25*"/>
+                            <ColumnDefinition Width="0.35*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="0:00" HorizontalOptions="Start"/>
+                        <Label Grid.Column="1" Text="8:00" HorizontalOptions="Start"/>
+                        <Label Grid.Column="2" Text="14:00" HorizontalOptions="Start"/>
+                        <Label Grid.Column="3" Text="20:00" HorizontalOptions="Start"/>
+                        <Label Grid.Column="3" Text="24:00" HorizontalOptions="End"/>
+                    </Grid>
+                </Grid>
                 <controls:RepeaterView ItemsSource="{Binding TimeTable}" Margin="5">
                     <controls:RepeaterView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="0" Padding="0">
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="0.25*"/>
                                     <ColumnDefinition Width="0.75*"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Column="0" Text="{Binding Day}" VerticalTextAlignment="Center"/>
-                                <controls1:TimeTableRow ItemsSource="{Binding Hours}" Grid.Column="1" BackgroundColor="Black" Padding="0" Margin="0"/>
+                                <controls1:TimeTableRow ItemsSource="{Binding Hours}" Grid.Column="1"/>
                             </Grid>
                         </DataTemplate>
                     </controls:RepeaterView.ItemTemplate>
