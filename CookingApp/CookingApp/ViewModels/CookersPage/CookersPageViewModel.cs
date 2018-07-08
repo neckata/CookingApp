@@ -41,11 +41,11 @@ namespace CookingApp.ViewModels.CookersPage
             OnPropertyChangedModel(nameof(Cookers));
         }
 
-        public void FillCookers()
+        public async void FillCookers()
         {
             if (SelectedCuisine != null)
             {
-                Cookers = _cookersModel.GetCookers(SelectedCuisine.Code);
+                Cookers = await _cookersModel.GetCookers(SelectedCuisine.Code);
                 OnPropertyChangedModel(nameof(Cookers));
             }
         }

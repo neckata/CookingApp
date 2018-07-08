@@ -43,7 +43,6 @@ namespace CookingApp.Services
                 ID = 1,
                 Description = "Готвач с 20 години опит във веганската кухня, перфекционист",
                 HoursPricing = 20,
-                IsWorking = true,
                 Name = "Иван Иванов",
                 OrdersCount = 24,
                 Rating = 2.5,

@@ -6,21 +6,17 @@ using CookingApp.ViewModels.UserPage;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CookingApp.Services
 {
     public class CookersModel
     {
-        public List<CookerViewModel> GetCookers(string cuisineCode)
+        RestfulClient _rc = new RestfulClient();
+
+        public async Task<List<CookerViewModel>> GetCookers(string cuisineCode)
         {
-            List<CookerDTO> data = new List<CookerDTO>()
-            {
-                new CookerDTO() {ID=1,Description="Готвач с 20 години опит във веганската кухня, перфекционист",HoursPricing=20,IsWorking=true,Name="Иван Иванов",OrdersCount=24,Rating=2.5,Image="http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/user-male-icon.png" },
-                new CookerDTO() {ID=2,Description="Готвач с 20 години опит във веганската кухня, перфекционист",HoursPricing=25,IsWorking=true,Name="Мария Николова",OrdersCount=55,Rating=4.5,Image="https://www.volleyamerica.com/img/generic-woman.png" },
-                new CookerDTO() {ID=3,Description="Готвач с 20 години опит във веганската кухня, перфекционист",HoursPricing=15,IsWorking=true,Name="Петър Петров",OrdersCount=33,Rating=5,Image="http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/user-male-icon.png" },
-                new CookerDTO() {ID=4,Description="Готвач с 20 години опит във веганската кухня, перфекционист",HoursPricing=45,IsWorking=true,Name="Гергана Георгиева",OrdersCount=1,Rating=2,Image="https://www.volleyamerica.com/img/generic-woman.png" },
-                new CookerDTO() {ID=5,Description="Готвач с 20 години опит във веганската кухня, перфекционист",HoursPricing=50,IsWorking=false,Name="Димитър Димитров",OrdersCount=45,Rating=1.5,Image="http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/user-male-icon.png" }
-            };
+            List<CookerDTO> data = await _rc.GetDataAsync<List<CookerDTO>>(Enums.GetActionMethods.Cookers, cuisineCode);
 
             List<CookerViewModel> cookers = new List<CookerViewModel>();
             foreach (var item in data)
@@ -29,31 +25,15 @@ namespace CookingApp.Services
             return cookers;
         }
 
-        public List<RecipeViewModel> GetCookerRecipes(int cookerID)
+        public async Task<CookerInformationViewModel> GetCookerInformation(int cookerID)
         {
-            List<RecipeDTO> data = new List<RecipeDTO>()
-            {
-                new RecipeDTO(){ID=1,Title="Ягодова Панакота",Image="http://recepti.gotvach.bg/files/lib/600x350/starawberry-pannacotta.jpg",TimeToCook=8,Portions=6},
-                new RecipeDTO(){ID=2,Title="Домати Конкасе",Image="http://recepti.gotvach.bg/files/lib/600x350/sandvichi_domati_new.jpg",TimeToCook=45,Portions=4},
-                new RecipeDTO(){ID=3,Title="Крем карамел",Image="http://recepti.gotvach.bg/files/lib/600x350/krem4.jpg",TimeToCook=75,Portions=8},
-                new RecipeDTO(){ID=4,Title="Айс Кола",Image="http://recepti.gotvach.bg/files/lib/600x350/icecola.jpg",TimeToCook=5,Portions=2},
-                new RecipeDTO(){ID=5,Title="Постни Вегански Хапки",Image="http://recepti.gotvach.bg/files/lib/600x350/postni-vegan-hapki-basil2.JPG",TimeToCook=20,Portions=7}
-            };
+            CookerInformationViewModel cooker = new CookerInformationViewModel();
+
+            CookerInformationDTO data = await _rc.GetDataAsync<CookerInformationDTO>(Enums.GetActionMethods.Cooker, cookerID.ToString());
 
             List<RecipeViewModel> recipes = new List<RecipeViewModel>();
-            foreach (var item in data)
+            foreach (var item in data.Receipts)
                 recipes.Add(new RecipeViewModel() { ID = item.ID, Image = item.Image, TimeToCook = item.TimeToCook, Title = item.Title, Portions = item.Portions });
-
-            return recipes;
-        }
-
-        public ObservableCollection<CuisineTypeViewModel> GetCookerCuisisnes(int cookerID)
-        {
-            List<CuisineDTO> data = new List<CuisineDTO>()
-            {
-                 new CuisineDTO{Code="CUISITA"}, new CuisineDTO{Code="SUMMER"}, new CuisineDTO{Code="CUISMED"},
-                 new CuisineDTO{Code="DISHGRILL"},new CuisineDTO{Code="CUISBG"},
-            };
 
             var cuisines = DataBase.Instance.Query<CuisineFilterDTO>();
             var cuisinesTypes = DataBase.Instance.Query<CuisineDTO>();
@@ -63,16 +43,22 @@ namespace CookingApp.Services
             foreach (var item in cuisines)
                 list.Add(new CuisineTypeViewModel() { Code = item.Code, Description = item.Description, Cuisines = new List<CuisineViewModel>() });
 
-            foreach (var item in data)
+            foreach (var item in data.Cuisines)
             {
-                var cuisineType = cuisinesTypes.Single(x => x.Code == item.Code);
+                var cuisineType = cuisinesTypes.Single(x => x.Code == item);
                 list.Single(x => x.Code == cuisineType.CuisineTypeCode).Cuisines.Add(new CuisineViewModel { Description = cuisineType.Description });
             }
 
-            return new ObservableCollection<CuisineTypeViewModel>(list.Where(x => x.Cuisines.Count > 0));
+            list = new ObservableCollection<CuisineTypeViewModel>(list.Where(x => x.Cuisines.Count > 0));
+
+            cooker.TimeTable = GetTimeTable(cookerID);
+            cooker.RecipesCanCook = recipes;
+            cooker.CuisineTypes = list;
+
+            return cooker;
         }
 
-        public List<TimeTableRowViewModel> GetTimeTable(int cookerID)
+        private List<TimeTableRowViewModel> GetTimeTable(int cookerID)
         {
             var data = new List<TimeTableRowDTO>()
             {

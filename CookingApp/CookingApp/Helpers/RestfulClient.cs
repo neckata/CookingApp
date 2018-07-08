@@ -12,6 +12,7 @@ using CookingApp.Resources;
 using Xamarin.Forms;
 using CookingApp.Interfaces;
 using System.Linq;
+using Plugin.Connectivity;
 
 namespace CookingApp.Helpers
 {
@@ -37,22 +38,36 @@ namespace CookingApp.Helpers
         {
             Uri requestUrl = BuildGetURL(method, parameter);
             T obj = new T();
-            var cts = new CancellationTokenSource();
-            cts.CancelAfter(Client.Timeout);
-            try
+            if (CrossConnectivity.Current.IsConnected)
             {
-                HttpResponseMessage response = await Client.GetAsync(requestUrl, cts.Token);
-                if (response.IsSuccessStatusCode)
+                if (await CrossConnectivity.Current.IsRemoteReachable(requestUrl.Host, requestUrl.Port, 5000))
                 {
-                    string responseStr = await response.Content.ReadAsStringAsync();
-                    obj = JsonConvert.DeserializeObject<T>(responseStr);
+                    var cts = new CancellationTokenSource();
+                    cts.CancelAfter(Client.Timeout);
+                    try
+                    {
+                        HttpResponseMessage response = await Client.GetAsync(requestUrl, cts.Token);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string responseStr = await response.Content.ReadAsStringAsync();
+                            obj = JsonConvert.DeserializeObject<T>(responseStr);
+                        }
+                        else
+                            UserDialogs.Instance.Toast(string.Format(AppResources.ResourceManager.GetString("notSuccessfulMethod"), response.StatusCode), new TimeSpan(0, 0, 3));
+                    }
+                    catch (TaskCanceledException ex)
+                    {
+                        UserDialogs.Instance.Toast(string.Format(AppResources.ResourceManager.GetString("errorMethod"), ex.Message), new TimeSpan(0, 0, 3));
+                    }
                 }
                 else
-                    UserDialogs.Instance.Toast(string.Format(AppResources.ResourceManager.GetString("notSuccessfulMethod"), response.StatusCode), new TimeSpan(0, 0, 3));
+                {
+                    UserDialogs.Instance.Toast(AppResources.ResourceManager.GetString("noServer"), new TimeSpan(0, 0, 3));
+                }
             }
-            catch (TaskCanceledException ex)
+            else
             {
-                UserDialogs.Instance.Toast(string.Format(AppResources.ResourceManager.GetString("noServer"), ex.Message), new TimeSpan(0, 0, 3));
+                UserDialogs.Instance.Toast(AppResources.ResourceManager.GetString("noInternet"), new TimeSpan(0, 0, 3));
             }
 
             return obj;
@@ -61,26 +76,39 @@ namespace CookingApp.Helpers
 
         public async Task<ResponseModel> PostDataAsync<T>(PostActionMethods method, T data, bool showSuccess = false)
         {
-            Uri requestUrl = BuildPostURL(method);
-
-            PostRequestModel model = BuildRequestDataModel(data);
-            string json = JsonConvert.SerializeObject(model);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-            var cts = new CancellationTokenSource();
-            cts.CancelAfter(Client.Timeout);
-            try
+            if (CrossConnectivity.Current.IsConnected)
             {
-                using (HttpResponseMessage response = await Client.PostAsync(requestUrl, content, cts.Token))
+                Uri requestUrl = BuildPostURL(method);
+                if (await CrossConnectivity.Current.IsRemoteReachable(requestUrl.Host, requestUrl.Port, 5000))
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    if (!response.IsSuccessStatusCode)
-                        UserDialogs.Instance.Toast(string.Format(AppResources.ResourceManager.GetString("notSuccessfulMethod"), response.StatusCode), new TimeSpan(0, 0, 3));
-                    return new ResponseModel(responseContent, response.StatusCode, response.IsSuccessStatusCode);
+                    PostRequestModel model = BuildRequestDataModel(data);
+                    string json = JsonConvert.SerializeObject(model);
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var cts = new CancellationTokenSource();
+                    cts.CancelAfter(Client.Timeout);
+                    try
+                    {
+                        using (HttpResponseMessage response = await Client.PostAsync(requestUrl, content, cts.Token))
+                        {
+                            string responseContent = await response.Content.ReadAsStringAsync();
+                            if (!response.IsSuccessStatusCode)
+                                UserDialogs.Instance.Toast(string.Format(AppResources.ResourceManager.GetString("notSuccessfulMethod"), response.StatusCode), new TimeSpan(0, 0, 3));
+                            return new ResponseModel(responseContent, response.StatusCode, response.IsSuccessStatusCode);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        UserDialogs.Instance.Toast(string.Format(AppResources.ResourceManager.GetString("errorMethod"), ex.Message), new TimeSpan(0, 0, 3));
+                    }
+                }
+                else
+                {
+                    UserDialogs.Instance.Toast(AppResources.ResourceManager.GetString("noServer"), new TimeSpan(0, 0, 3));
                 }
             }
-            catch (Exception ex)
+            else
             {
-                UserDialogs.Instance.Toast(string.Format(AppResources.ResourceManager.GetString("noServer"), ex.Message), new TimeSpan(0, 0, 3));
+                UserDialogs.Instance.Toast(AppResources.ResourceManager.GetString("noInternet"), new TimeSpan(0, 0, 3));
             }
 
             return new ResponseModel(null, System.Net.HttpStatusCode.BadRequest);

@@ -306,4 +306,10 @@
   <data name="lblTimeTable" xml:space="preserve">
     <value>Разписание</value>
   </data>
+  <data name="errorMethod" xml:space="preserve">
+    <value>Настъпи грешка в сървъра</value>
+  </data>
+  <data name="noInternet" xml:space="preserve">
+    <value>Не е установена връзка с интернет</value>
+  </data>
 </root>

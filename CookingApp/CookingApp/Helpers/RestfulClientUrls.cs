@@ -21,6 +21,12 @@ namespace CookingApp.Helpers
                 case GetActionMethods.RecipeInformation:
                     actionUrl = "receipt-information/{0}";
                     break;
+                case GetActionMethods.Cookers:
+                    actionUrl = "cuisine-cookers/{0}";
+                    break;
+                case GetActionMethods.Cooker:
+                    actionUrl = "cooker/{0}";
+                    break;
                 default:
                     break;
             }

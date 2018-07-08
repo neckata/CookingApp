@@ -20,9 +20,7 @@ namespace CookingApp.ViewModels.CookersPage
             Cooker = model;
             cookerID = model.ID;
             cookerName = model.Name;
-            RecipesCanCook = _model.GetCookerRecipes(cookerID);
-            CuisineTypes = _model.GetCookerCuisisnes(cookerID);
-            TimeTable = _model.GetTimeTable(cookerID);
+            FilldData();
         }
 
         private int cookerID;
@@ -60,6 +58,18 @@ namespace CookingApp.ViewModels.CookersPage
                     await PageTemplate.CurrentPage.NavigateAsync(new OrderPage(cookerID, cookerName) { Title = cookerName });
                 });
             }
+        }
+
+        private async void FilldData()
+        {
+            var cookerInformation = await _model.GetCookerInformation(cookerID);
+            TimeTable = cookerInformation.TimeTable;
+            RecipesCanCook = cookerInformation.RecipesCanCook;
+            CuisineTypes = cookerInformation.CuisineTypes;
+
+            OnPropertyChangedModel(nameof(TimeTable));
+            OnPropertyChangedModel(nameof(RecipesCanCook));
+            OnPropertyChangedModel(nameof(CuisineTypes));
         }
     }
 }

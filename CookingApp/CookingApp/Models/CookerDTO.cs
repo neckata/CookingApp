@@ -15,7 +15,5 @@
         public int OrdersCount { get; set; }
 
         public double HoursPricing { get; set; }
-
-        public bool IsWorking { get; set; }
     }
  }

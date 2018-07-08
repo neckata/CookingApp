@@ -5,7 +5,9 @@
         CuisinesFilters,
         Cuisines,
         Receipts,
-        RecipeInformation
+        RecipeInformation,
+        Cookers,
+        Cooker
     }
 
     public enum PostActionMethods
