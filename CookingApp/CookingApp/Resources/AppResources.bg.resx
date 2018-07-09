@@ -312,4 +312,7 @@
   <data name="noInternet" xml:space="preserve">
     <value>Не е установена връзка с интернет</value>
   </data>
+  <data name="lblLoading" xml:space="preserve">
+    <value>Зареждане...</value>
+  </data>
 </root>

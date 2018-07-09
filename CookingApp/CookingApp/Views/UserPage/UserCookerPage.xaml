@@ -5,7 +5,7 @@
              xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
              xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
              xmlns:converter="clr-namespace:CookingApp.Converters"
-             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
+             xmlns:controls="clr-namespace:CookingApp.Controls"
              x:Class="CookingApp.Views.UserPage.UserCookerPage">
     <ContentPage.Resources>
         <ResourceDictionary>

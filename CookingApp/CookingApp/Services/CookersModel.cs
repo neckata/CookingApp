@@ -3,6 +3,7 @@ using CookingApp.Models;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.RecipesPage;
 using CookingApp.ViewModels.UserPage;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace CookingApp.Services
             return cookers;
         }
 
-        public async Task<CookerInformationViewModel> GetCookerInformation(int cookerID)
+        public async Task<CookerInformationViewModel> GetCookerInformation(int cookerID,DateTime fromDate,DateTime toDate)
         {
             CookerInformationViewModel cooker = new CookerInformationViewModel();
 
@@ -51,14 +52,14 @@ namespace CookingApp.Services
 
             list = new ObservableCollection<CuisineTypeViewModel>(list.Where(x => x.Cuisines.Count > 0));
 
-            cooker.TimeTable = GetTimeTable(cookerID);
+            cooker.TimeTable = GetTimeTable(cookerID, fromDate, toDate);
             cooker.RecipesCanCook = recipes;
             cooker.CuisineTypes = list;
 
             return cooker;
         }
 
-        private List<TimeTableRowViewModel> GetTimeTable(int cookerID)
+        public List<TimeTableRowViewModel> GetTimeTable(int cookerID, DateTime fromDate, DateTime toDate)
         {
             var data = new List<TimeTableRowDTO>()
             {

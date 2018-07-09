@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
              xmlns:converter="clr-namespace:CookingApp.Converters"
-             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
+             xmlns:controls="clr-namespace:CookingApp.Controls"
              x:Class="CookingApp.Views.OrdersPage.OrdersPage"
              x:Name="OrdersPage">
     <ContentPage.Resources>

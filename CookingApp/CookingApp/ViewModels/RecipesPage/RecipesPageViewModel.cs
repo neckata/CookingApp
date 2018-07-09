@@ -21,6 +21,8 @@ namespace CookingApp.ViewModels.RecipesPage
 
         private RecipesModel _model = new RecipesModel();
 
+        public bool IsBusy { get; set; }
+
         public CuisineFilterDTO SelectedCuisineFilter { get; set; }
 
         public CuisineDTO SelectedCuisine { get; set; }
@@ -43,8 +45,14 @@ namespace CookingApp.ViewModels.RecipesPage
         {
             if (SelectedCuisine != null)
             {
+                IsBusy = true;
+                OnPropertyChangedModel(nameof(IsBusy));
+
                 Recipes = await _model.GetAllRecipes(SelectedCuisine.Code);
                 OnPropertyChangedModel(nameof(Recipes));
+
+                IsBusy = false;
+                OnPropertyChangedModel(nameof(IsBusy));
             }
         }
 

@@ -2,12 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
-             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
              x:Class="CookingApp.Views.CookersPage.SingleCookerPage"
              xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
              xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
              xmlns:converter="clr-namespace:CookingApp.Converters"
-             xmlns:controls1="clr-namespace:CookingApp.Controls"
+             xmlns:controls="clr-namespace:CookingApp.Controls"
              x:Name="CookerPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -15,111 +14,138 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView BackgroundColor="{StaticResource Primary}">
-            <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
-                <Image Source="{Binding Cooker.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
-                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
-                    <Label Text="{Binding Cooker.Name}" FontAttributes="Bold"/>
-                    <Label Text="{Binding Cooker.Description}" LineBreakMode="WordWrap" FontAttributes="Italic"/>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
-                        <rating:SfRating Value="{Binding Cooker.Rating}" IsEnabled="False" ItemCount="5" ItemSize="24" Precision="Exact"/>
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>
-                        <Label Text="{Binding Cooker.OrdersCount}"/>
-                    </StackLayout>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{i:Translate lblPricing}" FontAttributes="Bold"/>
-                        <Label Text="{Binding Cooker.HoursPricing}"/>
-                        <Label Text="{i:Translate lblLeva}"/>
-                    </StackLayout>
-                </StackLayout>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <ScrollView BackgroundColor="{StaticResource Primary}">
+                    <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
+                        <Image Source="{Binding Cooker.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
+                        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                            <Label Text="{Binding Cooker.Name}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Cooker.Description}" LineBreakMode="WordWrap" FontAttributes="Italic"/>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{i:Translate lblRating}" FontAttributes="Bold" VerticalTextAlignment="Center"/>
+                                <rating:SfRating Value="{Binding Cooker.Rating}" IsEnabled="False" ItemCount="5" ItemSize="24" Precision="Exact"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{i:Translate lblOrders}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Cooker.OrdersCount}"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{i:Translate lblPricing}" FontAttributes="Bold"/>
+                                <Label Text="{Binding Cooker.HoursPricing}"/>
+                                <Label Text="{i:Translate lblLeva}"/>
+                            </StackLayout>
+                        </StackLayout>
 
-                <Label Text="{i:Translate lblTimeTable}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.25*"/>
-                        <ColumnDefinition Width="0.75*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.20*"/>
-                            <ColumnDefinition Width="0.20*"/>
-                            <ColumnDefinition Width="0.20*"/>
-                            <ColumnDefinition Width="0.20*"/>
-                            <ColumnDefinition Width="0.20*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label  Grid.Column="0" Text="0:00" HorizontalOptions="Start" FontAttributes="Italic"/>
-                        <Label Grid.Column="1" Text="6:00" HorizontalOptions="Start" FontAttributes="Italic"/>
-                        <Label Grid.Column="2" Text="12:00" HorizontalOptions="Center" FontAttributes="Italic"/>
-                        <Label Grid.Column="3" Text="18:00" HorizontalOptions="End" FontAttributes="Italic"/>
-                        <Label Grid.Column="4" Text="24:00" HorizontalOptions="End" FontAttributes="Italic"/>
-                    </Grid>
-                </Grid>
-                <controls:RepeaterView ItemsSource="{Binding TimeTable}" Margin="5">
-                    <controls:RepeaterView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
+                        <Label Text="{i:Translate lblTimeTable}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                            <iconize:IconImage Icon="fa-angle-left" IconSize="20">
+                                <iconize:IconImage.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding LeftDate}"/>
+                                </iconize:IconImage.GestureRecognizers>
+                            </iconize:IconImage>
+                            <Label Text="{Binding FromDate, StringFormat='\{0:dd-MMM-yy}'}" FontSize="Medium" FontAttributes="Italic"/>
+                            <Label Text="-" FontSize="Medium"/>
+                            <Label Text="{Binding ToDate, StringFormat='\{0:dd-MMM-yy}'}" FontSize="Medium" FontAttributes="Italic"/>
+                            <iconize:IconImage Icon="fa-angle-right" IconSize="20">
+                                <iconize:IconImage.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding RightDate}"/>
+                                </iconize:IconImage.GestureRecognizers>
+                            </iconize:IconImage>
+                        </StackLayout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.25*"/>
+                                <ColumnDefinition Width="0.75*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="1">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.25*"/>
-                                    <ColumnDefinition Width="0.75*"/>
+                                    <ColumnDefinition Width="0.20*"/>
+                                    <ColumnDefinition Width="0.20*"/>
+                                    <ColumnDefinition Width="0.20*"/>
+                                    <ColumnDefinition Width="0.20*"/>
+                                    <ColumnDefinition Width="0.20*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0" Text="{Binding Day}" VerticalTextAlignment="Center"/>
-                                <controls1:TimeTableRow ItemsSource="{Binding Hours}" Grid.Column="1"/>
+                                <Label  Grid.Column="0" Text="0:00" HorizontalOptions="Start" FontAttributes="Italic"/>
+                                <Label Grid.Column="1" Text="6:00" HorizontalOptions="Start" FontAttributes="Italic"/>
+                                <Label Grid.Column="2" Text="12:00" HorizontalOptions="Center" FontAttributes="Italic"/>
+                                <Label Grid.Column="3" Text="18:00" HorizontalOptions="End" FontAttributes="Italic"/>
+                                <Label Grid.Column="4" Text="24:00" HorizontalOptions="End" FontAttributes="Italic"/>
                             </Grid>
-                        </DataTemplate>
-                    </controls:RepeaterView.ItemTemplate>
-                </controls:RepeaterView>
+                        </Grid>
+                        <controls:RepeaterView ItemsSource="{Binding TimeTable}" Margin="5">
+                            <controls:RepeaterView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="0.25*"/>
+                                            <ColumnDefinition Width="0.75*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Text="{Binding Day}" VerticalTextAlignment="Center"/>
+                                        <controls:TimeTableRow ItemsSource="{Binding Hours}" Grid.Column="1"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </controls:RepeaterView.ItemTemplate>
+                        </controls:RepeaterView>
 
-                <Label Text="{i:Translate lblCuisineCanMake}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
-                <controls:RepeaterView ItemsSource="{Binding CuisineTypes}" Margin="5">
-                    <controls:RepeaterView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
-                                <StackLayout Orientation="Vertical">
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding ChangeVisibility}"/>
-                                        </StackLayout.GestureRecognizers>
-                                        <Label Text="{Binding Description}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
-                                        <iconize:IconImage Icon="fa-arrow-up" IsVisible="{Binding IsVisible}" HorizontalOptions="EndAndExpand" IconSize="20" Margin="5"/>
-                                        <iconize:IconImage Icon="fa-arrow-down" IsVisible="{Binding IsVisible, Converter={StaticResource InvertBoolenConverter}}" HorizontalOptions="EndAndExpand" IconSize="20" Margin="5"/>
+                        <Label Text="{i:Translate lblCuisineCanMake}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
+                        <controls:RepeaterView ItemsSource="{Binding CuisineTypes}" Margin="5">
+                            <controls:RepeaterView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
+                                        <StackLayout Orientation="Vertical">
+                                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding ChangeVisibility}"/>
+                                                </StackLayout.GestureRecognizers>
+                                                <Label Text="{Binding Description}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
+                                                <iconize:IconImage Icon="fa-arrow-up" IsVisible="{Binding IsVisible}" HorizontalOptions="EndAndExpand" IconSize="20" Margin="5"/>
+                                                <iconize:IconImage Icon="fa-arrow-down" IsVisible="{Binding IsVisible, Converter={StaticResource InvertBoolenConverter}}" HorizontalOptions="EndAndExpand" IconSize="20" Margin="5"/>
+                                            </StackLayout>
+                                            <controls:RepeaterView ItemsSource="{Binding Cuisines,Mode=TwoWay}" BackgroundColor="White" Margin="5" Padding="5" IsVisible="{Binding IsVisible}">
+                                                <controls:RepeaterView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <iconize:IconImage Icon="fa-check" IconSize="18"/>
+                                                            <Label Text="{Binding Description}"/>
+                                                        </StackLayout>
+                                                    </DataTemplate>
+                                                </controls:RepeaterView.ItemTemplate>
+                                            </controls:RepeaterView>
+                                        </StackLayout>
                                     </StackLayout>
-                                    <controls:RepeaterView ItemsSource="{Binding Cuisines,Mode=TwoWay}" BackgroundColor="White" Margin="5" Padding="5" IsVisible="{Binding IsVisible}">
-                                        <controls:RepeaterView.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackLayout Orientation="Horizontal">
-                                                    <iconize:IconImage Icon="fa-check" IconSize="18"/>
-                                                    <Label Text="{Binding Description}"/>
-                                                </StackLayout>
-                                            </DataTemplate>
-                                        </controls:RepeaterView.ItemTemplate>
-                                    </controls:RepeaterView>
-                                </StackLayout>
-                            </StackLayout>
-                        </DataTemplate>
-                    </controls:RepeaterView.ItemTemplate>
-                </controls:RepeaterView>
+                                </DataTemplate>
+                            </controls:RepeaterView.ItemTemplate>
+                        </controls:RepeaterView>
 
-                <Label Text="{i:Translate lblRecipesCanCook}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
-                <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RecipesCanCook}" Margin="5,0,0,0">
-                    <controls:RepeaterView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource BorderColor}">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer  Command="{Binding Source={x:Reference Name=CookerPage}, Path=BindingContext.Navigate}" CommandParameter="{Binding ID}"/>
-                                </StackLayout.GestureRecognizers>
-                                <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
-                                <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Large" VerticalTextAlignment="Center"/>
-                            </StackLayout>
-                        </DataTemplate>
-                    </controls:RepeaterView.ItemTemplate>
-                </controls:RepeaterView>
+                        <Label Text="{i:Translate lblRecipesCanCook}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
+                        <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RecipesCanCook}" Margin="5,0,0,0">
+                            <controls:RepeaterView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource BorderColor}">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer  Command="{Binding Source={x:Reference Name=CookerPage}, Path=BindingContext.Navigate}" CommandParameter="{Binding ID}"/>
+                                        </StackLayout.GestureRecognizers>
+                                        <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
+                                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Large" VerticalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </controls:RepeaterView.ItemTemplate>
+                        </controls:RepeaterView>
 
-                <Button Text="{i:Translate lblOrder}" Command="{Binding Order}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                        <Button Text="{i:Translate lblOrder}" Command="{Binding Order}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                    </StackLayout>
+                </ScrollView>
             </StackLayout>
-        </ScrollView>
+
+            <StackLayout IsVisible="{Binding IsBusy}" Padding="12" BackgroundColor="{StaticResource ButtonColor}"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color ="Red"/>
+                <Label Text="{i:Translate lblLoading}" HorizontalOptions="Center" TextColor="White"/>
+            </StackLayout>
+
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

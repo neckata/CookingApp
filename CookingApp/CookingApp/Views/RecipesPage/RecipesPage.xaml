@@ -2,39 +2,50 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
-             xmlns:controls="clr-namespace:CookingApp.Controls;assembly=CookingApp"
+             xmlns:controls="clr-namespace:CookingApp.Controls"
              x:Class="CookingApp.Views.RecipesPage.RecipesPage"
              x:Name="RecipePage">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="{StaticResource Primary}">
-            <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineFilter}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
-            <Picker x:Name="cuisines" IsVisible="False" ItemsSource="{Binding Cuisines}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisine}" Title="{i:Translate lblChooseCuisine}" SelectedIndexChanged="Picker_SelectedIndexChanged_1"/>
-            <ScrollView x:Name="Recipes" IsVisible="False">
-                <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Recipes}">
-                    <controls:RepeaterView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource BorderColor}">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer  Command="{Binding Source={x:Reference Name=RecipePage}, Path=BindingContext.Navigate}" CommandParameter="{Binding ID}"/>
-                                </StackLayout.GestureRecognizers>
-                                <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
-                                <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
-                                    <Label Text="{Binding Title}" FontAttributes="Bold"/>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{i:Translate lblTimeToCook}" FontAttributes="Bold"/>
-                                        <Label Text="{Binding TimeToCook}"/>
-                                        <Label Text="{i:Translate lblMinutes}"/>
-                                    </StackLayout>
-                                    <StackLayout Orientation="Horizontal">
-                                        <Label Text="{i:Translate lblPortions}" FontAttributes="Bold"/>
-                                        <Label Text="{Binding Portions}"/>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+            <StackLayout BackgroundColor="{StaticResource Primary}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineFilter}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                <Picker x:Name="cuisines" IsVisible="False" ItemsSource="{Binding Cuisines}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisine}" Title="{i:Translate lblChooseCuisine}" SelectedIndexChanged="Picker_SelectedIndexChanged_1"/>
+                <ScrollView x:Name="Recipes" IsVisible="False">
+                    <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Recipes}">
+                        <controls:RepeaterView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource BorderColor}">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding Source={x:Reference Name=RecipePage}, Path=BindingContext.Navigate}" CommandParameter="{Binding ID}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Image Source="{Binding Image}" VerticalOptions="CenterAndExpand"  WidthRequest="100" HeightRequest="75"/>
+                                    <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
+                                        <Label Text="{Binding Title}" FontAttributes="Bold"/>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{i:Translate lblTimeToCook}" FontAttributes="Bold"/>
+                                            <Label Text="{Binding TimeToCook}"/>
+                                            <Label Text="{i:Translate lblMinutes}"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{i:Translate lblPortions}" FontAttributes="Bold"/>
+                                            <Label Text="{Binding Portions}"/>
+                                        </StackLayout>
                                     </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
-                        </DataTemplate>
-                    </controls:RepeaterView.ItemTemplate>
-                </controls:RepeaterView>
-            </ScrollView>
-        </StackLayout>
+                            </DataTemplate>
+                        </controls:RepeaterView.ItemTemplate>
+                    </controls:RepeaterView>
+                </ScrollView>
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding IsBusy}" Padding="12" BackgroundColor="{StaticResource ButtonColor}"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color ="Red"/>
+                <Label Text="{i:Translate lblLoading}" HorizontalOptions="Center" TextColor="White"/>
+            </StackLayout>
+
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
