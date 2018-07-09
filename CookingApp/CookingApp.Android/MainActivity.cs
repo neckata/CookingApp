@@ -3,6 +3,9 @@ using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using CookingApp.Helpers;
+using Plugin.Connectivity;
+using Plugin.Connectivity.Abstractions;
 
 namespace CookingApp.Droid
 {
@@ -23,10 +26,32 @@ namespace CookingApp.Droid
 
             UserDialogs.Init(this);
             FormsPlugin.Iconize.Droid.IconControls.Init(Resource.Id.toolbar);
-            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
-
+            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());      
+           
             LoadApplication(new App());
         }
 
+        protected override void OnStart()
+        {
+            AppBeforeLoad();
+            base.OnStart();
+        }
+
+        private void AppBeforeLoad()
+        {
+            if (CrossConnectivity.Current.IsConnected)
+                DataBase.Instance.LoadNomenclatures();
+            else
+                CrossConnectivity.Current.ConnectivityChanged += Current_ConnectivityChanged;
+        }
+
+        private void Current_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            if (e.IsConnected)
+            {
+                CrossConnectivity.Current.ConnectivityChanged -= Current_ConnectivityChanged;
+                DataBase.Instance.LoadNomenclatures();
+            }
+        }
     }
 }
