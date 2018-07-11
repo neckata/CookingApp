@@ -17,8 +17,8 @@
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
                 <ScrollView BackgroundColor="{StaticResource Primary}">
-                    <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand">
-                        <Image Source="{Binding Cooker.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200" Margin="0,5,0,0"/>
+                    <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand" Margin="5">
+                        <Image Source="{Binding Cooker.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200"/>
                         <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">
                             <Label Text="{Binding Cooker.Name}" FontAttributes="Bold"/>
                             <Label Text="{Binding Cooker.Description}" LineBreakMode="WordWrap" FontAttributes="Italic"/>
@@ -39,7 +39,7 @@
 
                         <Label Text="{i:Translate lblTimeTable}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
                         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                            <iconize:IconImage Icon="fa-angle-left" IconSize="20">
+                            <iconize:IconImage Icon="fa-angle-left" IconSize="24">
                                 <iconize:IconImage.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding LeftDate}"/>
                                 </iconize:IconImage.GestureRecognizers>
@@ -47,7 +47,7 @@
                             <Label Text="{Binding FromDate, StringFormat='\{0:dd-MMM-yy}'}" FontSize="Medium" FontAttributes="Italic"/>
                             <Label Text="-" FontSize="Medium"/>
                             <Label Text="{Binding ToDate, StringFormat='\{0:dd-MMM-yy}'}" FontSize="Medium" FontAttributes="Italic"/>
-                            <iconize:IconImage Icon="fa-angle-right" IconSize="20">
+                            <iconize:IconImage Icon="fa-angle-right" IconSize="24">
                                 <iconize:IconImage.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding RightDate}"/>
                                 </iconize:IconImage.GestureRecognizers>
@@ -74,7 +74,7 @@
                                 <Label Grid.Column="4" Text="24:00" HorizontalOptions="End" FontAttributes="Italic"/>
                             </Grid>
                         </Grid>
-                        <controls:RepeaterView ItemsSource="{Binding TimeTable}" Margin="5">
+                        <controls:RepeaterView ItemsSource="{Binding TimeTable}">
                             <controls:RepeaterView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -90,7 +90,7 @@
                         </controls:RepeaterView>
 
                         <Label Text="{i:Translate lblCuisineCanMake}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
-                        <controls:RepeaterView ItemsSource="{Binding CuisineTypes}" Margin="5">
+                        <controls:RepeaterView ItemsSource="{Binding CuisineTypes}">
                             <controls:RepeaterView.ItemTemplate>
                                 <DataTemplate>
                                     <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
@@ -120,7 +120,7 @@
                         </controls:RepeaterView>
 
                         <Label Text="{i:Translate lblRecipesCanCook}" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold"/>
-                        <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RecipesCanCook}" Margin="5,0,0,0">
+                        <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RecipesCanCook}">
                             <controls:RepeaterView.ItemTemplate>
                                 <DataTemplate>
                                     <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource BorderColor}">

@@ -318,25 +318,4 @@
   <data name="lblNoNotifications" xml:space="preserve">
     <value>Няма нотификации</value>
   </data>
-  <data name="friday" xml:space="preserve">
-    <value>Петък</value>
-  </data>
-  <data name="monday" xml:space="preserve">
-    <value>Понеделник</value>
-  </data>
-  <data name="saturday" xml:space="preserve">
-    <value>Събота</value>
-  </data>
-  <data name="sunday" xml:space="preserve">
-    <value>Неделя</value>
-  </data>
-  <data name="thursday" xml:space="preserve">
-    <value>Вторник</value>
-  </data>
-  <data name="tuesday" xml:space="preserve">
-    <value>Четвъртък</value>
-  </data>
-  <data name="wednesday" xml:space="preserve">
-    <value>Сряда</value>
-  </data>
 </root>

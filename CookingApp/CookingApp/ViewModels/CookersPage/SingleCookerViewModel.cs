@@ -117,7 +117,7 @@ namespace CookingApp.ViewModels.CookersPage
             OnPropertyChangedModel(nameof(IsBusy));
 
             FromDate = FromDate.AddDays(weekChange);
-            ToDate = FromDate.AddDays(weekChange);
+            ToDate = ToDate.AddDays(weekChange);
             TimeTable = await _model.GetTimeTable(cookerID, FromDate);
 
             OnPropertyChangedModel(nameof(TimeTable));

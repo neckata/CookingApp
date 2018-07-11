@@ -13,12 +13,12 @@ namespace CookingApp.Services
 
         public List<CuisineDTO> GetCuisines(CuisineTypeEnums type)
         {
-            return new List<CuisineDTO>(DataBase.Instance.Query<CuisineDTO>().Where(x => x.CuisineTypeCode == type));
+            return new List<CuisineDTO>(DataBase.Instance.Query<CuisineDTO>().Where(x => x.CuisineTypeCode == type).OrderBy(x=>x.Description));
         }
 
         public List<CuisineFilterDTO> GetCuisineFilters()
         {
-            return new List<CuisineFilterDTO>(DataBase.Instance.Query<CuisineFilterDTO>());
+            return new List<CuisineFilterDTO>(DataBase.Instance.Query<CuisineFilterDTO>().OrderBy(x => x.Description));
         }
 
         public async Task<List<RecipeViewModel>> GetAllRecipes(string cuisineCode)

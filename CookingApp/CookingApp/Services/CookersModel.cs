@@ -1,6 +1,5 @@
 ﻿using CookingApp.Helpers;
 using CookingApp.Models;
-using CookingApp.Resources;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.RecipesPage;
 using CookingApp.ViewModels.UserPage;
@@ -54,35 +53,21 @@ namespace CookingApp.Services
             list = new ObservableCollection<CuisineTypeViewModel>(list.Where(x => x.Cuisines.Count > 0));
 
             List<TimeTableRowViewModel> timeTableRows = new List<TimeTableRowViewModel>();
-            if (data.TimeTable != null && data.TimeTable.Count!=0)
+            foreach (var item in data.TimeTable)
             {
-                foreach (var item in data.TimeTable)
+                var vm = new TimeTableRowViewModel()
                 {
-                    var vm = new TimeTableRowViewModel()
+                    Day = item.Day,
+                    Hours = new List<TimeTableCellViewModel>()
+                };
+                foreach (var cell in item.Hours)
+                    vm.Hours.Add(new TimeTableCellViewModel()
                     {
-                        Day = item.Day,
-                        Hours = new List<TimeTableCellViewModel>()
-                    };
-                    foreach (var cell in item.Hours)
-                        vm.Hours.Add(new TimeTableCellViewModel()
-                        {
-                            IsTaken = cell.IsTaken,
-                            IsWorking = cell.IsWorking,
-                            Percentage = cell.Percentage
-                        });
-                    timeTableRows.Add(vm);
-                }
-            }
-            else
-            {
-                timeTableRows = new List<TimeTableRowViewModel>() {
-                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("monday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
-                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("thursday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
-                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("wednesday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
-                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("tuesday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
-                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("friday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
-                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("saturday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
-                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("sunday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } }};
+                        IsTaken = cell.IsTaken,
+                        IsWorking = cell.IsWorking,
+                        Percentage = cell.Percentage
+                    });
+                timeTableRows.Add(vm);
             }
 
             cooker.TimeTable = timeTableRows;
@@ -94,7 +79,7 @@ namespace CookingApp.Services
 
         public async Task<List<TimeTableRowViewModel>> GetTimeTable(int cookerID, DateTime fromDate)
         {
-            var data = await _rc.GetDataAsync<List<TimeTableRowDTO>>(Enums.GetActionMethods.TimeTable, string.Format("cookerID:{0}, fromDate:{1}", cookerID, fromDate));
+            var data = await _rc.GetDataAsync<List<TimeTableRowDTO>>(Enums.GetActionMethods.TimeTable, string.Format("{0}?fromDate={1}", cookerID, fromDate.ToString("yyyy-MM-dd")));
 
             List<TimeTableRowViewModel> list = new List<TimeTableRowViewModel>();
             foreach (var item in data)

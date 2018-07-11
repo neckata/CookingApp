@@ -1,12 +1,9 @@
 ﻿using CookingApp.Enums;
 using CookingApp.Helpers;
-using CookingApp.Interfaces;
 using CookingApp.Models;
-using CookingApp.Resources;
 using CookingApp.ViewModels.UserPage;
 using System.Collections.Generic;
 using System.Linq;
-using Xamarin.Forms;
 
 namespace CookingApp.Services
 {
@@ -23,20 +20,14 @@ namespace CookingApp.Services
         public async void RegisterUser()
         {
             UserDTO user = DataBase.Instance.Query<UserDTO>().First();
-            if (user == null)
+            if (!user.IsRegistered)
             {
-                user = new UserDTO
+                ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, "FCM");
+                if (model.IsSuccessStatusCode)
                 {
-                    UserType = UserTypesEnum.Client,
-                    UserName = "AnonymousUser",
-                    Email = "email@mail.com",
-                    Name = AppResources.ResourceManager.GetString("lblAnonymousUser"),
-                    IMEI = DependencyService.Get<IDevice>().GetIdentifier(),
-                    FCM = "FCM"
-                };
-                DataBase.Instance.Add(user);
-
-                ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, user);
+                    user.IsRegistered = true;
+                    DataBase.Instance.Update(user);
+                }
             }
         }
 

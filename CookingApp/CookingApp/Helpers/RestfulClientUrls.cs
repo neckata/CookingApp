@@ -28,7 +28,7 @@ namespace CookingApp.Helpers
                     actionUrl = "cooker/{0}";
                     break;
                 case GetActionMethods.TimeTable:
-                    actionUrl = "timeTable/{0}&{1}";
+                    actionUrl = "cooker-schedule/{0}";
                     break;
                 default:
                     break;

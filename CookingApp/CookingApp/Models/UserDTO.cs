@@ -57,5 +57,8 @@ namespace CookingApp.Models
 
         [Column(nameof(IsWorking))]
         public bool IsWorking { get; set; }
+
+        [Column(nameof(IsRegistered))]
+        public bool IsRegistered { get; set; }
     }
  }
