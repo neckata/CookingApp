@@ -7,11 +7,19 @@
         Receipts,
         RecipeInformation,
         Cookers,
-        Cooker
+        Cooker,
+        TimeTable
     }
 
     public enum PostActionMethods
     {
-        CreateUser
+        CreateUser,
+        Login,
+        Logout,
+        Order,
+        Orders,
+        Save,
+        SaveAddress,
+        SaveCooker
     }
 }

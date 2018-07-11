@@ -35,13 +35,7 @@ namespace CookingApp.ViewModels.MainPage
 
         public void ReloadUser()
         {
-            UserDTO user = DataBase.Instance.Query<UserDTO>().FirstOrDefault();
-            if (user == null)
-            {
-                user = new UserDTO { UserType = UserTypesEnum.Client, UserName = "AnonymousUser",Email="email@mail.com",Name=AppResources.ResourceManager.GetString("lblAnonymousUser"),
-                    IMEI = DependencyService.Get<IDevice>().GetIdentifier(), FCM = "FCM" };
-                DataBase.Instance.Add(user);
-            }
+            UserDTO user = DataBase.Instance.Query<UserDTO>().First();
             Name = string.Format("{0} {1}", user.Name, user.Family);
             Email = user.Email;
             OnPropertyChangedModel(nameof(Name));

@@ -1,5 +1,6 @@
 ﻿using CookingApp.Helpers;
 using CookingApp.Models;
+using CookingApp.Resources;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.RecipesPage;
 using CookingApp.ViewModels.UserPage;
@@ -26,7 +27,7 @@ namespace CookingApp.Services
             return cookers;
         }
 
-        public async Task<CookerInformationViewModel> GetCookerInformation(int cookerID,DateTime fromDate,DateTime toDate)
+        public async Task<CookerInformationViewModel> GetCookerInformation(int cookerID, DateTime fromDate)
         {
             CookerInformationViewModel cooker = new CookerInformationViewModel();
 
@@ -52,100 +53,48 @@ namespace CookingApp.Services
 
             list = new ObservableCollection<CuisineTypeViewModel>(list.Where(x => x.Cuisines.Count > 0));
 
-            cooker.TimeTable = GetTimeTable(cookerID, fromDate, toDate);
+            List<TimeTableRowViewModel> timeTableRows = new List<TimeTableRowViewModel>();
+            if (data.TimeTable != null && data.TimeTable.Count!=0)
+            {
+                foreach (var item in data.TimeTable)
+                {
+                    var vm = new TimeTableRowViewModel()
+                    {
+                        Day = item.Day,
+                        Hours = new List<TimeTableCellViewModel>()
+                    };
+                    foreach (var cell in item.Hours)
+                        vm.Hours.Add(new TimeTableCellViewModel()
+                        {
+                            IsTaken = cell.IsTaken,
+                            IsWorking = cell.IsWorking,
+                            Percentage = cell.Percentage
+                        });
+                    timeTableRows.Add(vm);
+                }
+            }
+            else
+            {
+                timeTableRows = new List<TimeTableRowViewModel>() {
+                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("monday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
+                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("thursday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
+                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("wednesday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
+                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("tuesday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
+                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("friday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
+                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("saturday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } },
+                new TimeTableRowViewModel{  Day = AppResources.ResourceManager.GetString("sunday"),Hours = new List<TimeTableCellViewModel>{new TimeTableCellViewModel { Percentage=1, IsWorking=false} } }};
+            }
+
+            cooker.TimeTable = timeTableRows;
             cooker.RecipesCanCook = recipes;
             cooker.CuisineTypes = list;
 
             return cooker;
         }
 
-        public List<TimeTableRowViewModel> GetTimeTable(int cookerID, DateTime fromDate, DateTime toDate)
+        public async Task<List<TimeTableRowViewModel>> GetTimeTable(int cookerID, DateTime fromDate)
         {
-            var data = new List<TimeTableRowDTO>()
-            {
-                new TimeTableRowDTO()
-                {
-                    Day="Понеделник",
-                    Hours= new List<TimeTableCellDTO>()
-                    {
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true,  Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
-                    }
-                },
-                new TimeTableRowDTO()
-                {
-                    Day="Вторник",
-                    Hours= new List<TimeTableCellDTO>()
-                    {
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
-                    }
-                },
-                new TimeTableRowDTO()
-                {
-                    Day="Сряда",
-                    Hours= new List<TimeTableCellDTO>()
-                    {
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true,  Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
-                    }
-                },
-                new TimeTableRowDTO()
-                {
-                    Day="Четврътък",
-                    Hours= new List<TimeTableCellDTO>()
-                    {
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
-                    }
-                },
-                new TimeTableRowDTO()
-                {
-                    Day="Петък",
-                    Hours= new List<TimeTableCellDTO>()
-                    {
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.3, IsWorking=false},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=false, Percentage=0.15, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true,  Percentage=0.075, IsWorking=true},
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=0.15, IsWorking=false},
-                    }
-                },
-                new TimeTableRowDTO()
-                {
-                    Day="Събота",
-                    Hours= new List<TimeTableCellDTO>()
-                    {
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=1, IsWorking=false},
-                    }
-                },
-                new TimeTableRowDTO()
-                {
-                    Day="Неделя",
-                    Hours= new List<TimeTableCellDTO>()
-                    {
-                       new TimeTableCellDTO() { IsTaken=true, Percentage=1, IsWorking=false},
-                    }
-                }
-            };
-
+            var data = await _rc.GetDataAsync<List<TimeTableRowDTO>>(Enums.GetActionMethods.TimeTable, string.Format("cookerID:{0}, fromDate:{1}", cookerID, fromDate));
 
             List<TimeTableRowViewModel> list = new List<TimeTableRowViewModel>();
             foreach (var item in data)

@@ -25,7 +25,7 @@ namespace CookingApp.ViewModels.CookersPage
             cookerName = model.Name;
             FromDate = Utility.FirstDateOfWeek(DateTime.Today.Year, Utility.GetWeekOfYear(DateTime.Now), CultureInfo.CurrentCulture);
             ToDate = FromDate.AddDays(6);
-            FilldData(FromDate, ToDate);
+            FilldData();
         }
 
         private int cookerID;
@@ -93,12 +93,12 @@ namespace CookingApp.ViewModels.CookersPage
             }
         }
 
-        private async void FilldData(DateTime fromDate, DateTime toDate)
+        private async void FilldData()
         {
             IsBusy = true;
             OnPropertyChangedModel(nameof(IsBusy));
 
-            var cookerInformation = await _model.GetCookerInformation(cookerID, fromDate, toDate);
+            var cookerInformation = await _model.GetCookerInformation(cookerID, FromDate);
             TimeTable = cookerInformation.TimeTable;
             RecipesCanCook = cookerInformation.RecipesCanCook;
             CuisineTypes = cookerInformation.CuisineTypes;
@@ -111,14 +111,14 @@ namespace CookingApp.ViewModels.CookersPage
             OnPropertyChangedModel(nameof(IsBusy));
         }
 
-        public void GetTimeTable(int weekChange)
+        public async void GetTimeTable(int weekChange)
         {
             IsBusy = true;
             OnPropertyChangedModel(nameof(IsBusy));
 
             FromDate = FromDate.AddDays(weekChange);
             ToDate = FromDate.AddDays(weekChange);
-            TimeTable = _model.GetTimeTable(cookerID, FromDate, ToDate);
+            TimeTable = await _model.GetTimeTable(cookerID, FromDate);
 
             OnPropertyChangedModel(nameof(TimeTable));
             OnPropertyChangedModel(nameof(FromDate));

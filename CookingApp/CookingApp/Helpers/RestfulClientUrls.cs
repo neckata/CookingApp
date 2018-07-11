@@ -27,6 +27,9 @@ namespace CookingApp.Helpers
                 case GetActionMethods.Cooker:
                     actionUrl = "cooker/{0}";
                     break;
+                case GetActionMethods.TimeTable:
+                    actionUrl = "timeTable/{0}&{1}";
+                    break;
                 default:
                     break;
             }
@@ -41,6 +44,27 @@ namespace CookingApp.Helpers
             {
                 case PostActionMethods.CreateUser:
                     actionUrl = "register";
+                    break;
+                case PostActionMethods.Login:
+                    actionUrl = "login";
+                    break;
+                case PostActionMethods.Logout:
+                    actionUrl = "logout";
+                    break;
+                case PostActionMethods.Save:
+                    actionUrl = "save";
+                    break;
+                case PostActionMethods.SaveAddress:
+                    actionUrl = "saveAddress";
+                    break;
+                case PostActionMethods.SaveCooker:
+                    actionUrl = "saveCooker";
+                    break;
+                case PostActionMethods.Order:
+                    actionUrl = "order";
+                    break;
+                case PostActionMethods.Orders:
+                    actionUrl = "orders";
                     break;
                 default:
                     break;

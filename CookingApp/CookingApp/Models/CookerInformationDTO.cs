@@ -7,5 +7,7 @@ namespace CookingApp.Models
         public List<RecipeDTO> Receipts { get; set; }
 
         public List<string> Cuisines { get; set; }
+
+        public List<TimeTableRowDTO> TimeTable { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CookingApp.Models
 {
-    class TimeTableRowDTO
+    public class TimeTableRowDTO
     {
         public string Day { get; set; }
 

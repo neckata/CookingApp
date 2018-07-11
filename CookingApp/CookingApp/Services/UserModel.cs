@@ -1,17 +1,43 @@
-﻿using CookingApp.Helpers;
+﻿using CookingApp.Enums;
+using CookingApp.Helpers;
+using CookingApp.Interfaces;
 using CookingApp.Models;
+using CookingApp.Resources;
 using CookingApp.ViewModels.UserPage;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace CookingApp.Services
 {
     public class UserModel
     {
+        RestfulClient _rc = new RestfulClient();
+
         public bool IsUserLogged()
         {
             UserDTO user = GetUser();
             return user.UserType == Enums.UserTypesEnum.Cooker;
+        }
+
+        public async void RegisterUser()
+        {
+            UserDTO user = DataBase.Instance.Query<UserDTO>().First();
+            if (user == null)
+            {
+                user = new UserDTO
+                {
+                    UserType = UserTypesEnum.Client,
+                    UserName = "AnonymousUser",
+                    Email = "email@mail.com",
+                    Name = AppResources.ResourceManager.GetString("lblAnonymousUser"),
+                    IMEI = DependencyService.Get<IDevice>().GetIdentifier(),
+                    FCM = "FCM"
+                };
+                DataBase.Instance.Add(user);
+
+                ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, user);
+            }
         }
 
         public bool Login(string userName, string password)
@@ -42,7 +68,7 @@ namespace CookingApp.Services
                 DataBase.Instance.Add(item);
 
             UserDTO user = GetUser();
-            user.UserType = Enums.UserTypesEnum.Cooker;
+            user.UserType = UserTypesEnum.Cooker;
 
             user.Name = data.Name;
             user.Email = data.Email;
@@ -62,7 +88,7 @@ namespace CookingApp.Services
         public bool Logout()
         {
             UserDTO user = GetUser();
-            user.UserType = Enums.UserTypesEnum.Client;
+            user.UserType = UserTypesEnum.Client;
             DataBase.Instance.Update(user);
             ClearUserCuisines();
             return true;
