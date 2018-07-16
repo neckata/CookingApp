@@ -43,6 +43,8 @@ namespace CookingApp.ViewModels.UserPage
 
         public ObservableCollection<CuisineTypeViewModel> CuisineTypes { get; set; }
 
+        public ObservableCollection<UserTimeTableViewModel> TimeTable { get; set; }
+
         public ICommand Login
         {
             get
@@ -101,6 +103,16 @@ namespace CookingApp.ViewModels.UserPage
                             DataBase.Instance.Add(new CuisineSelectedDTO() { Code=item2.Code});
                     }
 
+                    var timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
+                    foreach (var item in TimeTable)
+                    {
+                        var time = timeTablesBase.First(x => x.Code == item.Code);
+                        time.IsWorking = item.IsWorking;
+                        time.From = item.From;
+                        time.To = item.To;
+                        DataBase.Instance.Update(time);
+                    }
+
                     await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
                     await PageTemplate.CurrentPage.NavigateBack();
                 });
@@ -129,8 +141,10 @@ namespace CookingApp.ViewModels.UserPage
             OrdersCount = user.OrdersCount;
 
             CuisineTypes = new ObservableCollection<CuisineTypeViewModel>(_model.GetUserCuisineTypes());
+            TimeTable = new ObservableCollection<UserTimeTableViewModel>(_model.GetTimeTable());
 
             OnPropertyChangedModel(nameof(CuisineTypes));
+            OnPropertyChangedModel(nameof(TimeTable));
             OnPropertyChangedModel(nameof(IsWorking));
             OnPropertyChangedModel(nameof(OrdersCount));
             OnPropertyChangedModel(nameof(Rating));

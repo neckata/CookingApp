@@ -87,6 +87,7 @@ namespace CookingApp.Helpers
             _connection.CreateTable<ChatDTO>();
             _connection.CreateTable<CuisineFilterDTO>();
             _connection.CreateTable<CuisineSelectedDTO>();
+            _connection.CreateTable<UserTimeTableDTO>();
         }
 
         public async void LoadNomenclatures()

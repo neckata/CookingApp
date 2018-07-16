@@ -21,18 +21,18 @@
                                 <StackLayout.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={x:Reference Name=OrdersPage}, Path=BindingContext.OpenCooker}" CommandParameter="{Binding CookerID}"/>
                                 </StackLayout.GestureRecognizers>
-                                <Label Text="{Binding CookerName}" FontSize="22" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{i:Translate lblProductsIncluded}"  IsVisible="{Binding ProductsIncluded}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{i:Translate lblNotProductsIncluded}" IsVisible="{Binding ProductsIncluded, Converter={StaticResource InvertBoolenConverter}}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{i:Translate lblAddress}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding Address}" FontSize="20" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{i:Translate lblDate}" FontSize="20" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding Date}" FontSize="20" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding CookerName}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{i:Translate lblProductsIncluded}"  IsVisible="{Binding ProductsIncluded}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{i:Translate lblNotProductsIncluded}" IsVisible="{Binding ProductsIncluded, Converter={StaticResource InvertBoolenConverter}}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{i:Translate lblAddress}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Address}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{i:Translate lblDate}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Date}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
                             </StackLayout>
                         </DataTemplate>
                     </controls:RepeaterView.ItemTemplate>
                 </controls:RepeaterView>
-                <Label Text="{i:Translate lblNoOrders}" IsVisible="{Binding NoOrders}" FontSize="30" TextColor="{StaticResource TextColor}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                <Label Text="{i:Translate lblNoOrders}" IsVisible="{Binding NoOrders}" FontSize="Large" TextColor="{StaticResource TextColor}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" LineBreakMode="WordWrap"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

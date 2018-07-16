@@ -1,7 +1,9 @@
 ﻿using CookingApp.Enums;
 using CookingApp.Helpers;
 using CookingApp.Models;
+using CookingApp.Resources;
 using CookingApp.ViewModels.UserPage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +24,9 @@ namespace CookingApp.Services
             UserDTO user = DataBase.Instance.Query<UserDTO>().First();
             if (!user.IsRegistered)
             {
-                ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, "FCM");
+                //TODO FCM
+                RegisterUserDTO FCM = new RegisterUserDTO() { FcmID = user.FCM };
+                ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, FCM);
                 if (model.IsSuccessStatusCode)
                 {
                     user.IsRegistered = true;
@@ -53,7 +57,41 @@ namespace CookingApp.Services
                 new CuisineSelectedDTO() { Code = "AU" }, new CuisineSelectedDTO() { Code = "NOCOOK" }, new CuisineSelectedDTO() { Code = "VAREN" }, new CuisineSelectedDTO() { Code = "SUMMER" }
             };
 
+            List<UserTimeTableDTO> timeTables = new List<UserTimeTableDTO>()
+            {
+                new UserTimeTableDTO(){Code = WeekDaysEnum.MODAY,IsWorking=true, From=new TimeSpan(8,0,0),To=new TimeSpan(16,0,0)},
+                new UserTimeTableDTO(){Code = WeekDaysEnum.TUESDAY,IsWorking=true, From=new TimeSpan(10,0,0),To=new TimeSpan(18,0,0)},
+                new UserTimeTableDTO(){Code = WeekDaysEnum.WEDNESDAY},
+                new UserTimeTableDTO(){Code = WeekDaysEnum.TUESDAY},
+                new UserTimeTableDTO(){Code = WeekDaysEnum.FRIDAY},
+                new UserTimeTableDTO(){Code = WeekDaysEnum.SATURDAY,IsWorking=true, From=new TimeSpan(10,0,0),To=new TimeSpan(18,0,0)},
+                new UserTimeTableDTO(){Code = WeekDaysEnum.SUNDAY}
+            };
+
             ClearUserCuisines();
+
+            var timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
+
+            if (timeTablesBase.Count() == 0)
+            {
+                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.MODAY, Day = AppResources.ResourceManager.GetString("monday") });
+                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.TUESDAY, Day = AppResources.ResourceManager.GetString("tuesday") });
+                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.WEDNESDAY, Day = AppResources.ResourceManager.GetString("wednesday") });
+                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.THURDSAY, Day = AppResources.ResourceManager.GetString("thursday") });
+                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.FRIDAY, Day = AppResources.ResourceManager.GetString("friday") });
+                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.SATURDAY, Day = AppResources.ResourceManager.GetString("saturday") });
+                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.SUNDAY, Day = AppResources.ResourceManager.GetString("sunday") });
+                timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
+            }
+
+            foreach(var item in timeTables)
+            {
+                var time = timeTablesBase.First(x => x.Code == item.Code);
+                time.IsWorking = item.IsWorking;
+                time.From = item.From;
+                time.To = item.To;
+                DataBase.Instance.Update(time);
+            }
 
             foreach (var item in userCuisines)
                 DataBase.Instance.Add(item);
@@ -112,6 +150,23 @@ namespace CookingApp.Services
                     });
                 data.Add(cuisineType);
             }
+
+            return data;
+        }
+
+        public List<UserTimeTableViewModel> GetTimeTable()
+        {
+            List<UserTimeTableViewModel> data = new List<UserTimeTableViewModel>();
+
+            foreach (var item in DataBase.Instance.Query<UserTimeTableDTO>())
+                data.Add(new UserTimeTableViewModel()
+                {
+                    Day = item.Day,
+                    From = item.From,
+                    IsWorking = item.IsWorking,
+                    To = item.To,
+                    Code = item.Code
+                });
 
             return data;
         }

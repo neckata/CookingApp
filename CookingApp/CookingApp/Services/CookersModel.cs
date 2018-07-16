@@ -30,7 +30,7 @@ namespace CookingApp.Services
         {
             CookerInformationViewModel cooker = new CookerInformationViewModel();
 
-            CookerInformationDTO data = await _rc.GetDataAsync<CookerInformationDTO>(Enums.GetActionMethods.Cooker, cookerID.ToString());
+            CookerInformationDTO data = await _rc.GetDataAsync<CookerInformationDTO>(Enums.GetActionMethods.Cooker, string.Format("{0}?fromDate={1}", cookerID, fromDate.ToString("yyyy-MM-dd")));
 
             List<RecipeViewModel> recipes = new List<RecipeViewModel>();
             foreach (var item in data.Receipts)
@@ -53,7 +53,7 @@ namespace CookingApp.Services
             list = new ObservableCollection<CuisineTypeViewModel>(list.Where(x => x.Cuisines.Count > 0));
 
             List<TimeTableRowViewModel> timeTableRows = new List<TimeTableRowViewModel>();
-            foreach (var item in data.TimeTable)
+            foreach (var item in data.Schedule)
             {
                 var vm = new TimeTableRowViewModel()
                 {

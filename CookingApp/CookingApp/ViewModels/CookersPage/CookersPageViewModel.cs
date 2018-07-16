@@ -25,6 +25,8 @@ namespace CookingApp.ViewModels.CookersPage
 
         public bool IsBusy { get; set; }
 
+        public bool NoCookers { get; set; }
+
         public CuisineFilterDTO SelectedCuisineFilter { get; set; }
 
         public CuisineDTO SelectedCuisine { get; set; }
@@ -41,16 +43,26 @@ namespace CookingApp.ViewModels.CookersPage
             OnPropertyChangedModel(nameof(Cuisines));
             Cookers = new List<CookerViewModel>();
             OnPropertyChangedModel(nameof(Cookers));
+            NoCookers = false;
+            OnPropertyChangedModel(nameof(NoCookers));
         }
 
         public async void FillCookers()
         {
             if (SelectedCuisine != null)
             {
+                NoCookers = false;
+                OnPropertyChangedModel(nameof(NoCookers));
+
                 IsBusy = true;
                 OnPropertyChangedModel(nameof(IsBusy));
 
                 Cookers = await _cookersModel.GetCookers(SelectedCuisine.Code);
+                if (Cookers.Count == 0)
+                {
+                    NoCookers = true;
+                    OnPropertyChangedModel(nameof(NoCookers));
+                }
                 OnPropertyChangedModel(nameof(Cookers));
 
                 IsBusy = false;

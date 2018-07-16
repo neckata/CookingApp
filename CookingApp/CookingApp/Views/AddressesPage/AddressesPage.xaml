@@ -14,17 +14,17 @@
                             <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="0,5,0,5">
                                 <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
 
-                                    <Label Text="{i:Translate lblAddressName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
-                                    <Entry Text="{Binding Name}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
+                                    <Label Text="{i:Translate lblAddressName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Italic"/>
+                                    <Entry Text="{Binding Name}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontAttributes="Italic"/>
 
-                                    <Label Text="{i:Translate lblCity}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
-                                    <Entry Text="{Binding City}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
+                                    <Label Text="{i:Translate lblCity}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Italic"/>
+                                    <Entry Text="{Binding City}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontAttributes="Italic"/>
 
-                                    <Label Text="{i:Translate lblNeighborhood}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
-                                    <Entry Text="{Binding Neighborhood}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
+                                    <Label Text="{i:Translate lblNeighborhood}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Italic"/>
+                                    <Entry Text="{Binding Neighborhood}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Italic"/>
 
-                                    <Label Text="{i:Translate lblStreet}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="16" FontAttributes="Italic"/>
-                                    <Entry Text="{Binding Street}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="18" FontAttributes="Italic"/>
+                                    <Label Text="{i:Translate lblStreet}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Italic"/>
+                                    <Entry Text="{Binding Street}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontAttributes="Italic"/>
 
                                     <StackLayout Orientation="Horizontal">
                                         <Image Source="Accept.png" HorizontalOptions="CenterAndExpand">

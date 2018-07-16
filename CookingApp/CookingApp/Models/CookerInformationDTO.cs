@@ -8,6 +8,6 @@ namespace CookingApp.Models
 
         public List<string> Cuisines { get; set; }
 
-        public List<TimeTableRowDTO> TimeTable { get; set; }
+        public List<TimeTableRowDTO> Schedule { get; set; }
     }
 }

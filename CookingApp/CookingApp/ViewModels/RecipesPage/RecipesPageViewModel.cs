@@ -23,6 +23,8 @@ namespace CookingApp.ViewModels.RecipesPage
 
         public bool IsBusy { get; set; }
 
+        public bool NoRecipies { get; set; }
+
         public CuisineFilterDTO SelectedCuisineFilter { get; set; }
 
         public CuisineDTO SelectedCuisine { get; set; }
@@ -39,17 +41,28 @@ namespace CookingApp.ViewModels.RecipesPage
             OnPropertyChangedModel(nameof(Cuisines));
             Recipes = new List<RecipeViewModel>();
             OnPropertyChangedModel(nameof(Recipes));
+            NoRecipies = false;
+            OnPropertyChangedModel(nameof(NoRecipies));
         }
 
         public async void FillRecipesData()
         {
             if (SelectedCuisine != null)
             {
+                NoRecipies = false;
+                OnPropertyChangedModel(nameof(NoRecipies));
+
                 IsBusy = true;
                 OnPropertyChangedModel(nameof(IsBusy));
 
                 Recipes = await _model.GetAllRecipes(SelectedCuisine.Code);
                 OnPropertyChangedModel(nameof(Recipes));
+
+                if (Recipes.Count == 0)
+                {
+                    NoRecipies = true;
+                    OnPropertyChangedModel(nameof(NoRecipies));
+                }
 
                 IsBusy = false;
                 OnPropertyChangedModel(nameof(IsBusy));

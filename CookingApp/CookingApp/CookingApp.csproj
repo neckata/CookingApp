@@ -48,6 +48,7 @@
     <Compile Include="Enums\CuisineTypeEnums.cs" />
     <Compile Include="Enums\RestfulMethodsEnum.cs" />
     <Compile Include="Enums\UserTypesEnum.cs" />
+    <Compile Include="Enums\WeekDaysEnum.cs" />
     <Compile Include="Helpers\DataBase.cs" />
     <Compile Include="Helpers\RestfulClient.cs" />
     <Compile Include="Helpers\RestfulClientUrls.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Models\CookerCuisineDTO.cs" />
     <Compile Include="Models\CuisineDTO.cs" />
     <Compile Include="Models\RecipeCookerDTO.cs" />
+    <Compile Include="Models\RegisterUserDTO.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\SubscriptionDTO.cs" />
     <Compile Include="Models\ChatDTO.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Models\TimeTableCellDTO.cs" />
     <Compile Include="Models\TimeTableRowDTO.cs" />
     <Compile Include="Models\UserDTO.cs" />
+    <Compile Include="Models\UserTimeTableDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.bg.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -121,6 +124,7 @@
     <Compile Include="ViewModels\UserPage\CuisineViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserCookerPageViewModel.cs" />
     <Compile Include="ViewModels\UserPage\UserPageViewModel.cs" />
+    <Compile Include="ViewModels\UserPage\UserTimeTableViewModel.cs" />
     <Compile Include="Views\AddressesPage\AddressesPage.xaml.cs">
       <DependentUpon>AddressesPage.xaml</DependentUpon>
     </Compile>

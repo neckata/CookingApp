@@ -17,7 +17,7 @@ namespace CookingApp.ViewModels.MainPage
         }
 
         public string Name { get; set; }
-        
+
         public string Email { get; set; }
 
         public ICommand Navigate
@@ -42,6 +42,7 @@ namespace CookingApp.ViewModels.MainPage
                 {
                     UserType = UserTypesEnum.Client,
                     UserName = "AnonymousUser",
+                    Password = string.Empty,
                     Email = "email@mail.com",
                     Name = AppResources.ResourceManager.GetString("lblAnonymousUser"),
                     IMEI = DependencyService.Get<IDevice>().GetIdentifier(),

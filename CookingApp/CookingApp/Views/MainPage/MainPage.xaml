@@ -18,7 +18,7 @@
                             <TapGestureRecognizer Command="{Binding Navigate}" CommandParameter="CookersPage"/>
                         </Image.GestureRecognizers>
                     </Image>
-                    <Button Text="{i:Translate cookersPageTitle}" VerticalOptions="CenterAndExpand" FontSize="20" TextColor="{StaticResource TextColor}" BackgroundColor="{StaticResource ButtonColor}" Command="{Binding Navigate}" CommandParameter="CookersPage" HorizontalOptions="FillAndExpand"/>
+                    <Button Text="{i:Translate cookersPageTitle}" VerticalOptions="CenterAndExpand" FontSize="Medium" TextColor="{StaticResource TextColor}" BackgroundColor="{StaticResource ButtonColor}" Command="{Binding Navigate}" CommandParameter="CookersPage" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
 
                 <StackLayout Grid.Row="1" Margin="10,5,10,5" Orientation="Horizontal" Padding="5">
@@ -27,7 +27,7 @@
                             <TapGestureRecognizer Command="{Binding Navigate}" CommandParameter="RecipesPage"/>
                         </Image.GestureRecognizers>
                     </Image>
-                    <Button Text="{i:Translate recipesPageTitle}" VerticalOptions="CenterAndExpand" FontSize="20" TextColor="{StaticResource TextColor}" BackgroundColor="{StaticResource ButtonColor}" Command="{Binding Navigate}" CommandParameter="RecipesPage" HorizontalOptions="FillAndExpand"/>
+                    <Button Text="{i:Translate recipesPageTitle}" VerticalOptions="CenterAndExpand" FontSize="Medium" TextColor="{StaticResource TextColor}" BackgroundColor="{StaticResource ButtonColor}" Command="{Binding Navigate}" CommandParameter="RecipesPage" HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
             </Grid>
         </StackLayout>

@@ -16,7 +16,7 @@
     <ContentPage.Content>
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
-                <ScrollView BackgroundColor="{StaticResource Primary}">
+                <ScrollView BackgroundColor="{StaticResource Primary}" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBoolenConverter}}">
                     <StackLayout Orientation="Vertical" VerticalOptions="StartAndExpand" Margin="5">
                         <Image Source="{Binding Cooker.Image}" VerticalOptions="StartAndExpand"  WidthRequest="400" HeightRequest="200"/>
                         <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand">

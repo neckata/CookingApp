@@ -318,4 +318,43 @@
   <data name="lblNoNotifications" xml:space="preserve">
     <value>Няма нотификации</value>
   </data>
+  <data name="lblWorkTime" xml:space="preserve">
+    <value>Работно време :</value>
+  </data>
+  <data name="lblNoCookers" xml:space="preserve">
+    <value>Няма готвачи от този тип кухня</value>
+  </data>
+  <data name="lblNoRecipies" xml:space="preserve">
+    <value>Няма рецепти от този тип кухня</value>
+  </data>
+  <data name="lblFrom" xml:space="preserve">
+    <value>: От</value>
+  </data>
+  <data name="lblTo" xml:space="preserve">
+    <value>До</value>
+  </data>
+  <data name="friday" xml:space="preserve">
+    <value>Петък</value>
+  </data>
+  <data name="monday" xml:space="preserve">
+    <value>Понеделник</value>
+  </data>
+  <data name="saturday" xml:space="preserve">
+    <value>Събота</value>
+  </data>
+  <data name="sunday" xml:space="preserve">
+    <value>Неделя</value>
+  </data>
+  <data name="thursday" xml:space="preserve">
+    <value>Четвъртък</value>
+  </data>
+  <data name="tuesday" xml:space="preserve">
+    <value>Вторник</value>
+  </data>
+  <data name="wednesday" xml:space="preserve">
+    <value>Сряда</value>
+  </data>
+  <data name="lblFreeDay" xml:space="preserve">
+    <value>: Почивен ден</value>
+  </data>
 </root>

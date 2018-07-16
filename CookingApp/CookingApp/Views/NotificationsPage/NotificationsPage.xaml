@@ -5,7 +5,7 @@
              x:Class="CookingApp.Views.NotificationsPage.NotificationsPage">
     <ContentPage.Content>
         <ScrollView BackgroundColor="{StaticResource Primary}">
-            <Label Text="{i:Translate lblNoNotifications}" FontSize="30" TextColor="{StaticResource TextColor}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" LineBreakMode="WordWrap"/>
+            <Label Text="{i:Translate lblNoNotifications}" FontSize="Large" TextColor="{StaticResource TextColor}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" LineBreakMode="WordWrap"/>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

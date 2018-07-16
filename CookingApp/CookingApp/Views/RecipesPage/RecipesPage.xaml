@@ -4,11 +4,17 @@
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
              xmlns:controls="clr-namespace:CookingApp.Controls"
              x:Class="CookingApp.Views.RecipesPage.RecipesPage"
+             xmlns:converter="clr-namespace:CookingApp.Converters"
              x:Name="RecipePage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:InvertBoolenConverter x:Key="InvertBoolenConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-            <StackLayout BackgroundColor="{StaticResource Primary}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <StackLayout BackgroundColor="{StaticResource Primary}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBoolenConverter}}">
                 <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineFilter}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
                 <Picker x:Name="cuisines" IsVisible="False" ItemsSource="{Binding Cuisines}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisine}" Title="{i:Translate lblChooseCuisine}" SelectedIndexChanged="Picker_SelectedIndexChanged_1"/>
                 <ScrollView x:Name="Recipes" IsVisible="False">
@@ -37,6 +43,12 @@
                         </controls:RepeaterView.ItemTemplate>
                     </controls:RepeaterView>
                 </ScrollView>
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding NoRecipies}" Padding="12"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <Label Text="{i:Translate lblNoRecipies}" HorizontalOptions="Center" TextColor="White"/>
             </StackLayout>
 
             <StackLayout IsVisible="{Binding IsBusy}" Padding="12" BackgroundColor="{StaticResource ButtonColor}"
