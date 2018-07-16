@@ -24,7 +24,6 @@ namespace CookingApp.Services
             UserDTO user = DataBase.Instance.Query<UserDTO>().First();
             if (!user.IsRegistered)
             {
-                //TODO FCM
                 RegisterUserDTO FCM = new RegisterUserDTO() { FcmID = user.FCM };
                 ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, FCM);
                 if (model.IsSuccessStatusCode)
@@ -48,27 +47,23 @@ namespace CookingApp.Services
                 Description = "Готвач с 20 години опит във веганската кухня, перфекционист",
                 IsWorking = true,
                 HoursPricing = 40,
-                Rating = 4
+                Rating = 4,
+                UserCuisines = new List<CuisineSelectedDTO>()
+                {
+                    new CuisineSelectedDTO() { Code = "VEGAN" }, new CuisineSelectedDTO() { Code = "DIETIC" } ,  new CuisineSelectedDTO() { Code = "WINTER" },
+                    new CuisineSelectedDTO() { Code = "AU" }, new CuisineSelectedDTO() { Code = "NOCOOK" }, new CuisineSelectedDTO() { Code = "VAREN" }, new CuisineSelectedDTO() { Code = "SUMMER" }
+                },
+                TimeTables = new List<UserTimeTableDTO>()
+                {
+                    new UserTimeTableDTO(){Code = WeekDaysEnum.MODAY,IsWorking=true, From=new TimeSpan(8,0,0),To=new TimeSpan(16,0,0)},
+                    new UserTimeTableDTO(){Code = WeekDaysEnum.TUESDAY,IsWorking=true, From=new TimeSpan(10,0,0),To=new TimeSpan(18,0,0)},
+                    new UserTimeTableDTO(){Code = WeekDaysEnum.WEDNESDAY},
+                    new UserTimeTableDTO(){Code = WeekDaysEnum.TUESDAY},
+                    new UserTimeTableDTO(){Code = WeekDaysEnum.FRIDAY},
+                    new UserTimeTableDTO(){Code = WeekDaysEnum.SATURDAY,IsWorking=true, From=new TimeSpan(10,0,0),To=new TimeSpan(18,0,0)},
+                    new UserTimeTableDTO(){Code = WeekDaysEnum.SUNDAY}
+                }
             };
-
-            List<CuisineSelectedDTO> userCuisines = new List<CuisineSelectedDTO>()
-            {
-                new CuisineSelectedDTO() { Code = "VEGAN" }, new CuisineSelectedDTO() { Code = "DIETIC" } ,  new CuisineSelectedDTO() { Code = "WINTER" },
-                new CuisineSelectedDTO() { Code = "AU" }, new CuisineSelectedDTO() { Code = "NOCOOK" }, new CuisineSelectedDTO() { Code = "VAREN" }, new CuisineSelectedDTO() { Code = "SUMMER" }
-            };
-
-            List<UserTimeTableDTO> timeTables = new List<UserTimeTableDTO>()
-            {
-                new UserTimeTableDTO(){Code = WeekDaysEnum.MODAY,IsWorking=true, From=new TimeSpan(8,0,0),To=new TimeSpan(16,0,0)},
-                new UserTimeTableDTO(){Code = WeekDaysEnum.TUESDAY,IsWorking=true, From=new TimeSpan(10,0,0),To=new TimeSpan(18,0,0)},
-                new UserTimeTableDTO(){Code = WeekDaysEnum.WEDNESDAY},
-                new UserTimeTableDTO(){Code = WeekDaysEnum.TUESDAY},
-                new UserTimeTableDTO(){Code = WeekDaysEnum.FRIDAY},
-                new UserTimeTableDTO(){Code = WeekDaysEnum.SATURDAY,IsWorking=true, From=new TimeSpan(10,0,0),To=new TimeSpan(18,0,0)},
-                new UserTimeTableDTO(){Code = WeekDaysEnum.SUNDAY}
-            };
-
-            ClearUserCuisines();
 
             var timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
 
@@ -84,7 +79,7 @@ namespace CookingApp.Services
                 timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
             }
 
-            foreach(var item in timeTables)
+            foreach (var item in data.TimeTables)
             {
                 var time = timeTablesBase.First(x => x.Code == item.Code);
                 time.IsWorking = item.IsWorking;
@@ -93,7 +88,7 @@ namespace CookingApp.Services
                 DataBase.Instance.Update(time);
             }
 
-            foreach (var item in userCuisines)
+            foreach (var item in data.UserCuisines)
                 DataBase.Instance.Add(item);
 
             UserDTO user = GetUser();

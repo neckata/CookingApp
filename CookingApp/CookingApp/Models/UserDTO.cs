@@ -1,5 +1,6 @@
 ﻿using CookingApp.Enums;
 using SQLite;
+using System.Collections.Generic;
 
 namespace CookingApp.Models
 {
@@ -60,5 +61,11 @@ namespace CookingApp.Models
 
         [Column(nameof(IsRegistered))]
         public bool IsRegistered { get; set; }
+
+        [Ignore]
+        public List<CuisineSelectedDTO> UserCuisines { get; set; }
+
+        [Ignore]
+        public List<UserTimeTableDTO> TimeTables { get; set; }
     }
  }
