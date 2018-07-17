@@ -24,7 +24,7 @@ namespace CookingApp.Services
             UserDTO user = DataBase.Instance.Query<UserDTO>().First();
             if (!user.IsRegistered)
             {
-                RegisterUserDTO FCM = new RegisterUserDTO() { FcmID = user.FCM };
+                RegisterUserDTO FCM = new RegisterUserDTO() { FcmId = user.FCM };
                 ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, FCM);
                 if (model.IsSuccessStatusCode)
                 {

@@ -2,6 +2,6 @@
 {
     public class RegisterUserDTO
     {
-        public string FcmID { get; set; }
+        public string FcmId { get; set; }
     }
 }
