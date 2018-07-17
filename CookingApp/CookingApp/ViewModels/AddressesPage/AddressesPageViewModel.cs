@@ -2,6 +2,7 @@
 using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.Resources;
+using CookingApp.Services;
 using CookingApp.ViewModels.MainPage;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,8 @@ namespace CookingApp.ViewModels.AddressesPage
 {
     public class AddressesPageViewModel : ObservableViewModel
     {
+        private UserModel _model = new UserModel();
+
         public AddressesPageViewModel()
         {
             Addresses = new ObservableCollection<AddressViewModel>();
@@ -72,15 +75,10 @@ namespace CookingApp.ViewModels.AddressesPage
                         Street = address.Street
                     };
 
-                    if (address.IDInBase == 0)
-                    {
-                        addressDTO.ID = DataBase.Instance.Query<AddressesDTO>().Count() + 1;
-                        Addresses.FirstOrDefault(x => x.ID == para).IDInBase = addressDTO.ID;
-                        DataBase.Instance.Add(addressDTO);
-                    }
-                    else
-                        DataBase.Instance.Update(addressDTO);
-                    await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
+                    bool isSuccess = await _model.SaveAddress(addressDTO);
+
+                    if (isSuccess)
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
                 });
             }
         }
@@ -94,16 +92,19 @@ namespace CookingApp.ViewModels.AddressesPage
                     AddressViewModel address = Addresses.FirstOrDefault(x => x.ID == para);
 
                     Addresses.Remove(address);
-                    OnPropertyChangedModel(nameof(Addresses));
-
-                    if (address.IDInBase > 0)
-                        DataBase.Instance.Delete<AddressesDTO>(address.IDInBase);
 
                     if (Addresses.Count == 0)
                         Addresses.Add(new AddressViewModel());
 
-                    await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblDeleteSuccess"));
                     OnPropertyChangedModel(nameof(Addresses));
+
+                    bool isDeleted = true;
+
+                    if (address.IDInBase > 0)
+                        isDeleted = await _model.DeleteAddress(address.IDInBase);
+
+                    if (isDeleted)
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblDeleteSuccess"));
                 });
             }
         }

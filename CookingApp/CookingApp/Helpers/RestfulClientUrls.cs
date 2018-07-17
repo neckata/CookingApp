@@ -51,8 +51,8 @@ namespace CookingApp.Helpers
                 case PostActionMethods.Logout:
                     actionUrl = "logout";
                     break;
-                case PostActionMethods.Save:
-                    actionUrl = "save";
+                case PostActionMethods.SaveUserInformation:
+                    actionUrl = "saveUserInformation";
                     break;
                 case PostActionMethods.SaveAddress:
                     actionUrl = "saveAddress";
@@ -65,6 +65,9 @@ namespace CookingApp.Helpers
                     break;
                 case PostActionMethods.Orders:
                     actionUrl = "orders";
+                    break;
+                case PostActionMethods.DeleteAddress:
+                    actionUrl = "deleteAddress";
                     break;
                 default:
                     break;

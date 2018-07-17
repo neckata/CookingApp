@@ -18,8 +18,9 @@
         Logout,
         Order,
         Orders,
-        Save,
+        SaveUserInformation,
         SaveAddress,
-        SaveCooker
+        SaveCooker,
+        DeleteAddress
     }
 }

@@ -2,13 +2,13 @@
 using CookingApp.Services;
 using CookingApp.ViewModels.MainPage;
 using CookingApp.Views.MainPage;
-using CookingApp.Helpers;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Acr.UserDialogs;
 using CookingApp.Resources;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace CookingApp.ViewModels.UserPage
 {
@@ -89,32 +89,42 @@ namespace CookingApp.ViewModels.UserPage
         {
             get
             {
-                return new Command(async() =>
+                return new Command(async () =>
                 {
-                    UserDTO user = _model.GetUser();
-                    user.Description = Description;
-                    user.HoursPricing = HoursPricing;
-                    DataBase.Instance.Update(user);
-
-                    _model.ClearUserCuisines();
-                    foreach(var item in CuisineTypes)
+                    List<string> cuisines = new List<string>();
+                    foreach (var item in CuisineTypes)
                     {
                         foreach (var item2 in item.Cuisines.Where(x => x.IsSelected))
-                            DataBase.Instance.Add(new CuisineSelectedDTO() { Code=item2.Code});
+                            cuisines.Add(item2.Code);
                     }
 
-                    var timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
+                    List<UserTimeTableDTO> timeTable = new List<UserTimeTableDTO>();
                     foreach (var item in TimeTable)
                     {
-                        var time = timeTablesBase.First(x => x.Code == item.Code);
-                        time.IsWorking = item.IsWorking;
-                        time.From = item.From;
-                        time.To = item.To;
-                        DataBase.Instance.Update(time);
+                        timeTable.Add(new UserTimeTableDTO()
+                        {
+                            Code = item.Code,
+                            Day = item.Day,
+                            To = item.To,
+                            From = item.From,
+                            IsWorking = item.IsWorking
+                        });
                     }
 
-                    await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
-                    await PageTemplate.CurrentPage.NavigateBack();
+                    bool isSuccess = await _model.SaveCooker(new UserCookerDTO()
+                    {
+                        Description = Description,
+                        HoursPricing = HoursPricing,
+                        Image = Image,
+                        TimeTable = timeTable,
+                        Cuisines = cuisines
+                    });
+
+                    if (isSuccess)
+                    {
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
+                        await PageTemplate.CurrentPage.NavigateBack();
+                    }
                 });
             }
         }

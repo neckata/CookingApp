@@ -4,11 +4,6 @@ namespace CookingApp.ViewModels.AddressesPage
 {
     public class AddressViewModel : ObservableViewModel
     {
-        public AddressViewModel()
-        {
-
-        }
-
         public int ID { get; set; }
 
         public int IDInBase { get; set; }

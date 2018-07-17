@@ -40,15 +40,14 @@ namespace CookingApp.ViewModels.UserPage
                 {
                     if (Validate())
                     {
-                        UserDTO user = _model.GetUser();
-                        user.Name = Name;
-                        user.Phone = Phone;
-                        user.Email = Email;
-                        user.Family = Family;
-                        DataBase.Instance.Update(user);
-                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
-                        ((MenuPageViewModel)(((MenuPage)PageTemplate.CurrentPage.Master).BindingContext)).ReloadUser();
-                        await PageTemplate.CurrentPage.NavigateMainPageAsync();
+                        bool isSucess = await _model.SaveUserInformation(new UserInformationDTO() { Email = Email, FirstName = Name, LastName = Family, Phone = Phone });
+
+                        if (isSucess)
+                        {
+                            await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
+                            ((MenuPageViewModel)(((MenuPage)PageTemplate.CurrentPage.Master).BindingContext)).ReloadUser();
+                            await PageTemplate.CurrentPage.NavigateMainPageAsync();
+                        }
                     }
                 });
             }

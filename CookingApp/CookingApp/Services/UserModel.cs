@@ -6,6 +6,7 @@ using CookingApp.ViewModels.UserPage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CookingApp.Services
 {
@@ -32,6 +33,78 @@ namespace CookingApp.Services
                     DataBase.Instance.Update(user);
                 }
             }
+        }
+
+        public async Task<bool> SaveUserInformation(UserInformationDTO userInformation)
+        {
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.SaveUserInformation, userInformation);
+            if (model.IsSuccessStatusCode)
+            {
+                UserDTO user = GetUser();
+                user.Name = userInformation.FirstName;
+                user.Phone = userInformation.Phone;
+                user.Email = userInformation.Email;
+                user.Family = userInformation.LastName;
+                DataBase.Instance.Update(user);
+            }
+
+            return model.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> SaveAddress(AddressesDTO address)
+        {
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.SaveAddress, address);
+            if (model.IsSuccessStatusCode)
+            {
+                if (address.ID == 0)
+                {
+                    address.ID = int.Parse(model.ResponseContent);
+                    DataBase.Instance.Add(address);
+                }
+                else
+                    DataBase.Instance.Update(address);
+            }
+
+            return model.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeleteAddress(int addressesID)
+        {
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.DeleteAddress, addressesID);
+            if (model.IsSuccessStatusCode)
+            {
+                DataBase.Instance.Delete<AddressesDTO>(addressesID);
+            }
+
+            return model.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> SaveCooker(UserCookerDTO cooker)
+        {
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.SaveCooker, cooker);
+            if (model.IsSuccessStatusCode)
+            {
+                UserDTO user = GetUser();
+                user.Description = cooker.Description;
+                user.HoursPricing = cooker.HoursPricing;
+                DataBase.Instance.Update(user);
+
+                ClearUserCuisines();
+                foreach (var item in cooker.Cuisines)
+                    DataBase.Instance.Add(new CuisineSelectedDTO() { Code = item });
+
+                var timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
+                foreach (var item in cooker.TimeTable)
+                {
+                    var time = timeTablesBase.First(x => x.Code == item.Code);
+                    time.IsWorking = item.IsWorking;
+                    time.From = item.From;
+                    time.To = item.To;
+                    DataBase.Instance.Update(time);
+                }
+            }
+
+            return model.IsSuccessStatusCode;
         }
 
         public bool Login(string userName, string password)
