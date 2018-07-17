@@ -41,7 +41,7 @@ namespace CookingApp.ViewModels.MainPage
                 user = new UserDTO
                 {
                     UserType = UserTypesEnum.Client,
-                    UserName = "AnonymousUser",
+                    UserName = "Anonymous",
                     Password = string.Empty,
                     Email = "email@mail.com",
                     Name = AppResources.ResourceManager.GetString("lblAnonymousUser"),
