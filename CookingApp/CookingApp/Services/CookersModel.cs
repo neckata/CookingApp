@@ -1,8 +1,10 @@
-﻿using CookingApp.Helpers;
+﻿using CookingApp.Enums;
+using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.RecipesPage;
 using CookingApp.ViewModels.UserPage;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -107,6 +109,20 @@ namespace CookingApp.Services
             //TODO
             DataBase.Instance.Add(order);
             return true;
+        }
+
+        public async Task<List<AddressesDTO>> GetAddresses()
+        {
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.GetAddresses, "");
+            if (model.IsSuccessStatusCode)
+            {
+                List<AddressesDTO> data = JsonConvert.DeserializeObject<List<AddressesDTO>>(model.ResponseContent);
+                return data;
+            }
+            else
+            {
+                return new List<AddressesDTO>();
+            }
         }
     }
 }

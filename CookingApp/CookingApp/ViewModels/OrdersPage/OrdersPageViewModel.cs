@@ -13,8 +13,7 @@ namespace CookingApp.ViewModels.OrdersPage
     {
         public OrdersPageViewModel()
         {
-            Orders = _model.GetOrders();
-            NoOrders = Orders.Count == 0;
+            FillData();
         }
 
         private OrdersModel _model = new OrdersModel();
@@ -33,6 +32,15 @@ namespace CookingApp.ViewModels.OrdersPage
                     await PageTemplate.CurrentPage.NavigateAsync(new SingleCookerPage(cooker) { Title = cooker.Name });
                 });
             }
+        }
+
+        public async void FillData()
+        {
+            Orders = await _model.GetOrders();
+            NoOrders = Orders.Count == 0;
+
+            OnPropertyChangedModel(nameof(Orders));
+            OnPropertyChangedModel(nameof(NoOrders));
         }
     }
 }

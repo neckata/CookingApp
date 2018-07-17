@@ -6,7 +6,7 @@ namespace CookingApp.ViewModels.AddressesPage
     {
         public int ID { get; set; }
 
-        public int IDInBase { get; set; }
+        public int? IDInBase { get; set; }
 
         public string Name { get; set; }
 

@@ -1,10 +1,8 @@
 ﻿using Acr.UserDialogs;
-using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.Resources;
 using CookingApp.Services;
 using CookingApp.ViewModels.MainPage;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -19,28 +17,7 @@ namespace CookingApp.ViewModels.AddressesPage
         public AddressesPageViewModel()
         {
             Addresses = new ObservableCollection<AddressViewModel>();
-
-            var addressesDTO = DataBase.Instance.Query<AddressesDTO>().ToList();
-            if (addressesDTO.Count() == 0)
-                Addresses.Add(new AddressViewModel());
-            else
-            {
-                int counter = 0;
-                List<AddressViewModel> list = new List<AddressViewModel>();
-                foreach (var item in addressesDTO)
-                {
-                    Addresses.Add(new AddressViewModel()
-                    {
-                        City = item.City,
-                        Neighborhood = item.Neighborhood,
-                        Street = item.Street,
-                        IDInBase = item.ID,
-                        Name = item.AddressName,
-                        ID = counter
-                    });
-                    counter++;
-                }
-            }
+            FillData();
         }
 
         public ObservableCollection<AddressViewModel> Addresses { get; set; }
@@ -52,7 +29,7 @@ namespace CookingApp.ViewModels.AddressesPage
                 return new Command(() =>
                 {
                     AddressViewModel addressViewModel = new AddressViewModel();
-                    addressViewModel.ID = Addresses.Count;
+                    addressViewModel.ID = Addresses.Last().ID + 1;
                     Addresses.Add(addressViewModel);
                     OnPropertyChangedModel(nameof(Addresses));
                 });
@@ -68,17 +45,20 @@ namespace CookingApp.ViewModels.AddressesPage
                     AddressViewModel address = Addresses.FirstOrDefault(x => x.ID == para);
                     AddressesDTO addressDTO = new AddressesDTO()
                     {
-                        ID = address.IDInBase,
+                        Id = address.IDInBase,
                         City = address.City,
                         AddressName = address.Name,
                         Neighborhood = address.Neighborhood,
                         Street = address.Street
                     };
 
-                    bool isSuccess = await _model.SaveAddress(addressDTO);
+                    int? id = await _model.SaveAddress(addressDTO);
 
-                    if (isSuccess)
+                    if (id.HasValue)
+                    {
+                        address.IDInBase = id;
                         await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblSaveSuccess"));
+                    }
                 });
             }
         }
@@ -90,23 +70,30 @@ namespace CookingApp.ViewModels.AddressesPage
                 return new Command<int>(async (para) =>
                 {
                     AddressViewModel address = Addresses.FirstOrDefault(x => x.ID == para);
-
-                    Addresses.Remove(address);
-
-                    if (Addresses.Count == 0)
-                        Addresses.Add(new AddressViewModel());
-
-                    OnPropertyChangedModel(nameof(Addresses));
-
                     bool isDeleted = true;
 
-                    if (address.IDInBase > 0)
-                        isDeleted = await _model.DeleteAddress(address.IDInBase);
+                    if (address.IDInBase.HasValue)
+                        isDeleted = await _model.DeleteAddress(address.IDInBase.Value);
 
                     if (isDeleted)
+                    {
+                        Addresses.Remove(address);
+
+                        if (Addresses.Count == 0)
+                            Addresses.Add(new AddressViewModel());
+
+                        OnPropertyChangedModel(nameof(Addresses));
+
                         await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblDeleteSuccess"));
+                    }
                 });
             }
+        }
+
+        public async void FillData()
+        {
+            Addresses = await _model.GetAddresses();
+            OnPropertyChangedModel(nameof(Addresses));
         }
     }
 }

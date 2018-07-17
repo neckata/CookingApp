@@ -10,12 +10,13 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace CookingApp.ViewModels.CookersPage
 {
     public class OrderViewModel : ObservableViewModel
     {
-        public OrderViewModel(int cookerID,string cookerName)
+        public OrderViewModel(int cookerID, string cookerName)
         {
             LoadData();
             _cookerID = cookerID;
@@ -24,7 +25,9 @@ namespace CookingApp.ViewModels.CookersPage
 
         private int _cookerID;
 
-        private string _selectedAddress ,_cookerName;
+        private string _selectedAddress, _cookerName;
+
+        private List<AddressesDTO> addresses;
 
         private CookersModel _model = new CookersModel();
 
@@ -69,7 +72,7 @@ namespace CookingApp.ViewModels.CookersPage
             set
             {
                 _selectedAddress = value;
-                var address = DataBase.Instance.Query<AddressesDTO>().FirstOrDefault(x => x.AddressName == _selectedAddress);
+                var address = addresses.FirstOrDefault(x => x.AddressName == _selectedAddress);
                 if (address != null)
                 {
                     AddressName = address.AddressName;
@@ -98,7 +101,7 @@ namespace CookingApp.ViewModels.CookersPage
             }
         }
 
-        public List<string> Addresses { get; set; }
+        public ObservableCollection<string> Addresses { get; set; }
 
         public ICommand Order
         {
@@ -106,17 +109,18 @@ namespace CookingApp.ViewModels.CookersPage
             {
                 return new Command(async () =>
                 {
-                    var address = DataBase.Instance.Query<AddressesDTO>().FirstOrDefault(x => x.AddressName == _selectedAddress);
-                    
+                    var address = addresses.FirstOrDefault(x => x.AddressName == _selectedAddress);
+
                     var order = new OrderDTO()
                     {
                         Date = Date,
-                        Time = Time, ProductsIncluded = ProductsIncluded,
+                        Time = Time,
+                        ProductsIncluded = ProductsIncluded,
                         CookerID = _cookerID,
                         CookerName = _cookerName
                     };
                     if (address != null)
-                        order.AddressID = address.ID;
+                        order.AddressID = address.Id;
                     else
                     {
                         order.AddressName = AddressName;
@@ -149,7 +153,7 @@ namespace CookingApp.ViewModels.CookersPage
             }
         }
 
-        private void LoadData()
+        private async void LoadData()
         {
             IsAddresEnabled = true;
             MinimumDate = DateTime.Now;
@@ -166,10 +170,13 @@ namespace CookingApp.ViewModels.CookersPage
             OnPropertyChangedModel(nameof(Phone));
             OnPropertyChangedModel(nameof(Email));
 
-            Addresses = new List<string>();
+            Addresses = new ObservableCollection<string>();
             Addresses.Add(AppResources.ResourceManager.GetString("newAddress"));
-            foreach (var item in DataBase.Instance.Query<AddressesDTO>())
+            addresses = await _model.GetAddresses();
+            foreach (var item in addresses)
                 Addresses.Add(item.AddressName);
+
+            OnPropertyChangedModel(nameof(Addresses));
         }
     }
 }

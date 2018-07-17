@@ -69,6 +69,9 @@ namespace CookingApp.Helpers
                 case PostActionMethods.DeleteAddress:
                     actionUrl = "deleteAddress";
                     break;
+                case PostActionMethods.GetAddresses:
+                    actionUrl = "listAddresses";
+                    break;
                 default:
                     break;
             }

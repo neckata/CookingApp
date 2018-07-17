@@ -80,7 +80,6 @@ namespace CookingApp.Helpers
             _connection.CreateTable<UserDTO>();
             _connection.CreateTable<SubscriptionDTO>();
             _connection.CreateTable<RecipeCookerDTO>();
-            _connection.CreateTable<AddressesDTO>();
             _connection.CreateTable<OrderDTO>();
             _connection.CreateTable<NotificationDTO>();
             _connection.CreateTable<CuisineDTO>();

@@ -4,19 +4,23 @@ using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.OrdersPage;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CookingApp.Services
 {
     public class OrdersModel
     {
-        public ObservableCollection<SingleOrderViewModel> GetOrders()
+        private CookersModel _model = new CookersModel();
+
+        public async Task<ObservableCollection<SingleOrderViewModel>> GetOrders()
         {
+            var addresess = await _model.GetAddresses();
             var data = new ObservableCollection<SingleOrderViewModel>();
             foreach (var item in DataBase.Instance.Query<OrderDTO>())
             {
                 AddressesDTO address;
                 if (item.AddressID.HasValue)
-                    address = DataBase.Instance.Query<AddressesDTO>().Single(x => x.ID == item.AddressID.Value);
+                    address = addresess.Single(x => x.Id == item.AddressID.Value);
                 else
                     address = new AddressesDTO() { AddressName = item.AddressName, City = item.City, Neighborhood = item.Neighborhood, Street = item.Street };
 

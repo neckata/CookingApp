@@ -21,6 +21,7 @@
         SaveUserInformation,
         SaveAddress,
         SaveCooker,
-        DeleteAddress
+        DeleteAddress,
+        GetAddresses
     }
 }

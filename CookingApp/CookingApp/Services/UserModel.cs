@@ -2,9 +2,12 @@
 using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.Resources;
+using CookingApp.ViewModels.AddressesPage;
 using CookingApp.ViewModels.UserPage;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -51,30 +54,52 @@ namespace CookingApp.Services
             return model.IsSuccessStatusCode;
         }
 
-        public async Task<bool> SaveAddress(AddressesDTO address)
+        public async Task<ObservableCollection<AddressViewModel>> GetAddresses()
+        {
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.GetAddresses, "");
+            ObservableCollection<AddressViewModel> list = new ObservableCollection<AddressViewModel>();
+            if (model.IsSuccessStatusCode)
+            {
+                List<AddressesDTO> data = JsonConvert.DeserializeObject<List<AddressesDTO>>(model.ResponseContent);
+                if (data.Count == 0)
+                {
+                    list.Add(new AddressViewModel());
+                }
+                else
+                {
+                    int counter = 0;
+                    foreach (var item in data)
+                    {
+                        counter++;
+                        list.Add(new AddressViewModel()
+                        {
+                            City = item.City,
+                            Neighborhood = item.Neighborhood,
+                            Street = item.Street,
+                            Name = item.AddressName,
+                            IDInBase = item.Id.Value,
+                            ID = counter
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public async Task<int?> SaveAddress(AddressesDTO address)
         {
             ResponseModel model = await _rc.PostDataAsync(PostActionMethods.SaveAddress, address);
             if (model.IsSuccessStatusCode)
             {
-                if (address.ID == 0)
-                {
-                    address.ID = int.Parse(model.ResponseContent);
-                    DataBase.Instance.Add(address);
-                }
-                else
-                    DataBase.Instance.Update(address);
+                return int.Parse(model.ResponseContent);
             }
 
-            return model.IsSuccessStatusCode;
+            return null;
         }
 
         public async Task<bool> DeleteAddress(int addressesID)
         {
-            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.DeleteAddress, addressesID);
-            if (model.IsSuccessStatusCode)
-            {
-                DataBase.Instance.Delete<AddressesDTO>(addressesID);
-            }
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.DeleteAddress, new IDDTO() { Id=addressesID});
 
             return model.IsSuccessStatusCode;
         }
