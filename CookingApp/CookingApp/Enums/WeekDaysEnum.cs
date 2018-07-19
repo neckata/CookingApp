@@ -2,10 +2,10 @@
 {
     public enum WeekDaysEnum
     {
-        MODAY,
+        MONDAY,
         TUESDAY,
         WEDNESDAY,
-        THURDSAY,
+        THURSDAY,
         FRIDAY,
         SATURDAY,
         SUNDAY

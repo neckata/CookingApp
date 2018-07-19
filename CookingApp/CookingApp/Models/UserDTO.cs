@@ -63,9 +63,9 @@ namespace CookingApp.Models
         public bool IsRegistered { get; set; }
 
         [Ignore]
-        public List<CuisineSelectedDTO> UserCuisines { get; set; }
+        public List<string> Cuisines { get; set; }
 
         [Ignore]
-        public List<UserTimeTableDTO> TimeTables { get; set; }
+        public List<UserTimeTableDTO> TimeTable { get; set; }
     }
  }

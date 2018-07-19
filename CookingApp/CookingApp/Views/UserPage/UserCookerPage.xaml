@@ -56,7 +56,7 @@
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="{i:Translate lblPricing}" FontAttributes="Bold" VerticalOptions="CenterAndExpand"/>
-                            <Entry Text="{Binding HoursPricing}" VerticalOptions="StartAndExpand" WidthRequest="50" Keyboard="Numeric" />
+                            <Entry Text="{Binding HoursPricing}" VerticalOptions="StartAndExpand" WidthRequest="60" Keyboard="Numeric" />
                             <Label Text="{i:Translate lblLeva}" VerticalOptions="CenterAndExpand"/>
                         </StackLayout>
                     </StackLayout>

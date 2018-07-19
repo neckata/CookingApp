@@ -20,7 +20,7 @@ namespace CookingApp.Services
         public bool IsUserLogged()
         {
             UserDTO user = GetUser();
-            return user.UserType == Enums.UserTypesEnum.Cooker;
+            return user.UserType == UserTypesEnum.Cooker;
         }
 
         public async void RegisterUser()
@@ -120,7 +120,7 @@ namespace CookingApp.Services
 
         public async Task<bool> DeleteAddress(int addressesID)
         {
-            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.DeleteAddress, new IDDTO() { Id=addressesID});
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.DeleteAddress, new IDDTO() { Id = addressesID });
 
             if (model.IsSuccessStatusCode)
                 DataBase.Instance.Delete<AddressesDTO>(addressesID);
@@ -156,88 +156,81 @@ namespace CookingApp.Services
             return model.IsSuccessStatusCode;
         }
 
-        public bool Login(string userName, string password)
+        public async Task<bool> Login(string userName, string password)
         {
-            UserDTO data = new UserDTO()
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.Login, new UserLoginDTO() { UserName = userName, Password = password });
+            if (model.IsSuccessStatusCode)
             {
-                Name = "Иван",
-                Email = "mail@gmail.com",
-                Family = "Иванов",
-                OrdersCount = 120,
-                Phone = "0686864",
-                Image = "http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/user-male-icon.png",
-                Description = "Готвач с 20 години опит във веганската кухня, перфекционист",
-                IsWorking = true,
-                HoursPricing = 40,
-                Rating = 4,
-                UserCuisines = new List<CuisineSelectedDTO>()
+                UserDTO data = JsonConvert.DeserializeObject<UserDTO>(model.ResponseContent);
+
+                var timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
+
+                if (timeTablesBase.Count() == 0)
                 {
-                    new CuisineSelectedDTO() { Code = "VEGAN" }, new CuisineSelectedDTO() { Code = "DIETIC" } ,  new CuisineSelectedDTO() { Code = "WINTER" },
-                    new CuisineSelectedDTO() { Code = "AU" }, new CuisineSelectedDTO() { Code = "NOCOOK" }, new CuisineSelectedDTO() { Code = "VAREN" }, new CuisineSelectedDTO() { Code = "SUMMER" }
-                },
-                TimeTables = new List<UserTimeTableDTO>()
-                {
-                    new UserTimeTableDTO(){Code = WeekDaysEnum.MODAY,IsWorking=true, From=new TimeSpan(8,0,0),To=new TimeSpan(16,0,0)},
-                    new UserTimeTableDTO(){Code = WeekDaysEnum.TUESDAY,IsWorking=true, From=new TimeSpan(10,0,0),To=new TimeSpan(18,0,0)},
-                    new UserTimeTableDTO(){Code = WeekDaysEnum.WEDNESDAY},
-                    new UserTimeTableDTO(){Code = WeekDaysEnum.TUESDAY},
-                    new UserTimeTableDTO(){Code = WeekDaysEnum.FRIDAY},
-                    new UserTimeTableDTO(){Code = WeekDaysEnum.SATURDAY,IsWorking=true, From=new TimeSpan(10,0,0),To=new TimeSpan(18,0,0)},
-                    new UserTimeTableDTO(){Code = WeekDaysEnum.SUNDAY}
+                    DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.MONDAY, Day = AppResources.ResourceManager.GetString("monday") });
+                    DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.TUESDAY, Day = AppResources.ResourceManager.GetString("tuesday") });
+                    DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.WEDNESDAY, Day = AppResources.ResourceManager.GetString("wednesday") });
+                    DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.THURSDAY, Day = AppResources.ResourceManager.GetString("thursday") });
+                    DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.FRIDAY, Day = AppResources.ResourceManager.GetString("friday") });
+                    DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.SATURDAY, Day = AppResources.ResourceManager.GetString("saturday") });
+                    DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.SUNDAY, Day = AppResources.ResourceManager.GetString("sunday") });
+                    timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
                 }
-            };
 
-            var timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
+                foreach (var item in timeTablesBase)
+                {
+                    var time = data.TimeTable.First(x => x.Code == item.Code);
+                    item.IsWorking = time.IsWorking;
+                    item.From = time.From;
+                    item.To = time.To;
+                    DataBase.Instance.Update(item);
+                }
 
-            if (timeTablesBase.Count() == 0)
-            {
-                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.MODAY, Day = AppResources.ResourceManager.GetString("monday") });
-                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.TUESDAY, Day = AppResources.ResourceManager.GetString("tuesday") });
-                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.WEDNESDAY, Day = AppResources.ResourceManager.GetString("wednesday") });
-                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.THURDSAY, Day = AppResources.ResourceManager.GetString("thursday") });
-                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.FRIDAY, Day = AppResources.ResourceManager.GetString("friday") });
-                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.SATURDAY, Day = AppResources.ResourceManager.GetString("saturday") });
-                DataBase.Instance.Add(new UserTimeTableDTO() { Code = WeekDaysEnum.SUNDAY, Day = AppResources.ResourceManager.GetString("sunday") });
-                timeTablesBase = DataBase.Instance.Query<UserTimeTableDTO>();
+                foreach (var item in data.Cuisines)
+                    DataBase.Instance.Add(new CuisineSelectedDTO() { Code = item });
+
+                UserDTO user = GetUser();
+                user.UserType = UserTypesEnum.Cooker;
+
+                user.Name = data.Name;
+                user.Email = data.Email;
+                user.OrdersCount = data.OrdersCount;
+                user.Family = data.Family;
+                user.Phone = data.Phone;
+                user.Image = data.Image;
+                user.Description = data.Description;
+                user.IsWorking = data.IsWorking;
+                user.HoursPricing = data.HoursPricing;
+                user.Rating = data.Rating;
+                user.UserName = userName;
+                user.Password = password;
+                DataBase.Instance.Update(user);
             }
 
-            foreach (var item in data.TimeTables)
-            {
-                var time = timeTablesBase.First(x => x.Code == item.Code);
-                time.IsWorking = item.IsWorking;
-                time.From = item.From;
-                time.To = item.To;
-                DataBase.Instance.Update(time);
-            }
-
-            foreach (var item in data.UserCuisines)
-                DataBase.Instance.Add(item);
-
-            UserDTO user = GetUser();
-            user.UserType = UserTypesEnum.Cooker;
-
-            user.Name = data.Name;
-            user.Email = data.Email;
-            user.OrdersCount = data.OrdersCount;
-            user.Family = data.Family;
-            user.Phone = data.Phone;
-            user.Image = data.Image;
-            user.Description = data.Description;
-            user.IsWorking = data.IsWorking;
-            user.HoursPricing = data.HoursPricing;
-            user.Rating = data.Rating;
-            DataBase.Instance.Update(user);
-
-            return true;
+            return model.IsSuccessStatusCode;
         }
 
-        public bool Logout()
+        public async Task<bool> Logout()
         {
-            UserDTO user = GetUser();
-            user.UserType = UserTypesEnum.Client;
-            DataBase.Instance.Update(user);
-            ClearUserCuisines();
-            return true;
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.Logout, string.Empty);
+            if (model.IsSuccessStatusCode)
+            {
+                UserDTO userData = JsonConvert.DeserializeObject<UserDTO>(model.ResponseContent);
+
+                UserDTO user = GetUser();
+                user.UserType = UserTypesEnum.Client;
+                user.Name = userData.Name;
+                user.Family = userData.Family;
+                user.Phone = userData.Phone;
+                user.Email = userData.Email;
+                user.UserName = "Anonymous";
+                user.Password = string.Empty;
+                DataBase.Instance.Update(user);
+
+                ClearUserCuisines();
+            }
+ 
+            return model.IsSuccessStatusCode;
         }
 
         public void ClearUserCuisines()
@@ -279,9 +272,9 @@ namespace CookingApp.Services
                 data.Add(new UserTimeTableViewModel()
                 {
                     Day = item.Day,
-                    From = item.From,
+                    From = item.From.HasValue ? item.From.Value : new TimeSpan(),
                     IsWorking = item.IsWorking,
-                    To = item.To,
+                    To = item.To.HasValue ? item.To.Value : new TimeSpan(),
                     Code = item.Code
                 });
 

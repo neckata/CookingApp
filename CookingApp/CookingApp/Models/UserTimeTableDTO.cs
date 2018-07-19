@@ -18,9 +18,9 @@ namespace CookingApp.Models
         public bool IsWorking { get; set; }
 
         [Column(nameof(From))]
-        public TimeSpan From { get; set; }
+        public TimeSpan? From { get; set; }
 
         [Column(nameof(To))]
-        public TimeSpan To { get; set; }
+        public TimeSpan? To { get; set; }
     }
 }

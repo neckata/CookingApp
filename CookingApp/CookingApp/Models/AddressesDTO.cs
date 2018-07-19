@@ -15,7 +15,7 @@ namespace CookingApp.Models
         [Column(nameof(City))]
         public string City { get; set; }
 
-        [Column(nameof(Neighborhood)]
+        [Column(nameof(Neighborhood))]
         public string Neighborhood { get; set; }
 
         [Column(nameof(Street))]

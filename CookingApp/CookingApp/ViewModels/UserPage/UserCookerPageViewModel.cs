@@ -9,6 +9,7 @@ using CookingApp.Resources;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Collections.Generic;
+using CookingApp.Enums;
 
 namespace CookingApp.ViewModels.UserPage
 {
@@ -49,9 +50,9 @@ namespace CookingApp.ViewModels.UserPage
         {
             get
             {
-                return new Command(() =>
+                return new Command(async () =>
                 {
-                    bool isLogged = _model.Login(UserName, Password);
+                    bool isLogged = await _model.Login(UserName, Password);
                     if (isLogged)
                     {
                         IsUserLogged = true;
@@ -69,9 +70,9 @@ namespace CookingApp.ViewModels.UserPage
         {
             get
             {
-                return new Command(() =>
+                return new Command(async () =>
                 {
-                    bool isLogout = _model.Logout();
+                    bool isLogout = await _model.Logout();
                     if (isLogout)
                     {
                         IsUserLogged = false;
@@ -135,7 +136,8 @@ namespace CookingApp.ViewModels.UserPage
             {
                 return new Command(() =>
                 {
-
+                    //TODO
+                    //https://xamarinhelp.com/use-camera-take-photo-xamarin-forms/
                 });
             }
         }
@@ -149,6 +151,16 @@ namespace CookingApp.ViewModels.UserPage
             Description = user.Description;
             Rating = user.Rating;
             OrdersCount = user.OrdersCount;
+            if (user.UserType == UserTypesEnum.Client)
+            {
+                UserName = string.Empty;
+                Password = string.Empty;
+
+                OnPropertyChangedModel(nameof(UserName));
+                OnPropertyChangedModel(nameof(Password));
+            }
+            else
+                UserName = user.UserName;
 
             CuisineTypes = new ObservableCollection<CuisineTypeViewModel>(_model.GetUserCuisineTypes());
             TimeTable = new ObservableCollection<UserTimeTableViewModel>(_model.GetTimeTable());

@@ -11,7 +11,6 @@ namespace CookingApp.Models
         [Column(nameof(ID))]
         public int ID { get; set; }
 
-        //Да се тегли като номенклатура ?
         [Column(nameof(Type))]
         public NotificationsTypesEnum Type { get; set; }
 
