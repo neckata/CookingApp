@@ -16,8 +16,8 @@ namespace CookingApp.ViewModels.AddressesPage
 
         public AddressesPageViewModel()
         {
-            Addresses = new ObservableCollection<AddressViewModel>();
-            FillData();
+            Addresses = _model.GetAddresses();
+            OnPropertyChangedModel(nameof(Addresses));
         }
 
         public ObservableCollection<AddressViewModel> Addresses { get; set; }
@@ -88,12 +88,6 @@ namespace CookingApp.ViewModels.AddressesPage
                     }
                 });
             }
-        }
-
-        public async void FillData()
-        {
-            Addresses = await _model.GetAddresses();
-            OnPropertyChangedModel(nameof(Addresses));
         }
     }
 }

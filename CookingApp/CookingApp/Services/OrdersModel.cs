@@ -1,4 +1,5 @@
-﻿using CookingApp.Helpers;
+﻿using CookingApp.Enums;
+using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.OrdersPage;
@@ -10,17 +11,16 @@ namespace CookingApp.Services
 {
     public class OrdersModel
     {
-        private CookersModel _model = new CookersModel();
+        private RestfulClient _rc = new RestfulClient();
 
-        public async Task<ObservableCollection<SingleOrderViewModel>> GetOrders()
+        public ObservableCollection<SingleOrderViewModel> GetOrders()
         {
-            var addresess = await _model.GetAddresses();
             var data = new ObservableCollection<SingleOrderViewModel>();
             foreach (var item in DataBase.Instance.Query<OrderDTO>())
             {
                 AddressesDTO address;
                 if (item.AddressID.HasValue)
-                    address = addresess.Single(x => x.Id == item.AddressID.Value);
+                    address = DataBase.Instance.Query<AddressesDTO>().Single(x => x.Id == item.AddressID.Value);
                 else
                     address = new AddressesDTO() { AddressName = item.AddressName, City = item.City, Neighborhood = item.Neighborhood, Street = item.Street };
 
@@ -40,18 +40,9 @@ namespace CookingApp.Services
             return data;
         }
 
-        public CookerViewModel GetCooker(int cookerID)
+        public async Task<CookerViewModel> GetCooker(int cookerID)
         {
-            var data = new CookerDTO()
-            {
-                ID = 1,
-                Description = "Готвач с 20 години опит във веганската кухня, перфекционист",
-                HoursPricing = 20,
-                Name = "Иван Иванов",
-                OrdersCount = 24,
-                Rating = 2.5,
-                Image = "http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/user-male-icon.png"
-            };
+            CookerDTO data = await _rc.GetDataAsync<CookerDTO>(GetActionMethods.Cooker, cookerID.ToString());
 
             return new CookerViewModel()
             {

@@ -153,7 +153,7 @@ namespace CookingApp.ViewModels.CookersPage
             }
         }
 
-        private async void LoadData()
+        private void LoadData()
         {
             IsAddresEnabled = true;
             MinimumDate = DateTime.Now;
@@ -172,7 +172,7 @@ namespace CookingApp.ViewModels.CookersPage
 
             Addresses = new ObservableCollection<string>();
             Addresses.Add(AppResources.ResourceManager.GetString("newAddress"));
-            addresses = await _model.GetAddresses();
+            addresses = DataBase.Instance.Query<AddressesDTO>().ToList();
             foreach (var item in addresses)
                 Addresses.Add(item.AddressName);
 

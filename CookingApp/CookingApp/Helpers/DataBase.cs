@@ -87,6 +87,7 @@ namespace CookingApp.Helpers
             _connection.CreateTable<CuisineFilterDTO>();
             _connection.CreateTable<CuisineSelectedDTO>();
             _connection.CreateTable<UserTimeTableDTO>();
+            _connection.CreateTable<AddressesDTO>();
         }
 
         public async void LoadNomenclatures()
@@ -127,8 +128,16 @@ namespace CookingApp.Helpers
                     Instance.Delete<CuisineSelectedDTO>(item.Code);
             }
 
+            UserDTO user = Instance.Query<UserDTO>().First();
             UserModel model = new UserModel();
-            model.RegisterUser();
+            if (!user.IsRegistered)
+            {
+                model.RegisterUser();
+            }
+            else
+            {
+                model.FillAddresses();
+            }
         }
     }
 }

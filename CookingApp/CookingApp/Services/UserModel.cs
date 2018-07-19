@@ -26,15 +26,13 @@ namespace CookingApp.Services
         public async void RegisterUser()
         {
             UserDTO user = DataBase.Instance.Query<UserDTO>().First();
-            if (!user.IsRegistered)
+            RegisterUserDTO FCM = new RegisterUserDTO() { FcmId = user.FCM };
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, FCM);
+            if (model.IsSuccessStatusCode)
             {
-                RegisterUserDTO FCM = new RegisterUserDTO() { FcmId = user.FCM };
-                ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, FCM);
-                if (model.IsSuccessStatusCode)
-                {
-                    user.IsRegistered = true;
-                    DataBase.Instance.Update(user);
-                }
+                user.IsRegistered = true;
+                DataBase.Instance.Update(user);
+                FillAddresses();
             }
         }
 
@@ -54,35 +52,48 @@ namespace CookingApp.Services
             return model.IsSuccessStatusCode;
         }
 
-        public async Task<ObservableCollection<AddressViewModel>> GetAddresses()
+        public async void FillAddresses()
         {
             ResponseModel model = await _rc.PostDataAsync(PostActionMethods.GetAddresses, "");
-            ObservableCollection<AddressViewModel> list = new ObservableCollection<AddressViewModel>();
             if (model.IsSuccessStatusCode)
             {
+                foreach (var item in DataBase.Instance.Query<AddressesDTO>())
+                    DataBase.Instance.Delete<AddressesDTO>(item.Id);
+
                 List<AddressesDTO> data = JsonConvert.DeserializeObject<List<AddressesDTO>>(model.ResponseContent);
-                if (data.Count == 0)
+                foreach (var item in data)
                 {
-                    list.Add(new AddressViewModel());
-                }
-                else
-                {
-                    int counter = 0;
-                    foreach (var item in data)
-                    {
-                        counter++;
-                        list.Add(new AddressViewModel()
-                        {
-                            City = item.City,
-                            Neighborhood = item.Neighborhood,
-                            Street = item.Street,
-                            Name = item.AddressName,
-                            IDInBase = item.Id.Value,
-                            ID = counter
-                        });
-                    }
+                    DataBase.Instance.Add(item);
                 }
             }
+        }
+
+        public ObservableCollection<AddressViewModel> GetAddresses()
+        {
+            ObservableCollection<AddressViewModel> list = new ObservableCollection<AddressViewModel>();
+            List<AddressesDTO> data = DataBase.Instance.Query<AddressesDTO>().ToList();
+            if (data.Count == 0)
+            {
+                list.Add(new AddressViewModel());
+            }
+            else
+            {
+                int counter = 0;
+                foreach (var item in data)
+                {
+                    counter++;
+                    list.Add(new AddressViewModel()
+                    {
+                        City = item.City,
+                        Neighborhood = item.Neighborhood,
+                        Street = item.Street,
+                        Name = item.AddressName,
+                        IDInBase = item.Id.Value,
+                        ID = counter
+                    });
+                }
+            }
+
             return list;
         }
 
@@ -91,7 +102,17 @@ namespace CookingApp.Services
             ResponseModel model = await _rc.PostDataAsync(PostActionMethods.SaveAddress, address);
             if (model.IsSuccessStatusCode)
             {
-                return int.Parse(model.ResponseContent);
+                if (address.Id.HasValue)
+                {
+                    DataBase.Instance.Update(address);
+                    return address.Id.Value;
+                }
+                else
+                {
+                    address.Id = int.Parse(model.ResponseContent);
+                    DataBase.Instance.Add(address);
+                    return address.Id;
+                }
             }
 
             return null;
@@ -100,6 +121,9 @@ namespace CookingApp.Services
         public async Task<bool> DeleteAddress(int addressesID)
         {
             ResponseModel model = await _rc.PostDataAsync(PostActionMethods.DeleteAddress, new IDDTO() { Id=addressesID});
+
+            if (model.IsSuccessStatusCode)
+                DataBase.Instance.Delete<AddressesDTO>(addressesID);
 
             return model.IsSuccessStatusCode;
         }
