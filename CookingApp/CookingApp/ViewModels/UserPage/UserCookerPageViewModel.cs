@@ -24,6 +24,8 @@ namespace CookingApp.ViewModels.UserPage
 
         private UserModel _model = new UserModel();
 
+        public bool IsBusy { get; set; }
+
         public string Password { get; set; }
 
         public string UserName { get; set; }
@@ -52,6 +54,9 @@ namespace CookingApp.ViewModels.UserPage
             {
                 return new Command(async () =>
                 {
+                    IsBusy = true;
+                    OnPropertyChangedModel(nameof(IsBusy));
+
                     bool isLogged = await _model.Login(UserName, Password);
                     if (isLogged)
                     {
@@ -62,6 +67,9 @@ namespace CookingApp.ViewModels.UserPage
                         .BindingContext)).ReloadUser();
                         ReloadUser();
                     }
+
+                    IsBusy = false;
+                    OnPropertyChangedModel(nameof(IsBusy));
                 });
             }
         }
@@ -72,6 +80,9 @@ namespace CookingApp.ViewModels.UserPage
             {
                 return new Command(async () =>
                 {
+                    IsBusy = true;
+                    OnPropertyChangedModel(nameof(IsBusy));
+
                     bool isLogout = await _model.Logout();
                     if (isLogout)
                     {
@@ -82,6 +93,9 @@ namespace CookingApp.ViewModels.UserPage
                         .BindingContext)).ReloadUser();
                         ReloadUser();
                     }
+
+                    IsBusy = false;
+                    OnPropertyChangedModel(nameof(IsBusy));
                 });
             }
         }
@@ -92,6 +106,9 @@ namespace CookingApp.ViewModels.UserPage
             {
                 return new Command(async () =>
                 {
+                    IsBusy = true;
+                    OnPropertyChangedModel(nameof(IsBusy));
+
                     List<string> cuisines = new List<string>();
                     foreach (var item in CuisineTypes)
                     {
@@ -120,6 +137,9 @@ namespace CookingApp.ViewModels.UserPage
                         TimeTable = timeTable,
                         Cuisines = cuisines
                     });
+
+                    IsBusy = false;
+                    OnPropertyChangedModel(nameof(IsBusy));
 
                     if (isSuccess)
                     {

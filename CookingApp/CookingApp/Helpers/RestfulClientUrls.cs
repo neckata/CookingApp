@@ -58,7 +58,7 @@ namespace CookingApp.Helpers
                     actionUrl = "saveAddress";
                     break;
                 case PostActionMethods.SaveCooker:
-                    actionUrl = "saveCooker";
+                    actionUrl = "saveCookerInformation";
                     break;
                 case PostActionMethods.Order:
                     actionUrl = "order";

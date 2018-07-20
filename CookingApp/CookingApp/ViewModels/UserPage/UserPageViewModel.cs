@@ -20,6 +20,8 @@ namespace CookingApp.ViewModels.UserPage
 
         private UserModel _model = new UserModel();
 
+        public bool IsBusy { get; set; }
+
         public bool NameValidation { get; set; }
 
         public bool EmailValidation { get; set; }
@@ -40,7 +42,13 @@ namespace CookingApp.ViewModels.UserPage
                 {
                     if (Validate())
                     {
+                        IsBusy = true;
+                        OnPropertyChangedModel(nameof(IsBusy));
+
                         bool isSucess = await _model.SaveUserInformation(new UserInformationDTO() { Email = Email, FirstName = Name, LastName = Family, Phone = Phone });
+
+                        IsBusy = false;
+                        OnPropertyChangedModel(nameof(IsBusy));
 
                         if (isSucess)
                         {

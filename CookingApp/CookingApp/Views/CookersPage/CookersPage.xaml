@@ -15,7 +15,7 @@
     <ContentPage.Content>
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
-            <StackLayout BackgroundColor="{StaticResource Primary}"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBoolenConverter}}">
+            <StackLayout BackgroundColor="{StaticResource Primary}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBoolenConverter}}">
                 <Picker ItemsSource="{Binding CuisineFilters}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisineFilter}" Title="{i:Translate lblChooseCuisineCookers}" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
                 <Picker x:Name="Cuisines" IsVisible="False" ItemsSource="{Binding Cuisines}" ItemDisplayBinding="{Binding Description}" SelectedItem="{Binding SelectedCuisine}" Title="{i:Translate lblChooseCuisine}" SelectedIndexChanged="Picker_SelectedIndexChanged_1"/>
                 <ScrollView x:Name="Cookers" IsVisible="False">
