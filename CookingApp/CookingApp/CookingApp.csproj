@@ -41,6 +41,7 @@
     <Compile Include="Controls\ExpandableEditor.cs" />
     <Compile Include="Controls\RepeaterView.cs" />
     <Compile Include="Controls\TimeTableRow.cs" />
+    <Compile Include="Converters\CustomDateTimeConverter.cs" />
     <Compile Include="Converters\InverseBoolenConverter.cs" />
     <Compile Include="Enums\PageNavigateEnums.cs" />
     <Compile Include="Enums\NotificationsTypesEnum.cs" />

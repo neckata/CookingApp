@@ -18,8 +18,11 @@
                         <Label Text="{i:Translate lblDate}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Bold"/>
                         <DatePicker Date="{Binding Date}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" MinimumDate="{Binding MinimumDate}"/>
 
-                        <Label Text="{i:Translate lblTime}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Bold"/>
-                        <TimePicker Time="{Binding Time}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+                        <Label Text="{i:Translate lblFromTime}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Bold"/>
+                        <TimePicker Time="{Binding FromTime}"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+
+                        <Label Text="{i:Translate lblToTime}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium" FontAttributes="Bold"/>
+                        <TimePicker Time="{Binding ToTime}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
                     </StackLayout>
                 </StackLayout>
 

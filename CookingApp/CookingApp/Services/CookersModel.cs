@@ -1,4 +1,5 @@
-﻿using CookingApp.Helpers;
+﻿using CookingApp.Enums;
+using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.RecipesPage;
@@ -17,7 +18,7 @@ namespace CookingApp.Services
 
         public async Task<List<CookerViewModel>> GetCookers(string cuisineCode)
         {
-            List<CookerDTO> data = await _rc.GetDataAsync<List<CookerDTO>>(Enums.GetActionMethods.Cookers, cuisineCode);
+            List<CookerDTO> data = await _rc.GetDataAsync<List<CookerDTO>>(GetActionMethods.Cookers, cuisineCode);
 
             List<CookerViewModel> cookers = new List<CookerViewModel>();
             foreach (var item in data)
@@ -30,7 +31,7 @@ namespace CookingApp.Services
         {
             CookerInformationViewModel cooker = new CookerInformationViewModel();
 
-            CookerInformationDTO data = await _rc.GetDataAsync<CookerInformationDTO>(Enums.GetActionMethods.Cooker, string.Format("{0}?fromDate={1}", cookerID, fromDate.ToString("yyyy-MM-dd")));
+            CookerInformationDTO data = await _rc.GetDataAsync<CookerInformationDTO>(GetActionMethods.Cooker, string.Format("{0}?fromDate={1}", cookerID, fromDate.ToString("yyyy-MM-dd")));
 
             List<RecipeViewModel> recipes = new List<RecipeViewModel>();
             foreach (var item in data.Receipts)
@@ -102,11 +103,14 @@ namespace CookingApp.Services
             return list;
         }
 
-        public bool MakeOrder(OrderDTO order)
+        public async Task<bool> MakeOrder(OrderDTO order)
         {
-            //TODO
-            DataBase.Instance.Add(order);
-            return true;
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.Order, order);
+            if (model.IsSuccessStatusCode)
+            {
+                DataBase.Instance.Add(order);
+            }
+            return model.IsSuccessStatusCode;
         }       
     }
 }

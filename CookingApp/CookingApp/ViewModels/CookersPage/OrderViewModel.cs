@@ -57,7 +57,9 @@ namespace CookingApp.ViewModels.CookersPage
 
         public string Neighborhood { get; set; }
 
-        public TimeSpan Time { get; set; }
+        public TimeSpan FromTime { get; set; }
+
+        public TimeSpan ToTime { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -109,12 +111,15 @@ namespace CookingApp.ViewModels.CookersPage
             {
                 return new Command(async () =>
                 {
+                    //TODO time validation
+                    //https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/src/Forms/XLabs.Forms/Controls/ExtendedTimePicker.cs
                     var address = addresses.FirstOrDefault(x => x.AddressName == _selectedAddress);
 
                     var order = new OrderDTO()
                     {
                         Date = Date,
-                        Time = Time,
+                        FromTime = FromTime,
+                        ToTime=ToTime,
                         ProductsIncluded = ProductsIncluded,
                         CookerID = _cookerID,
                         CookerName = _cookerName
@@ -129,7 +134,7 @@ namespace CookingApp.ViewModels.CookersPage
                         order.Street = Street;
                     }
 
-                    bool isSend = _model.MakeOrder(order);
+                    bool isSend = await _model.MakeOrder(order);
                     if (isSend)
                     {
                         await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderSuccess"));

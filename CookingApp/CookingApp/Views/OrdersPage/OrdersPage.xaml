@@ -27,7 +27,13 @@
                                 <Label Text="{i:Translate lblAddress}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
                                 <Label Text="{Binding Address}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
                                 <Label Text="{i:Translate lblDate}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding Date}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Date, StringFormat='\{0:dd-MMM-yy}'}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{i:Translate lblFromTime}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding FromTime}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{i:Translate lblToTime}" Margin="5,0,0,0" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding ToTime}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                </StackLayout>
                             </StackLayout>
                         </DataTemplate>
                     </controls:RepeaterView.ItemTemplate>

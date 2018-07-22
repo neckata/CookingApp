@@ -276,8 +276,8 @@
   <data name="lblSelectAddress" xml:space="preserve">
     <value>Изберете адрес</value>
   </data>
-  <data name="lblTime" xml:space="preserve">
-    <value>Час</value>
+  <data name="lblFromTime" xml:space="preserve">
+    <value>От час</value>
   </data>
   <data name="lblUserSpecific" xml:space="preserve">
     <value>Данни за поръчителя</value>
@@ -356,5 +356,8 @@
   </data>
   <data name="lblFreeDay" xml:space="preserve">
     <value>: Почивен ден</value>
+  </data>
+  <data name="lblToTime" xml:space="preserve">
+    <value>До час</value>
   </data>
 </root>

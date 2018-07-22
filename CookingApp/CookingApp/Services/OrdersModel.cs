@@ -15,6 +15,7 @@ namespace CookingApp.Services
 
         public ObservableCollection<SingleOrderViewModel> GetOrders()
         {
+            //TODO from server or local base ?
             var data = new ObservableCollection<SingleOrderViewModel>();
             foreach (var item in DataBase.Instance.Query<OrderDTO>())
             {
@@ -24,7 +25,7 @@ namespace CookingApp.Services
                 else
                     address = new AddressesDTO() { AddressName = item.AddressName, City = item.City, Neighborhood = item.Neighborhood, Street = item.Street };
 
-                data.Add(new SingleOrderViewModel(item.Date, item.Time)
+                data.Add(new SingleOrderViewModel()
                 {
                     AddressID = item.AddressID,
                     AddressName = address.AddressName,
@@ -34,7 +35,10 @@ namespace CookingApp.Services
                     Neighborhood=address.Neighborhood,
                     ProductsIncluded =item.ProductsIncluded,
                     Street =address.Street,
-                    CookerName =item.CookerName
+                    CookerName =item.CookerName,
+                    Date=item.Date,
+                    FromTime=item.FromTime,
+                    ToTime=item.ToTime
                 });
             }
             return data;

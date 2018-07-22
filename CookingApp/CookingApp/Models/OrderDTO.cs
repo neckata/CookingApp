@@ -1,4 +1,6 @@
-﻿using SQLite;
+﻿using CookingApp.Converters;
+using Newtonsoft.Json;
+using SQLite;
 using System;
 
 namespace CookingApp.Models
@@ -20,10 +22,14 @@ namespace CookingApp.Models
         public bool ProductsIncluded { get; set; }
 
         [Column(nameof(Date))]
+        [JsonConverter(typeof(CustomDateTimeConverter))]
         public DateTime Date { get; set; }
 
-        [Column(nameof(Time))]
-        public TimeSpan Time { get; set; }
+        [Column(nameof(FromTime))]
+        public TimeSpan FromTime { get; set; }
+
+        [Column(nameof(ToTime))]
+        public TimeSpan ToTime { get; set; }
 
         [Column(nameof(AddressID))]
         public int? AddressID { get; set; }
