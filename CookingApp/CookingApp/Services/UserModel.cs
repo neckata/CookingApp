@@ -205,6 +205,8 @@ namespace CookingApp.Services
                 user.UserName = userName;
                 user.Password = password;
                 DataBase.Instance.Update(user);
+
+                FillAddresses();
             }
 
             return model.IsSuccessStatusCode;
@@ -228,6 +230,8 @@ namespace CookingApp.Services
                 DataBase.Instance.Update(user);
 
                 ClearUserCuisines();
+
+                FillAddresses();
             }
  
             return model.IsSuccessStatusCode;
