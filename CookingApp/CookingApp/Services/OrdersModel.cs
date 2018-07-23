@@ -62,7 +62,7 @@ namespace CookingApp.Services
 
         public async Task<CookerViewModel> GetCooker(int cookerID)
         {
-            CookerDTO data = await _rc.GetDataAsync<CookerDTO>(GetActionMethods.Cooker, cookerID.ToString());
+            CookerDTO data = await _rc.GetDataAsync<CookerDTO>(GetActionMethods.Cooker, string.Format("{0}?fromDate={1}", cookerID, DateTime.Now.ToString("yyyy-MM-dd")));
 
             return new CookerViewModel()
             {
