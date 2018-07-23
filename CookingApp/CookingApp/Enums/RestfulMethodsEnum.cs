@@ -18,6 +18,7 @@
         Logout,
         Order,
         Orders,
+        VoteOrder,
         SaveUserInformation,
         SaveAddress,
         SaveCooker,

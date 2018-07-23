@@ -3,7 +3,11 @@ using CookingApp.Helpers;
 using CookingApp.Models;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.OrdersPage;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,35 +17,46 @@ namespace CookingApp.Services
     {
         private RestfulClient _rc = new RestfulClient();
 
-        public ObservableCollection<SingleOrderViewModel> GetOrders()
+        public async Task<ObservableCollection<SingleOrderViewModel>> GetOrders()
         {
-            //TODO from server or local base ?
-            var data = new ObservableCollection<SingleOrderViewModel>();
-            foreach (var item in DataBase.Instance.Query<OrderDTO>())
-            {
-                AddressesDTO address;
-                if (item.AddressID.HasValue)
-                    address = DataBase.Instance.Query<AddressesDTO>().Single(x => x.Id == item.AddressID.Value);
-                else
-                    address = new AddressesDTO() { AddressName = item.AddressName, City = item.City, Neighborhood = item.Neighborhood, Street = item.Street };
+            var list = new ObservableCollection<SingleOrderViewModel>();
 
-                data.Add(new SingleOrderViewModel()
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.Orders, string.Empty);
+
+            if (model.IsSuccessStatusCode)
+            {
+                var data = JsonConvert.DeserializeObject<List<OrderDTO>>(model.ResponseContent);
+                foreach (var item in data)
                 {
-                    AddressID = item.AddressID,
-                    AddressName = address.AddressName,
-                    Address = string.Format("{0},{1},{2}", address.City, address.Neighborhood, address.Street),
-                    City = address.City,
-                    CookerID = item.CookerID,
-                    Neighborhood = address.Neighborhood,
-                    ProductsIncluded = item.ProductsIncluded,
-                    Street = address.Street,
-                    CookerName = item.CookerName,
-                    Date = item.Date,
-                    FromTime = item.FromTime,
-                    ToTime = item.ToTime
-                });
+                    AddressesDTO address;
+                    if (item.AddressID.HasValue)
+                        address = DataBase.Instance.Query<AddressesDTO>().Single(x => x.Id == item.AddressID.Value);
+                    else
+                        address = new AddressesDTO() { AddressName = item.AddressName, City = item.City, Neighborhood = item.Neighborhood, Street = item.Street };
+
+                    list.Add(new SingleOrderViewModel()
+                    {
+                        ID = item.ID,
+                        AddressID = item.AddressID,
+                        AddressName = address.AddressName,
+                        Address = string.Format("{0},{1},{2}", address.City, address.Neighborhood, address.Street),
+                        City = address.City,
+                        CookerID = item.CookerID,
+                        Neighborhood = address.Neighborhood,
+                        ProductsIncluded = item.ProductsIncluded,
+                        Street = address.Street,
+                        CookerName = item.CookerName,
+                        Date = item.Date,
+                        FromTime = item.FromTime.ToString(),
+                        ToTime = item.ToTime.ToString(),
+                        IsRated = item.Rating.HasValue,
+                        OrderColor = item.Date < DateTime.Now ? Color.Green : Color.Yellow,
+                        Rating = item.Rating.HasValue ? item.Rating.Value : 0
+                    });
+                }
             }
-            return data;
+
+            return list;
         }
 
         public async Task<CookerViewModel> GetCooker(int cookerID)
@@ -58,6 +73,13 @@ namespace CookingApp.Services
                 OrdersCount = data.OrdersCount,
                 Rating = data.Rating
             };
+        }
+
+        public async Task<bool> VoteOrder(int orderID, double rating)
+        {
+            ResponseModel model = await _rc.PostDataAsync(PostActionMethods.VoteOrder, new OrderRatingDTO() { OrderID = orderID, Rating = rating });
+
+            return model.IsSuccessStatusCode;
         }
     }
 }

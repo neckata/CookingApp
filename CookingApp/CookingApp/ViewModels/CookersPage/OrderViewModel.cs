@@ -31,6 +31,8 @@ namespace CookingApp.ViewModels.CookersPage
 
         private CookersModel _model = new CookersModel();
 
+        public bool IsBusy { get; set; }
+
         public bool NameValidation { get; set; }
 
         public bool EmailValidation { get; set; }
@@ -111,6 +113,9 @@ namespace CookingApp.ViewModels.CookersPage
             {
                 return new Command(async () =>
                 {
+                    IsBusy = true;
+                    OnPropertyChangedModel(nameof(IsBusy));
+
                     //TODO time validation
                     //https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/src/Forms/XLabs.Forms/Controls/ExtendedTimePicker.cs
                     var address = addresses.FirstOrDefault(x => x.AddressName == _selectedAddress);
@@ -142,6 +147,9 @@ namespace CookingApp.ViewModels.CookersPage
                     }
                     else
                         await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderFail"));
+
+                    IsBusy = false;
+                    OnPropertyChangedModel(nameof(IsBusy));
                 });
             }
         }
@@ -161,7 +169,7 @@ namespace CookingApp.ViewModels.CookersPage
         private void LoadData()
         {
             IsAddresEnabled = true;
-            MinimumDate = DateTime.Now;
+            MinimumDate = DateTime.Today.AddDays(1);
 
             UserDTO user = DataBase.Instance.Query<UserDTO>().First();
             Name = user.Name;

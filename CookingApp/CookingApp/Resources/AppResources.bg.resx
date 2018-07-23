@@ -360,4 +360,13 @@
   <data name="lblToTime" xml:space="preserve">
     <value>До час</value>
   </data>
+  <data name="lblRate" xml:space="preserve">
+    <value>Оцени</value>
+  </data>
+  <data name="lblRateNotSuccess" xml:space="preserve">
+    <value>Настъпи грешка при оценяване на поръчката</value>
+  </data>
+  <data name="lblRateSuccess" xml:space="preserve">
+    <value>Успешно оценяване на поръчката</value>
+  </data>
 </root>

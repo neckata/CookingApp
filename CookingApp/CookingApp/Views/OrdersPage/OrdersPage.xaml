@@ -4,6 +4,7 @@
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
              xmlns:converter="clr-namespace:CookingApp.Converters"
              xmlns:controls="clr-namespace:CookingApp.Controls"
+             xmlns:rating="clr-namespace:Syncfusion.SfRating.XForms;assembly=Syncfusion.SfRating.XForms"
              x:Class="CookingApp.Views.OrdersPage.OrdersPage"
              x:Name="OrdersPage">
     <ContentPage.Resources>
@@ -12,35 +13,62 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView BackgroundColor="{StaticResource Primary}">
-            <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <controls:RepeaterView VerticalOptions="Fill" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Orders}" IsVisible="{Binding NoOrders, Converter={StaticResource InvertBoolenConverter}}">
-                    <controls:RepeaterView.ItemTemplate>
-                        <DataTemplate>
-                            <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="10" Padding="10" Orientation="Vertical">
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference Name=OrdersPage}, Path=BindingContext.OpenCooker}" CommandParameter="{Binding CookerID}"/>
-                                </StackLayout.GestureRecognizers>
-                                <Label Text="{Binding CookerName}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{i:Translate lblProductsIncluded}"  IsVisible="{Binding ProductsIncluded}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{i:Translate lblNotProductsIncluded}" IsVisible="{Binding ProductsIncluded, Converter={StaticResource InvertBoolenConverter}}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{i:Translate lblAddress}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding Address}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{i:Translate lblDate}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding Date, StringFormat='\{0:dd-MMM-yy}'}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{i:Translate lblFromTime}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                    <Label Text="{Binding FromTime}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                    <Label Text="{i:Translate lblToTime}" Margin="5,0,0,0" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                    <Label Text="{Binding ToTime}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+            <ScrollView BackgroundColor="{StaticResource Primary}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <controls:RepeaterView VerticalOptions="Fill" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Orders}" IsVisible="{Binding NoOrders, Converter={StaticResource InvertBoolenConverter}}">
+                        <controls:RepeaterView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout BackgroundColor="{Binding OrderColor}" Margin="10" Padding="5">
+                                    <StackLayout BackgroundColor="{StaticResource BorderColor}" Padding="10" Orientation="Vertical">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference Name=OrdersPage}, Path=BindingContext.OpenCooker}" CommandParameter="{Binding CookerID}"/>
+                                        </StackLayout.GestureRecognizers>
+                                        <Label Text="{Binding CookerName}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{i:Translate lblProductsIncluded}"  IsVisible="{Binding ProductsIncluded}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{i:Translate lblNotProductsIncluded}" IsVisible="{Binding ProductsIncluded, Converter={StaticResource InvertBoolenConverter}}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{i:Translate lblAddress}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Address}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{i:Translate lblDate}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding Date, StringFormat='\{0:dd-MMM-yy}'}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{i:Translate lblFromTime}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                            <Label Text="{Binding FromTime}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                            <Label Text="{i:Translate lblToTime}" Margin="5,0,0,0" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                            <Label Text="{Binding ToTime}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                        </StackLayout>
+                                        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsRated}">
+                                            <Label Text="{i:Translate lblRating}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                            <rating:SfRating Value="{Binding Rating}" IsEnabled="False" ItemCount="5" ItemSize="20" Precision="Exact"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" IsVisible="{Binding IsRated, Converter={StaticResource InvertBoolenConverter}}">
+                                        <rating:SfRating Value="{Binding Rating}" ItemCount="5" ItemSize="20" Precision="Exact"/>
+                                        <Button Text="{i:Translate lblRate}" HorizontalOptions="EndAndExpand" BackgroundColor="{StaticResource ButtonColor}"
+                                                Command="{Binding Source={x:Reference Name=OrdersPage}, Path=BindingContext.Rate}" CommandParameter="{Binding ID}"/>
+                                    </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
-                        </DataTemplate>
-                    </controls:RepeaterView.ItemTemplate>
-                </controls:RepeaterView>
-                <Label Text="{i:Translate lblNoOrders}" IsVisible="{Binding NoOrders}" FontSize="Large" TextColor="{StaticResource TextColor}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" LineBreakMode="WordWrap"/>
+                            </DataTemplate>
+                        </controls:RepeaterView.ItemTemplate>
+                    </controls:RepeaterView>
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout IsVisible="{Binding NoOrders}" Padding="12"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <Label Text="{i:Translate lblNoOrders}" HorizontalOptions="Center" TextColor="{StaticResource ButtonColor}" FontSize="Large"/>
             </StackLayout>
-        </ScrollView>
+
+            <StackLayout IsVisible="{Binding IsBusy}" Padding="12" BackgroundColor="{StaticResource ButtonColor}"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color ="Red"/>
+                <Label Text="{i:Translate lblLoading}" HorizontalOptions="Center" TextColor="White"/>
+            </StackLayout>
+
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>
     

@@ -61,6 +61,7 @@
     <Compile Include="Models\CuisineSelectedDTO.cs" />
     <Compile Include="Models\CuisineFilterDTO.cs" />
     <Compile Include="Models\IDDTO.cs" />
+    <Compile Include="Models\OrderRatingDTO.cs" />
     <Compile Include="Models\PostRequestModel.cs" />
     <Compile Include="Models\RecipeDTO.cs" />
     <Compile Include="Models\CookerCuisineDTO.cs" />

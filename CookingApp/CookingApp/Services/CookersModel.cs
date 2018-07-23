@@ -89,7 +89,7 @@ namespace CookingApp.Services
 
         public async Task<List<TimeTableRowViewModel>> GetTimeTable(int cookerID, DateTime fromDate)
         {
-            var data = await _rc.GetDataAsync<List<TimeTableRowDTO>>(Enums.GetActionMethods.TimeTable, string.Format("{0}?fromDate={1}", cookerID, fromDate.ToString("yyyy-MM-dd")));
+            var data = await _rc.GetDataAsync<List<TimeTableRowDTO>>(GetActionMethods.TimeTable, string.Format("{0}?fromDate={1}", cookerID, fromDate.ToString("yyyy-MM-dd")));
 
             List<TimeTableRowViewModel> list = new List<TimeTableRowViewModel>();
             foreach (var item in data)
@@ -115,10 +115,6 @@ namespace CookingApp.Services
         public async Task<bool> MakeOrder(OrderDTO order)
         {
             ResponseModel model = await _rc.PostDataAsync(PostActionMethods.Order, order);
-            if (model.IsSuccessStatusCode)
-            {
-                DataBase.Instance.Add(order);
-            }
             return model.IsSuccessStatusCode;
         }       
     }

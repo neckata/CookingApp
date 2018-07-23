@@ -1,14 +1,18 @@
-﻿using System;
+﻿using CookingApp.ViewModels.MainPage;
+using System;
+using System.Drawing;
 
 namespace CookingApp.ViewModels.OrdersPage
 {
-    public class SingleOrderViewModel
+    public class SingleOrderViewModel : ObservableViewModel
     {
+        public int ID { get; set; }
+
         public DateTime Date { get; set; }
 
-        public TimeSpan FromTime { get; set; }
+        public string FromTime { get; set; }
 
-        public TimeSpan ToTime { get; set; }
+        public string ToTime { get; set; }
 
         public string Address { get; set; }
 
@@ -27,5 +31,17 @@ namespace CookingApp.ViewModels.OrdersPage
         public string Neighborhood { get; set; }
 
         public string Street { get; set; }
+
+        public double Rating { get; set; }
+
+        public Color OrderColor { get; set; }
+
+        public bool IsRated { get; set; }
+
+        public void UpdateIsRated()
+        {
+            IsRated = true;
+            OnPropertyChangedModel(nameof(IsRated));
+        }
     }
 }

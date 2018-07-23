@@ -64,7 +64,10 @@ namespace CookingApp.Helpers
                     actionUrl = "place-order";
                     break;
                 case PostActionMethods.Orders:
-                    actionUrl = "orders";
+                    actionUrl = "list-orders";
+                    break;
+                case PostActionMethods.VoteOrder:
+                    actionUrl = "order-rating";
                     break;
                 case PostActionMethods.DeleteAddress:
                     actionUrl = "deleteAddress";
