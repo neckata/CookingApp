@@ -10,6 +10,7 @@ namespace CookingApp.Models
     {
         [PrimaryKey,AutoIncrement]
         [Column(nameof(ID))]
+        [JsonIgnore]
         public int ID { get; set; }
 
         [Column(nameof(CookerID))]

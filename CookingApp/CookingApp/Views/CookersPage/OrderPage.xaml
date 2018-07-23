@@ -34,7 +34,7 @@
 
                     <Picker ItemsSource="{Binding Addresses}" SelectedItem="{Binding SelectedAddress}" Title="{i:Translate lblSelectAddress}" BackgroundColor="White" Margin="5"/>
 
-                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
+                    <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5" IsVisible="{Binding NameEmailVisibility}">
                         <Label Text="{i:Translate lblAddressName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontAttributes="Italic"/>
                         <Entry Text="{Binding AddressName}" IsEnabled="{Binding IsAddresEnabledIsAddresEnabled}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontAttributes="Italic"/>
 

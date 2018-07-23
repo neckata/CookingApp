@@ -29,16 +29,16 @@ namespace CookingApp.Services
                 {
                     AddressID = item.AddressID,
                     AddressName = address.AddressName,
-                    Address = string.Format("{0},{1},{2}",address.City,address.Neighborhood,address.Street),
-                    City=address.City,
-                    CookerID=item.CookerID,
-                    Neighborhood=address.Neighborhood,
-                    ProductsIncluded =item.ProductsIncluded,
-                    Street =address.Street,
-                    CookerName =item.CookerName,
-                    Date=item.Date,
-                    FromTime=item.FromTime,
-                    ToTime=item.ToTime
+                    Address = string.Format("{0},{1},{2}", address.City, address.Neighborhood, address.Street),
+                    City = address.City,
+                    CookerID = item.CookerID,
+                    Neighborhood = address.Neighborhood,
+                    ProductsIncluded = item.ProductsIncluded,
+                    Street = address.Street,
+                    CookerName = item.CookerName,
+                    Date = item.Date,
+                    FromTime = item.FromTime,
+                    ToTime = item.ToTime
                 });
             }
             return data;
@@ -50,13 +50,13 @@ namespace CookingApp.Services
 
             return new CookerViewModel()
             {
-                ID=data.ID,
-                Description=data.Description,
-                HoursPricing=data.HoursPricing,
-                Image=data.Image,
-                Name=data.Name,
-                OrdersCount=data.OrdersCount,
-                Rating=data.Rating
+                ID = data.ID,
+                Description = data.Description,
+                HoursPricing = data.HoursPricing,
+                Image = data.Image,
+                Name = string.Format("{0} {1}", data.FirstName, data.LastName),
+                OrdersCount = data.OrdersCount,
+                Rating = data.Rating
             };
         }
     }

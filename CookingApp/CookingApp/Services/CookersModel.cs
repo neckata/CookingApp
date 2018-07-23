@@ -22,7 +22,16 @@ namespace CookingApp.Services
 
             List<CookerViewModel> cookers = new List<CookerViewModel>();
             foreach (var item in data)
-                cookers.Add(new CookerViewModel() { ID = item.ID, Description = item.Description, HoursPricing = item.HoursPricing, Image = item.Image, Name = item.Name, OrdersCount = item.OrdersCount, Rating = item.Rating });
+                cookers.Add(new CookerViewModel()
+                {
+                    ID = item.ID,
+                    Description = item.Description,
+                    HoursPricing = item.HoursPricing,
+                    Image = item.Image,
+                    Name = string.Format("{0} {1}", item.FirstName, item.LastName),
+                    OrdersCount = item.OrdersCount,
+                    Rating = item.Rating
+                });
 
             return cookers;
         }
