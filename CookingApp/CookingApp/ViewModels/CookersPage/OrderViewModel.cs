@@ -35,7 +35,7 @@ namespace CookingApp.ViewModels.CookersPage
 
         public bool NameValidation { get; set; }
 
-        public bool EmailValidation { get; set; }
+        public bool PhoneValidation { get; set; }
 
         public bool NameEmailVisibility { get; set; }
 
@@ -113,43 +113,49 @@ namespace CookingApp.ViewModels.CookersPage
             {
                 return new Command(async () =>
                 {
-                    IsBusy = true;
-                    OnPropertyChangedModel(nameof(IsBusy));
-
-                    //TODO time validation
-                    //https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/src/Forms/XLabs.Forms/Controls/ExtendedTimePicker.cs
-                    var address = addresses.FirstOrDefault(x => x.AddressName == _selectedAddress);
-
-                    var order = new OrderDTO()
+                    if (!NameValidation && !PhoneValidation)
                     {
-                        Date = Date,
-                        FromTime = FromTime,
-                        ToTime=ToTime,
-                        ProductsIncluded = ProductsIncluded,
-                        CookerID = _cookerID,
-                        CookerName = _cookerName
-                    };
-                    if (address != null)
-                        order.AddressID = address.Id;
-                    else
-                    {
-                        order.AddressName = AddressName;
-                        order.City = City;
-                        order.Neighborhood = Neighborhood;
-                        order.Street = Street;
+
+                        IsBusy = true;
+                        OnPropertyChangedModel(nameof(IsBusy));
+
+                        //TODO time validation
+                        //https://github.com/XLabs/Xamarin-Forms-Labs/blob/master/src/Forms/XLabs.Forms/Controls/ExtendedTimePicker.cs
+                        var address = addresses.FirstOrDefault(x => x.AddressName == _selectedAddress);
+
+                        var order = new OrderDTO()
+                        {
+                            Date = Date,
+                            FromTime = FromTime,
+                            ToTime = ToTime,
+                            ProductsIncluded = ProductsIncluded,
+                            CookerID = _cookerID,
+                            CookerName = _cookerName
+                        };
+                        if (address != null)
+                            order.AddressID = address.Id;
+                        else
+                        {
+                            order.AddressName = AddressName;
+                            order.City = City;
+                            order.Neighborhood = Neighborhood;
+                            order.Street = Street;
+                        }
+
+                        bool isSend = await _model.MakeOrder(order);
+                        if (isSend)
+                        {
+                            await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderSuccess"));
+                            await PageTemplate.CurrentPage.NavigateBack();
+                        }
+                        else
+                            await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderFail"));
+
+                        IsBusy = false;
+                        OnPropertyChangedModel(nameof(IsBusy));
                     }
-
-                    bool isSend = await _model.MakeOrder(order);
-                    if (isSend)
-                    {
-                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderSuccess"));
-                        await PageTemplate.CurrentPage.NavigateBack();
-                    }
                     else
-                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderFail"));
-
-                    IsBusy = false;
-                    OnPropertyChangedModel(nameof(IsBusy));
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblUpdateData"));
                 });
             }
         }
@@ -176,6 +182,18 @@ namespace CookingApp.ViewModels.CookersPage
             Family = user.Family;
             Phone = user.Phone;
             Email = user.Email;
+
+            if (string.IsNullOrEmpty(Name))
+            {
+                NameValidation = true;
+                OnPropertyChangedModel(nameof(NameValidation));
+            }
+
+            if (string.IsNullOrEmpty(Phone))
+            {
+                PhoneValidation = true;
+                OnPropertyChangedModel(nameof(PhoneValidation));
+            }
 
             OnPropertyChangedModel(nameof(IsAddresEnabled));
             OnPropertyChangedModel(nameof(Name));

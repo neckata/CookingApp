@@ -60,31 +60,31 @@
                         <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
                             <Label Text="{i:Translate lblName}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium"/>
                             <StackLayout BackgroundColor="Black">
-                                <Entry Text="{Binding Name}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
+                                <Entry Text="{Binding Name}" IsEnabled="False"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
                             </StackLayout>
-                            <Label IsVisible="{Binding NameValidation}" Text="{i:Translate lblNameValidation}" TextColor="Red" FontAttributes="Italic" Margin="10,0,0,0"/>
+                            <Label IsVisible="{Binding NameValidation}" Text="{i:Translate lblNameValidationOrder}" TextColor="Red" FontAttributes="Italic" Margin="10,0,0,0"/>
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
                             <Label Text="{i:Translate lblUserFamily}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium"/>
                             <StackLayout BackgroundColor="Black">
-                                <Entry Text="{Binding Family}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
+                                <Entry Text="{Binding Family}" IsEnabled="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White"/>
                             </StackLayout>
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
                             <Label Text="{i:Translate lblPhone}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium"/>
                             <StackLayout BackgroundColor="Black">
-                                <Entry Text="{Binding Phone}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" Keyboard="Numeric"/>
+                                <Entry Text="{Binding Phone}" IsEnabled="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" Keyboard="Numeric"/>
                             </StackLayout>
+                            <Label IsVisible="{Binding PhoneValidation}" Text="{i:Translate lblPhoneValidationOrder}" TextColor="Red" FontAttributes="Italic" Margin="10,0,0,0"/>
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" BackgroundColor="White" Margin="5" Padding="5">
                             <Label Text="{i:Translate lblEmail}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" FontSize="Medium"/>
                             <StackLayout BackgroundColor="Black">
-                                <Entry Text="{Binding Email}" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" Keyboard="Email"/>
+                                <Entry Text="{Binding Email}" IsEnabled="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="1" BackgroundColor="White" Keyboard="Email"/>
                             </StackLayout>
-                            <Label IsVisible="{Binding EmailValidation}" Text="{i:Translate lblEmailValidation}" TextColor="Red" FontAttributes="Italic"  Margin="10,0,0,0"/>
                         </StackLayout>
                     </StackLayout>
 

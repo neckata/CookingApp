@@ -369,4 +369,13 @@
   <data name="lblRateSuccess" xml:space="preserve">
     <value>Успешно оценяване на поръчката</value>
   </data>
+  <data name="lblNameValidationOrder" xml:space="preserve">
+    <value>Моля име в данни за потребителя</value>
+  </data>
+  <data name="lblPhoneValidationOrder" xml:space="preserve">
+    <value>Моля въведете телефон в данни за потребителя</value>
+  </data>
+  <data name="lblUpdateData" xml:space="preserve">
+    <value>Моля обновете телефона и името в данни за потребителя </value>
+  </data>
 </root>
