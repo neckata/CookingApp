@@ -1,6 +1,6 @@
 ﻿using CookingApp.ViewModels.MainPage;
 using System;
-using System.Drawing;
+using Xamarin.Forms;
 
 namespace CookingApp.ViewModels.OrdersPage
 {
@@ -36,12 +36,17 @@ namespace CookingApp.ViewModels.OrdersPage
 
         public Color OrderColor { get; set; }
 
-        public bool IsRated { get; set; }
+        public bool IsRatingVisible { get; set; }
+
+        public bool IsRatеVisible { get; set; }
 
         public void UpdateIsRated()
         {
-            IsRated = true;
-            OnPropertyChangedModel(nameof(IsRated));
+            IsRatingVisible = true;
+            OnPropertyChangedModel(nameof(IsRatingVisible));
+
+            IsRatеVisible = false;
+            OnPropertyChangedModel(nameof(IsRatеVisible));
         }
     }
 }

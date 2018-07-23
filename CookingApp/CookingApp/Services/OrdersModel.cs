@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace CookingApp.Services
 {
@@ -49,8 +49,9 @@ namespace CookingApp.Services
                         Date = item.Date,
                         FromTime = item.FromTime.ToString(),
                         ToTime = item.ToTime.ToString(),
-                        IsRated = item.Rating.HasValue,
-                        OrderColor = item.Date < DateTime.Now ? Color.Green : Color.Yellow,
+                        IsRatingVisible = item.Date < DateTime.Now ? item.Rating.HasValue : false,
+                        IsRatеVisible = item.Date < DateTime.Now ? !item.Rating.HasValue : false,
+                        OrderColor = item.Date < DateTime.Now ? Color.LightGreen : Color.Yellow,
                         Rating = item.Rating.HasValue ? item.Rating.Value : 0
                     });
                 }

@@ -20,8 +20,8 @@
                     <controls:RepeaterView VerticalOptions="Fill" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Orders}" IsVisible="{Binding NoOrders, Converter={StaticResource InvertBoolenConverter}}">
                         <controls:RepeaterView.ItemTemplate>
                             <DataTemplate>
-                                <StackLayout BackgroundColor="{Binding OrderColor}" Margin="10" Padding="5">
-                                    <StackLayout BackgroundColor="{StaticResource BorderColor}" Padding="10" Orientation="Vertical">
+                                <StackLayout BackgroundColor="{Binding OrderColor}" Margin="10" Orientation="Vertical">
+                                    <StackLayout BackgroundColor="{StaticResource BorderColor}" Margin="5" Padding="10" Orientation="Vertical">
                                         <StackLayout.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Source={x:Reference Name=OrdersPage}, Path=BindingContext.OpenCooker}" CommandParameter="{Binding CookerID}"/>
                                         </StackLayout.GestureRecognizers>
@@ -38,13 +38,13 @@
                                             <Label Text="{i:Translate lblToTime}" Margin="5,0,0,0" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
                                             <Label Text="{Binding ToTime}" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
                                         </StackLayout>
-                                        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsRated}">
+                                        <StackLayout Orientation="Horizontal" IsVisible="{Binding IsRatingVisible}">
                                             <Label Text="{i:Translate lblRating}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
                                             <rating:SfRating Value="{Binding Rating}" IsEnabled="False" ItemCount="5" ItemSize="20" Precision="Exact"/>
                                         </StackLayout>
                                     </StackLayout>
-                                    <StackLayout Orientation="Horizontal" IsVisible="{Binding IsRated, Converter={StaticResource InvertBoolenConverter}}">
-                                        <rating:SfRating Value="{Binding Rating}" ItemCount="5" ItemSize="20" Precision="Exact"/>
+                                    <StackLayout Orientation="Horizontal" IsVisible="{Binding IsRatеVisible}" Margin="5,0,5,5">
+                                        <rating:SfRating Value="{Binding Rating}" ItemCount="5" ItemSize="20" Precision="Exact" VerticalOptions="CenterAndExpand" Margin="5,0,0,0"/>
                                         <Button Text="{i:Translate lblRate}" HorizontalOptions="EndAndExpand" BackgroundColor="{StaticResource ButtonColor}"
                                                 Command="{Binding Source={x:Reference Name=OrdersPage}, Path=BindingContext.Rate}" CommandParameter="{Binding ID}"/>
                                     </StackLayout>
