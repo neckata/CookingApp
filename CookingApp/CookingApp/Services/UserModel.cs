@@ -46,6 +46,7 @@ namespace CookingApp.Services
                 user.Phone = userInformation.Phone;
                 user.Email = userInformation.Email;
                 user.Family = userInformation.LastName;
+                user.HasNotifications = userInformation.HasNotifications;
                 DataBase.Instance.Update(user);
             }
 
@@ -128,7 +129,7 @@ namespace CookingApp.Services
             return model.IsSuccessStatusCode;
         }
 
-        public async Task<bool> SaveCooker(UserCookerDTO cooker)
+        public async Task<bool> SaveCooker(UserCookerDTO cooker,string image)
         {
             ResponseModel model = await _rc.PostDataAsync(PostActionMethods.SaveCooker, cooker);
             if (model.IsSuccessStatusCode)
@@ -136,6 +137,7 @@ namespace CookingApp.Services
                 UserDTO user = GetUser();
                 user.Description = cooker.Description;
                 user.HoursPricing = cooker.HoursPricing;
+                user.Image = image;
                 DataBase.Instance.Update(user);
 
                 ClearUserCuisines();
@@ -204,6 +206,7 @@ namespace CookingApp.Services
                 user.Rating = data.Rating;
                 user.UserName = userName;
                 user.Password = password;
+                user.HasNotifications = data.HasNotifications;
                 DataBase.Instance.Update(user);
 
                 FillAddresses();
@@ -227,6 +230,7 @@ namespace CookingApp.Services
                 user.Email = userData.Email;
                 user.UserName = "Anonymous";
                 user.Password = string.Empty;
+                user.HasNotifications = userData.HasNotifications;
                 DataBase.Instance.Update(user);
 
                 ClearUserCuisines();

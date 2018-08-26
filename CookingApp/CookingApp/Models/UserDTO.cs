@@ -62,6 +62,9 @@ namespace CookingApp.Models
         [Column(nameof(IsRegistered))]
         public bool IsRegistered { get; set; }
 
+        [Column(nameof(HasNotifications))]
+        public bool HasNotifications { get; set; }
+
         [Ignore]
         public List<string> Cuisines { get; set; }
 

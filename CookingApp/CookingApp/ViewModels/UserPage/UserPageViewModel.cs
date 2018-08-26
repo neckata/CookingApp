@@ -34,6 +34,8 @@ namespace CookingApp.ViewModels.UserPage
 
         public string Email { get; set; }
 
+        public bool HasNotifications { get; set; }
+
         public ICommand SaveCommand
         {
             get
@@ -45,7 +47,7 @@ namespace CookingApp.ViewModels.UserPage
                         IsBusy = true;
                         OnPropertyChangedModel(nameof(IsBusy));
 
-                        bool isSucess = await _model.SaveUserInformation(new UserInformationDTO() { Email = Email, FirstName = Name, LastName = Family, Phone = Phone });
+                        bool isSucess = await _model.SaveUserInformation(new UserInformationDTO() { Email = Email, FirstName = Name, LastName = Family, Phone = Phone, HasNotifications = HasNotifications });
 
                         IsBusy = false;
                         OnPropertyChangedModel(nameof(IsBusy));
@@ -68,6 +70,17 @@ namespace CookingApp.ViewModels.UserPage
                 return new Command(async () =>
                 {
                     await PageTemplate.CurrentPage.NavigateAsync(new UserCookerPage() { Title = AppResources.ResourceManager.GetString("lblCookerInfo") });
+                });
+            }
+        }
+        public ICommand ChangeHasNotifications
+        {
+            get
+            {
+                return new Command(() =>
+                {
+                    HasNotifications = !HasNotifications;
+                    OnPropertyChangedModel(nameof(HasNotifications));
                 });
             }
         }
@@ -120,7 +133,9 @@ namespace CookingApp.ViewModels.UserPage
             Family = user.Family;
             Phone = user.Phone;
             Email = user.Email;
+            HasNotifications = user.HasNotifications;
 
+            OnPropertyChangedModel(nameof(HasNotifications));
             OnPropertyChangedModel(nameof(Name));
             OnPropertyChangedModel(nameof(Family));
             OnPropertyChangedModel(nameof(Phone));

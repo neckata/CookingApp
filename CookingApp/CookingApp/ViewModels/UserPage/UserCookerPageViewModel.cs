@@ -10,6 +10,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Collections.Generic;
 using CookingApp.Enums;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System.IO;
 
 namespace CookingApp.ViewModels.UserPage
 {
@@ -23,6 +26,8 @@ namespace CookingApp.ViewModels.UserPage
         }
 
         private UserModel _model = new UserModel();
+
+        private byte[] newImage;
 
         public bool IsBusy { get; set; }
 
@@ -133,10 +138,10 @@ namespace CookingApp.ViewModels.UserPage
                     {
                         Description = Description,
                         HoursPricing = HoursPricing,
-                        Image = Image,
+                        Image = newImage,
                         TimeTable = timeTable,
                         Cuisines = cuisines
-                    });
+                    }, Image);
 
                     IsBusy = false;
                     OnPropertyChangedModel(nameof(IsBusy));
@@ -154,10 +159,34 @@ namespace CookingApp.ViewModels.UserPage
         {
             get
             {
-                return new Command(() =>
+                return new Command(async() =>
                 {
-                    //TODO
-                    //https://xamarinhelp.com/use-camera-take-photo-xamarin-forms/
+                    await CrossMedia.Current.Initialize();
+
+                    if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsPickPhotoSupported)
+                    {
+                        await PageTemplate.CurrentPage.DisplayAlert(AppResources.ResourceManager.GetString("lblWarning"), AppResources.ResourceManager.GetString("msgCameraError"),
+                            AppResources.ResourceManager.GetString("lblOk"));
+                        return;
+                    }
+
+                    var file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                    {
+                        SaveToAlbum = true,
+                        Name = "NewImage.jpg"
+                    });
+
+                    if (file == null)
+                        return;
+
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        file.GetStream().CopyTo(memoryStream);
+                        newImage = memoryStream.ToArray();
+                    }
+
+                    Image = file.Path;
+                    OnPropertyChangedModel(nameof(Image));
                 });
             }
         }

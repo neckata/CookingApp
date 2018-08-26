@@ -6,6 +6,7 @@ using Android.Views;
 using CookingApp.Helpers;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
+using Plugin.CurrentActivity;
 
 namespace CookingApp.Droid
 {
@@ -19,6 +20,8 @@ namespace CookingApp.Droid
 
             base.Window.RequestFeature(WindowFeatures.ActionBar);
             base.SetTheme(Resource.Style.MyTheme);
+
+            CrossCurrentActivity.Current.Init(this, bundle);
 
             base.OnCreate(bundle);
 

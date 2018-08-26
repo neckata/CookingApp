@@ -378,4 +378,16 @@
   <data name="lblUpdateData" xml:space="preserve">
     <value>Моля обновете телефона и името в данни за потребителя </value>
   </data>
+  <data name="lblOk" xml:space="preserve">
+    <value>Ок</value>
+  </data>
+  <data name="lblWarning" xml:space="preserve">
+    <value>Внимание</value>
+  </data>
+  <data name="msgCameraError" xml:space="preserve">
+    <value>Няма достъп до камерата</value>
+  </data>
+  <data name="lblNotificationsSubscription" xml:space="preserve">
+    <value>Абониране за нотификации</value>
+  </data>
 </root>

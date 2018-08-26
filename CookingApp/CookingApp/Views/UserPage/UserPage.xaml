@@ -57,6 +57,15 @@
                             </StackLayout>
                             <Label IsVisible="{Binding EmailValidation}" Text="{i:Translate lblEmailValidation}" TextColor="Red" FontAttributes="Italic"  Margin="10,0,0,0"/>
                         </StackLayout>
+
+                        <StackLayout Orientation="Horizontal" Margin="5,0,5,5" Padding="5">
+                            <Switch IsToggled="{Binding HasNotifications}"/>
+                            <Label Text="{i:Translate lblNotificationsSubscription}" VerticalTextAlignment="Center" FontSize="Medium">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ChangeHasNotifications}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
                     </StackLayout>
 
                     <Button Text="{i:Translate lblSave}" Command="{Binding SaveCommand}" BackgroundColor="{StaticResource ButtonColor}" TextColor="{StaticResource TextColor}" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Margin="0,0,0,5"/>
