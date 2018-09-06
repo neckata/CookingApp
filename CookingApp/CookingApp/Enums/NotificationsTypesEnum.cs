@@ -3,6 +3,7 @@
     public enum NotificationsTypesEnum
     {
         Chat,
-        News
+        Recipe,
+        Cooker
     }
 }

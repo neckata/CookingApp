@@ -390,4 +390,7 @@
   <data name="lblNotificationsSubscription" xml:space="preserve">
     <value>Абониране за нотификации</value>
   </data>
+  <data name="lblDateReceived" xml:space="preserve">
+    <value>Получен :</value>
+  </data>
 </root>

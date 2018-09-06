@@ -2,10 +2,52 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i="clr-namespace:CookingApp.Helpers;assembly=CookingApp"
-             x:Class="CookingApp.Views.NotificationsPage.NotificationsPage">
+             xmlns:converter="clr-namespace:CookingApp.Converters"
+             xmlns:controls="clr-namespace:CookingApp.Controls"
+             x:Class="CookingApp.Views.NotificationsPage.NotificationsPage"
+             x:Name="NotificationsPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:InvertBoolenConverter x:Key="InvertBoolenConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView BackgroundColor="{StaticResource Primary}">
-            <Label Text="{i:Translate lblNoNotifications}" FontSize="Large" TextColor="{StaticResource TextColor}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" LineBreakMode="WordWrap"/>
-        </ScrollView>
+        <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout BackgroundColor="{StaticResource Primary}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" IsEnabled="{Binding IsBusy, Converter={StaticResource InvertBoolenConverter}}">
+                <ScrollView>
+                    <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Notifications}">
+                        <controls:RepeaterView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Vertical" BackgroundColor="{StaticResource BorderColor}">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference Name=NotificationsPage}, Path=BindingContext.Navigate}" CommandParameter="{Binding NotificationID}"/>
+                                    </StackLayout.GestureRecognizers>
+                                    <Label Text="{Binding NotificationTitle}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding NotificationBody}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{i:Translate lblDateReceived}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding NotificationDate}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </DataTemplate>
+                        </controls:RepeaterView.ItemTemplate>
+                    </controls:RepeaterView>
+                </ScrollView>
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding NoNotifications}" Padding="12"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <Label Text="{i:Translate lblNoNotifications}" HorizontalOptions="Center" TextColor="{StaticResource ButtonColor}" FontSize="Large"/>
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding IsBusy}" Padding="12" BackgroundColor="{StaticResource ButtonColor}"
+                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                 AbsoluteLayout.LayoutBounds="0.5,0.5,-1,-1">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color ="Red"/>
+                <Label Text="{i:Translate lblLoading}" HorizontalOptions="Center" TextColor="White"/>
+            </StackLayout>
+
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

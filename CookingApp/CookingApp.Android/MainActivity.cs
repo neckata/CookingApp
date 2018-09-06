@@ -1,12 +1,27 @@
 ﻿using Acr.UserDialogs;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
+using Android.Gms.Common;
 using Android.OS;
 using Android.Views;
+using CookingApp.Droid.Utils;
 using CookingApp.Helpers;
+using CookingApp.Models;
+using Newtonsoft.Json;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
 using Plugin.CurrentActivity;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Firebase;
+using CookingApp.Enums;
+using CookingApp.ViewModels.CookersPage;
+using CookingApp.Views.MainPage;
+using CookingApp.Views.CookersPage;
+using CookingApp.ViewModels.RecipesPage;
+using CookingApp.Views.RecipesPage;
 
 namespace CookingApp.Droid
 {
@@ -22,16 +37,67 @@ namespace CookingApp.Droid
             base.SetTheme(Resource.Style.MyTheme);
 
             CrossCurrentActivity.Current.Init(this, bundle);
-
+            FirebaseApp.InitializeApp(this);
             base.OnCreate(bundle);
+
+            if (IsPlayServicesAvailable())
+            {
+                Task serviceInstanceTask = new Task(() =>
+                {
+                    Intent intent = null;
+                    if (!IsServiceRunning(typeof(FireBaseIDService)))
+                    {
+                        intent = new Intent(this, typeof(FireBaseIDService));
+                        StartService(intent);
+                    }
+
+                    if (!IsServiceRunning(typeof(CookingAppFirebaseMessagingService)))
+                    {
+                        intent = new Intent(this, typeof(CookingAppFirebaseMessagingService));
+                        StartService(intent);
+                    }
+                });
+
+                serviceInstanceTask.Start();
+            }
+            else
+            {
+                GoogleApiAvailability.Instance.MakeGooglePlayServicesAvailable(this);
+            }
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
 
             UserDialogs.Init(this);
             FormsPlugin.Iconize.Droid.IconControls.Init(Resource.Id.toolbar);
-            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());      
-           
+            Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
+
             LoadApplication(new App());
+        }
+
+        private bool IsServiceRunning(Type serviceType)
+        {
+            return (((ActivityManager)GetSystemService(ActivityService)).GetRunningServices(int.MaxValue).Select(service => service.Service.ShortClassName).ToList())
+                   .Contains(serviceType.ToString().ToLower());
+        }
+
+        private bool IsPlayServicesAvailable()
+        {
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            if (resultCode != ConnectionResult.Success)
+            {
+                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+                {
+                }
+                else
+                {
+                    Finish();
+                }
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         protected override void OnStart()
@@ -54,6 +120,132 @@ namespace CookingApp.Droid
             {
                 CrossConnectivity.Current.ConnectivityChanged -= Current_ConnectivityChanged;
                 DataBase.Instance.LoadNomenclatures();
+            }
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+            if (intent?.Extras != null)
+            {
+                string data = intent?.Extras.GetString("data");
+                if (data != null)
+                {
+                    NotificationDTO notification = JsonConvert.DeserializeObject<NotificationDTO>(data);
+
+                    DataBase.Instance.Add(notification);
+
+                    NavigateNotification(notification.NotificationType, notification.NotificationID);
+                }
+                else
+                {
+                    string NotificationID = intent?.Extras.GetString("NotificationID");
+                    NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), intent?.Extras.GetString("NotificationType"), true);
+                    if (!string.IsNullOrEmpty(NotificationID))
+                    {
+                        if (DataBase.Instance.Query<NotificationDTO>().FirstOrDefault(x => x.NotificationID == int.Parse(NotificationID)) != null)
+                        {
+                            string NotificationSentTime = intent?.Extras.GetString("NotificationSentTime");
+                            string NotificationTitle = intent?.Extras.GetString("NotificationTitle");
+                            string NotificationBody = intent?.Extras.GetString("NotificationBody");
+
+                            DataBase.Instance.Add(new NotificationDTO()
+                            {
+                                NotificationID = int.Parse(NotificationID),
+                                NotificationBody = NotificationBody,
+                                NotificationSentTime = DateTime.Parse(NotificationSentTime),
+                                NotificationTitle = Title,
+                                NotificationType = NotificationType
+                            });
+                        }
+                    }
+                    NavigateNotification(NotificationType, int.Parse(NotificationID));
+                }
+            }
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (this.Intent?.Extras != null)
+            {
+                string data = this.Intent?.Extras.GetString("data");
+                if (data != null)
+                {
+                    this.Intent.RemoveExtra("data");
+
+                    NotificationDTO notification = JsonConvert.DeserializeObject<NotificationDTO>(data);
+
+                    DataBase.Instance.Add(notification);
+
+                    NavigateNotification(notification.NotificationType, notification.NotificationID);
+                }
+                else
+                {
+                    string NotificationID = this.Intent.Extras.GetString("NotificationID");
+                    NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), this.Intent.Extras.GetString("NotificationType"), true);
+                    if (!string.IsNullOrEmpty(NotificationID))
+                    {
+                        if (DataBase.Instance.Query<NotificationDTO>().FirstOrDefault(x => x.NotificationID == int.Parse(NotificationID)) != null)
+                        {
+                            string NotificationSentTime = this.Intent.Extras.GetString("NotificationSentTime");
+                            string NotificationTitle = this.Intent?.Extras.GetString("NotificationTitle");
+                            string NotificationBody = this.Intent.Extras.GetString("NotificationBody");
+
+                            DataBase.Instance.Add(new NotificationDTO()
+                            {
+                                NotificationID = int.Parse(NotificationID),
+                                NotificationBody = NotificationBody,
+                                NotificationSentTime = DateTime.Parse(NotificationSentTime),
+                                NotificationTitle = Title,
+                                NotificationType = NotificationType
+                            });
+                        }
+                    }
+                    NavigateNotification(NotificationType, int.Parse(NotificationID));
+                }
+            }
+        }
+
+        private async void NavigateNotification(NotificationsTypesEnum NotificationType, int NotificationID)
+        {
+            if (NotificationType == NotificationsTypesEnum.Chat)
+            {
+                //TODO    
+            }
+            else if (NotificationType == NotificationsTypesEnum.Cooker)
+            {
+                CookerDTO cookerDTO = DataBase.Instance.Query<CookerDTO>().FirstOrDefault(x => x.ID == NotificationID);
+
+                CookerViewModel cooker = new CookerViewModel()
+                {
+                    Description = cookerDTO.Description,
+                    ID = cookerDTO.ID,
+                    HoursPricing = cookerDTO.HoursPricing,
+                    Image = cookerDTO.Image,
+                    Name = string.Format("{0} {1}", cookerDTO.FirstName, cookerDTO.LastName),
+                    OrdersCount = cookerDTO.OrdersCount,
+                    Rating = cookerDTO.Rating
+                };
+
+                await PageTemplate.CurrentPage.NavigateAsync(new SingleCookerPage(cooker) { Title = cooker.Name });
+            }
+            else if (NotificationType == NotificationsTypesEnum.Recipe)
+            {
+                RecipeDTO recipeDTO = DataBase.Instance.Query<RecipeDTO>().FirstOrDefault(x => x.ID == NotificationID);
+
+                RecipeViewModel recipe = new RecipeViewModel()
+                {
+                    ID = recipeDTO.ID,
+                    HowToCook=recipeDTO.HowToCook,
+                    Image = recipeDTO.Image,
+                    NecessaryIngredients = recipeDTO.NecessaryIngredients,
+                    Portions = recipeDTO.Portions,
+                    TimeToCook = recipeDTO.TimeToCook,
+                    Title = recipeDTO.Title
+                };
+                
+                await PageTemplate.CurrentPage.NavigateAsync(new SingleRecipePage(recipe) { Title = recipe.Title });
             }
         }
     }

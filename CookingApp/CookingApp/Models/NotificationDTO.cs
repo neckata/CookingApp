@@ -7,23 +7,20 @@ namespace CookingApp.Models
     [Table("NOTIFICATIONTABLE")]
     public class NotificationDTO
     {
-        [PrimaryKey, AutoIncrement]
-        [Column(nameof(ID))]
-        public int ID { get; set; }
+        [PrimaryKey]
+        [Column(nameof(NotificationID))]
+        public int NotificationID { get; set; }
 
-        [Column(nameof(Type))]
-        public NotificationsTypesEnum Type { get; set; }
+        [Column(nameof(NotificationType))]
+        public NotificationsTypesEnum NotificationType { get; set; }
 
-        [Column(nameof(DeviceID))]
-        public int DeviceID { get; set; }
+        [Column(nameof(NotificationSentTime))]
+        public DateTime NotificationSentTime { get; set; }
 
-        [Column(nameof(DateSend))]
-        public DateTime DateSend { get; set; }
+        [Column(nameof(NotificationTitle))]
+        public string NotificationTitle { get; set; }
 
-        [Column(nameof(DateDelivered))]
-        public DateTime DateDelivered { get; set; }
-
-        [Column(nameof(DateRead))]
-        public DateTime DateRead { get; set; }
+        [Column(nameof(NotificationBody))]
+        public string NotificationBody { get; set; }
     }
 }
