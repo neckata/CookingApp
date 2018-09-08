@@ -37,5 +37,11 @@ namespace CookingApp.Services
             RecipeDTO data = await _rc.GetDataAsync<RecipeDTO>(GetActionMethods.RecipeInformation, recipeID.ToString());
             return new RecipeViewModel() { NecessaryIngredients = data.NecessaryIngredients, HowToCook = data.HowToCook };
         }
+
+        public async Task<RecipeViewModel> GetRecipeFromID(int recipeID)
+        {
+            RecipeDTO data = await _rc.GetDataAsync<RecipeDTO>(GetActionMethods.RecipeFullInformation, recipeID.ToString());
+            return new RecipeViewModel() { ID = recipeID, Image = data.Image, TimeToCook = data.TimeToCook, Title = data.Title, Portions = data.Portions };
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Media;
 using Firebase.Messaging;
+using System;
 
 namespace CookingApp.Droid.Utils
 {
@@ -21,15 +22,14 @@ namespace CookingApp.Droid.Utils
                 while (enumerator.MoveNext())
                     data += "\"" + enumerator.Current.Key + "\":\"" + enumerator.Current.Value + "\",";
 
-            intent.PutExtra("NotificationTitle", message.Data["NotificationTitle"]);
-            intent.PutExtra("NotificationBody", message.Data["NotificationBody"]);
+            intent.PutExtra("NotificationTitle", message.Data["notificationTitle"]);
+            intent.PutExtra("NotificationBody", message.Data["notificationBody"]);
             data += "}";
             intent.PutExtra("data", data);
-            intent.PutExtra("NotificationSentTime", message.SentTime);
+            intent.PutExtra("NotificationSentTime", DateTime.Now.ToString());
 
-            SendNotification(intent, message.Data["NotificationTitle"], message.Data["NotificationBody"], message.SentTime);
+            SendNotification(intent, message.Data["notificationTitle"], message.Data["notificationBody"], message.SentTime);
         }
-
 
         private void SendNotification(Intent intent, string messageTitle, string messageBody, long sendTime, RingtoneType ringtoneType = RingtoneType.Alarm)
         {

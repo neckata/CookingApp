@@ -15,6 +15,7 @@ namespace CookingApp.Droid.Utils
             {
                 UserDTO user = DataBase.Instance.Query<UserDTO>().FirstOrDefault();
                 user.FCM = FirebaseInstanceId.Instance.Token;
+                DataBase.Instance.Update(user);
             }
         }
     }

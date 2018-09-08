@@ -18,7 +18,7 @@ namespace CookingApp.Helpers
 {
     public partial class RestfulClient : IDisposable
     {
-        private const string _baseUrlAddress = "http://109.160.42.216:8080/TheCookingApp/";
+        private const string _baseUrlAddress = "http://109.160.42.216:8080/TheCookingApp/mobile/";
 
         private HttpClient Client
         {

@@ -26,7 +26,7 @@ namespace CookingApp.Services
         public async void RegisterUser()
         {
             UserDTO user = DataBase.Instance.Query<UserDTO>().First();
-            RegisterUserDTO register = new RegisterUserDTO() { FcmId = user.FCM , IMEI = user.IMEI};
+            RegisterUserDTO register = new RegisterUserDTO() { FcmId = user.FCM};
             ResponseModel model = await _rc.PostDataAsync(PostActionMethods.CreateUser, register);
             if (model.IsSuccessStatusCode)
             {

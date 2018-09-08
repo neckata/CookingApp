@@ -6,6 +6,7 @@
         Cuisines,
         Receipts,
         RecipeInformation,
+        RecipeFullInformation,
         Cookers,
         Cooker,
         TimeTable

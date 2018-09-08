@@ -22,6 +22,7 @@ using CookingApp.Views.MainPage;
 using CookingApp.Views.CookersPage;
 using CookingApp.ViewModels.RecipesPage;
 using CookingApp.Views.RecipesPage;
+using CookingApp.Services;
 
 namespace CookingApp.Droid
 {
@@ -70,7 +71,6 @@ namespace CookingApp.Droid
             UserDialogs.Init(this);
             FormsPlugin.Iconize.Droid.IconControls.Init(Resource.Id.toolbar);
             Plugin.Iconize.Iconize.With(new Plugin.Iconize.Fonts.FontAwesomeModule());
-
             LoadApplication(new App());
         }
 
@@ -133,21 +133,22 @@ namespace CookingApp.Droid
                 {
                     NotificationDTO notification = JsonConvert.DeserializeObject<NotificationDTO>(data);
 
-                    DataBase.Instance.Add(notification);
+                    if (!DataBase.Instance.Query<NotificationDTO>().Any(x => x.NotificationID == notification.NotificationID))
+                        DataBase.Instance.Add(notification);
 
                     NavigateNotification(notification.NotificationType, notification.NotificationID);
                 }
                 else
                 {
-                    string NotificationID = intent?.Extras.GetString("NotificationID");
-                    NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), intent?.Extras.GetString("NotificationType"), true);
+                    string NotificationID = intent?.Extras.GetString("notificationID");
+                    NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), intent?.Extras.GetString("notificationType"), true);
                     if (!string.IsNullOrEmpty(NotificationID))
                     {
                         if (DataBase.Instance.Query<NotificationDTO>().FirstOrDefault(x => x.NotificationID == int.Parse(NotificationID)) != null)
                         {
-                            string NotificationSentTime = intent?.Extras.GetString("NotificationSentTime");
-                            string NotificationTitle = intent?.Extras.GetString("NotificationTitle");
-                            string NotificationBody = intent?.Extras.GetString("NotificationBody");
+                            string NotificationSentTime = intent?.Extras.GetString("notificationSentTime");
+                            string NotificationTitle = intent?.Extras.GetString("notificationTitle");
+                            string NotificationBody = intent?.Extras.GetString("notificationBody");
 
                             DataBase.Instance.Add(new NotificationDTO()
                             {
@@ -182,15 +183,15 @@ namespace CookingApp.Droid
                 }
                 else
                 {
-                    string NotificationID = this.Intent.Extras.GetString("NotificationID");
-                    NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), this.Intent.Extras.GetString("NotificationType"), true);
+                    string NotificationID = this.Intent.Extras.GetString("notificationID");
+                    NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), this.Intent.Extras.GetString("notificationType"), true);
                     if (!string.IsNullOrEmpty(NotificationID))
                     {
                         if (DataBase.Instance.Query<NotificationDTO>().FirstOrDefault(x => x.NotificationID == int.Parse(NotificationID)) != null)
                         {
-                            string NotificationSentTime = this.Intent.Extras.GetString("NotificationSentTime");
-                            string NotificationTitle = this.Intent?.Extras.GetString("NotificationTitle");
-                            string NotificationBody = this.Intent.Extras.GetString("NotificationBody");
+                            string NotificationSentTime = this.Intent.Extras.GetString("notificationSentTime");
+                            string NotificationTitle = this.Intent?.Extras.GetString("notificationTitle");
+                            string NotificationBody = this.Intent.Extras.GetString("notificationBody");
 
                             DataBase.Instance.Add(new NotificationDTO()
                             {
@@ -215,37 +216,21 @@ namespace CookingApp.Droid
             }
             else if (NotificationType == NotificationsTypesEnum.Cooker)
             {
-                CookerDTO cookerDTO = DataBase.Instance.Query<CookerDTO>().FirstOrDefault(x => x.ID == NotificationID);
-
-                CookerViewModel cooker = new CookerViewModel()
-                {
-                    Description = cookerDTO.Description,
-                    ID = cookerDTO.ID,
-                    HoursPricing = cookerDTO.HoursPricing,
-                    Image = cookerDTO.Image,
-                    Name = string.Format("{0} {1}", cookerDTO.FirstName, cookerDTO.LastName),
-                    OrdersCount = cookerDTO.OrdersCount,
-                    Rating = cookerDTO.Rating
-                };
+                OrdersModel model = new OrdersModel();
+                CookerViewModel cooker = await model.GetCooker(NotificationID);
 
                 await PageTemplate.CurrentPage.NavigateAsync(new SingleCookerPage(cooker) { Title = cooker.Name });
             }
             else if (NotificationType == NotificationsTypesEnum.Recipe)
             {
-                RecipeDTO recipeDTO = DataBase.Instance.Query<RecipeDTO>().FirstOrDefault(x => x.ID == NotificationID);
+                RecipesModel model = new RecipesModel();
+                RecipeViewModel recipe = await model.GetRecipeFromID(NotificationID);
 
-                RecipeViewModel recipe = new RecipeViewModel()
-                {
-                    ID = recipeDTO.ID,
-                    HowToCook=recipeDTO.HowToCook,
-                    Image = recipeDTO.Image,
-                    NecessaryIngredients = recipeDTO.NecessaryIngredients,
-                    Portions = recipeDTO.Portions,
-                    TimeToCook = recipeDTO.TimeToCook,
-                    Title = recipeDTO.Title
-                };
-                
                 await PageTemplate.CurrentPage.NavigateAsync(new SingleRecipePage(recipe) { Title = recipe.Title });
+            }
+            else
+            {
+                await PageTemplate.CurrentPage.NavigateAsync(Utility.PageParser(PageNavigateEnums.NotificationsPage));
             }
         }
     }

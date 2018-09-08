@@ -18,7 +18,7 @@
                     <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Notifications}">
                         <controls:RepeaterView.ItemTemplate>
                             <DataTemplate>
-                                <StackLayout Orientation="Vertical" BackgroundColor="{StaticResource BorderColor}">
+                                <StackLayout Orientation="Vertical" BackgroundColor="{StaticResource BorderColor}" Margin="5">
                                     <StackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference Name=NotificationsPage}, Path=BindingContext.Navigate}" CommandParameter="{Binding NotificationID}"/>
                                     </StackLayout.GestureRecognizers>
