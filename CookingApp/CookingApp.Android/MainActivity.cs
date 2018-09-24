@@ -38,7 +38,6 @@ namespace CookingApp.Droid
             base.SetTheme(Resource.Style.MyTheme);
 
             CrossCurrentActivity.Current.Init(this, bundle);
-            FirebaseApp.InitializeApp(this);
             base.OnCreate(bundle);
 
             if (IsPlayServicesAvailable())
@@ -132,6 +131,8 @@ namespace CookingApp.Droid
                 if (data != null)
                 {
                     NotificationDTO notification = JsonConvert.DeserializeObject<NotificationDTO>(data);
+                    string NotificationSentTime = intent?.Extras.GetString("NotificationSentTime");
+                    notification.NotificationSentTime = DateTime.Parse(NotificationSentTime);
 
                     if (!DataBase.Instance.Query<NotificationDTO>().Any(x => x.NotificationID == notification.NotificationID))
                         DataBase.Instance.Add(notification);
@@ -176,6 +177,8 @@ namespace CookingApp.Droid
                     this.Intent.RemoveExtra("data");
 
                     NotificationDTO notification = JsonConvert.DeserializeObject<NotificationDTO>(data);
+                    string NotificationSentTime = this.Intent.Extras.GetString("NotificationSentTime");
+                    notification.NotificationSentTime = DateTime.Parse(NotificationSentTime);
 
                     DataBase.Instance.Add(notification);
 
@@ -190,7 +193,7 @@ namespace CookingApp.Droid
                         if (DataBase.Instance.Query<NotificationDTO>().FirstOrDefault(x => x.NotificationID == int.Parse(NotificationID)) != null)
                         {
                             string NotificationSentTime = this.Intent.Extras.GetString("notificationSentTime");
-                            string NotificationTitle = this.Intent?.Extras.GetString("notificationTitle");
+                            string NotificationTitle = this.Intent.Extras.GetString("notificationTitle");
                             string NotificationBody = this.Intent.Extras.GetString("notificationBody");
 
                             DataBase.Instance.Add(new NotificationDTO()

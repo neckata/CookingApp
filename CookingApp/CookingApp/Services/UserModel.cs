@@ -210,6 +210,7 @@ namespace CookingApp.Services
                 DataBase.Instance.Update(user);
 
                 FillAddresses();
+                ClearNotifications();
             }
 
             return model.IsSuccessStatusCode;
@@ -234,6 +235,7 @@ namespace CookingApp.Services
                 DataBase.Instance.Update(user);
 
                 ClearUserCuisines();
+                ClearNotifications();
 
                 FillAddresses();
             }
@@ -241,11 +243,18 @@ namespace CookingApp.Services
             return model.IsSuccessStatusCode;
         }
 
-        public void ClearUserCuisines()
+        private void ClearUserCuisines()
         {
             var cuisines = DataBase.Instance.Query<CuisineSelectedDTO>();
             foreach (var item in cuisines)
                 DataBase.Instance.Delete<CuisineSelectedDTO>(item.Code);
+        }
+
+        private void ClearNotifications()
+        {
+            var notif = DataBase.Instance.Query<NotificationDTO>();
+            foreach (var item in notif)
+                DataBase.Instance.Delete<NotificationDTO>(item.NotificationID);
         }
 
         public UserDTO GetUser()

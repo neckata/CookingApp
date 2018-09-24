@@ -24,9 +24,9 @@
                                     </StackLayout.GestureRecognizers>
                                     <Label Text="{Binding NotificationTitle}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                     <Label Text="{Binding NotificationBody}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                    <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                                         <Label Text="{i:Translate lblDateReceived}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                        <Label Text="{Binding NotificationDate}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding NotificationSentTime}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                     </StackLayout>
                                 </StackLayout>
                             </DataTemplate>

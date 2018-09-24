@@ -4,6 +4,7 @@
     {
         Chat,
         Recipe,
-        Cooker
+        Cooker,
+        Order
     }
 }
