@@ -52,7 +52,7 @@ namespace CookingApp.ViewModels.OrdersPage
                     bool isVoted = await _model.VoteOrder(order.ID, order.Rating);
                     if (isVoted)
                     {
-                        order.UpdateIsRated();
+                        order.UpdateIsRated(order.Rating);
 
                         await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblRateSuccess"));
                     }

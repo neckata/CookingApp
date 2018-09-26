@@ -78,6 +78,9 @@ namespace CookingApp.Helpers
                 case PostActionMethods.GetAddresses:
                     actionUrl = "listAddresses";
                     break;
+                case PostActionMethods.ReplyOrder:
+                    actionUrl = "reply-order";
+                    break;
                 default:
                     break;
             }

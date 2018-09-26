@@ -5,6 +5,7 @@
         Chat,
         Recipe,
         Cooker,
-        Order
+        Order,
+        Reply
     }
 }

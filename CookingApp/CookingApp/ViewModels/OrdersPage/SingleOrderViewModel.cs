@@ -1,4 +1,5 @@
-﻿using CookingApp.ViewModels.MainPage;
+﻿using CookingApp.Enums;
+using CookingApp.ViewModels.MainPage;
 using System;
 using Xamarin.Forms;
 
@@ -40,10 +41,15 @@ namespace CookingApp.ViewModels.OrdersPage
 
         public bool IsRatеVisible { get; set; }
 
-        public void UpdateIsRated()
+        public OrdersEnum Status { get; set; }
+
+        public void UpdateIsRated(double rate)
         {
             IsRatingVisible = true;
             OnPropertyChangedModel(nameof(IsRatingVisible));
+
+            Rating = rate;
+            OnPropertyChangedModel(nameof(Rating));
 
             IsRatеVisible = false;
             OnPropertyChangedModel(nameof(IsRatеVisible));

@@ -1,4 +1,5 @@
 ﻿using CookingApp.Converters;
+using CookingApp.Enums;
 using Newtonsoft.Json;
 using System;
 
@@ -29,8 +30,10 @@ namespace CookingApp.Models
 
         public string Neighborhood { get; set; }
 
-        public string Street { get; set; } 
+        public string Street { get; set; }
 
         public double? Rating { get; set; }
+
+        public OrdersEnum Status {get;set;}
     }
 }

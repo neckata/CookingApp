@@ -34,7 +34,7 @@ namespace CookingApp.Services
                     else
                         address = new AddressesDTO() { AddressName = item.AddressName, City = item.City, Neighborhood = item.Neighborhood, Street = item.Street };
 
-                    list.Add(new SingleOrderViewModel()
+                    var vm = new SingleOrderViewModel()
                     {
                         ID = item.ID,
                         AddressID = item.AddressID,
@@ -49,11 +49,26 @@ namespace CookingApp.Services
                         Date = item.Date,
                         FromTime = item.FromTime.ToString(),
                         ToTime = item.ToTime.ToString(),
-                        IsRatingVisible = item.Date < DateTime.Now ? item.Rating.HasValue : false,
-                        IsRatеVisible = item.Date < DateTime.Now ? !item.Rating.HasValue : false,
-                        OrderColor = item.Date < DateTime.Now ? Color.LightGreen : Color.Yellow,
-                        Rating = item.Rating.HasValue ? item.Rating.Value : 0
-                    });
+                        Rating = item.Rating.HasValue ? item.Rating.Value : 0,
+                        Status = item.Status
+                    };
+
+                    if(vm.Status == OrdersEnum.Accepted)
+                    {
+                        vm.OrderColor = Color.LightGreen;
+                        vm.IsRatingVisible = item.Date < DateTime.Now ? item.Rating.HasValue : false;
+                        vm.IsRatеVisible = item.Date < DateTime.Now ? !item.Rating.HasValue : false;
+                    }
+                    else if(vm.Status == OrdersEnum.Rejected)
+                    {
+                        vm.OrderColor = Color.Red;
+                    }
+                    else if(vm.Status == OrdersEnum.Waiting)
+                    {
+                        vm.OrderColor = Color.Yellow;
+                    }
+
+                    list.Add(vm);
                 }
             }
 

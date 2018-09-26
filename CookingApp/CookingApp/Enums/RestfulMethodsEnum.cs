@@ -24,6 +24,7 @@
         SaveAddress,
         SaveCooker,
         DeleteAddress,
-        GetAddresses
+        GetAddresses,
+        ReplyOrder
     }
 }

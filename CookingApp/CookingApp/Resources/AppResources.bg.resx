@@ -393,4 +393,28 @@
   <data name="lblDateReceived" xml:space="preserve">
     <value>Получена на :</value>
   </data>
+  <data name="lblConfirm" xml:space="preserve">
+    <value>Потвърди</value>
+  </data>
+  <data name="lblReject" xml:space="preserve">
+    <value>Отхвърли</value>
+  </data>
+  <data name="lblOrderAcceptedNotSuccess" xml:space="preserve">
+    <value>Грешка при потвърждаването на поръчката</value>
+  </data>
+  <data name="lblOrderAcceptedSuccess" xml:space="preserve">
+    <value>Успешно потвърдена поръчка</value>
+  </data>
+  <data name="lblOrderRejectedNotSuccess" xml:space="preserve">
+    <value>Грешка при отказване на поръчката</value>
+  </data>
+  <data name="lblOrderRejectedSuccess" xml:space="preserve">
+    <value>Успешно отказана поръчка</value>
+  </data>
+  <data name="lblOrderAccepted" xml:space="preserve">
+    <value>Поръчката беше потвърдена</value>
+  </data>
+  <data name="lblOrderRejected" xml:space="preserve">
+    <value>Поръчката беше отказана</value>
+  </data>
 </root>

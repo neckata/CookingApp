@@ -18,15 +18,27 @@
                     <controls:RepeaterView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" ItemsSource="{Binding Notifications}">
                         <controls:RepeaterView.ItemTemplate>
                             <DataTemplate>
-                                <StackLayout Orientation="Vertical" BackgroundColor="{StaticResource BorderColor}" Margin="5">
-                                    <StackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference Name=NotificationsPage}, Path=BindingContext.Navigate}" CommandParameter="{Binding NotificationID}"/>
-                                    </StackLayout.GestureRecognizers>
-                                    <Label Text="{Binding NotificationTitle}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                    <Label Text="{Binding NotificationBody}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                                        <Label Text="{i:Translate lblDateReceived}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
-                                        <Label Text="{Binding NotificationSentTime}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <StackLayout BackgroundColor="{Binding NotificationColor}" Margin="10" Orientation="Vertical">
+                                    <StackLayout Orientation="Vertical" BackgroundColor="{StaticResource BorderColor}" Margin="5">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference Name=NotificationsPage}, Path=BindingContext.Navigate}" CommandParameter="{Binding NotificationID}"/>
+                                        </StackLayout.GestureRecognizers>
+                                        <Label Text="{Binding NotificationTitle}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding NotificationBody}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                                            <Label Text="{i:Translate lblDateReceived}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+                                            <Label Text="{Binding NotificationSentTime}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" IsVisible="{Binding IsOrderPending}" Margin="5,0,5,5">
+                                        <Button Text="{i:Translate lblConfirm}" HorizontalOptions="StartAndExpand" BackgroundColor="{StaticResource ButtonColor}"
+                                                Command="{Binding Source={x:Reference Name=NotificationsPage}, Path=BindingContext.Confirm}" CommandParameter="{Binding NotificationID}"/>
+                                        <Button Text="{i:Translate lblReject}" HorizontalOptions="EndAndExpand" BackgroundColor="{StaticResource ButtonColor}"
+                                                Command="{Binding Source={x:Reference Name=NotificationsPage}, Path=BindingContext.Reject}" CommandParameter="{Binding NotificationID}"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Vertical" IsVisible="{Binding IsOrderProcessed}" Margin="5,0,5,5">
+                                        <Label IsVisible="{Binding IsOrderAccepted}" Text="{i:Translate lblOrderAccepted}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                        <Label IsVisible="{Binding IsOrderRejected}" Text="{i:Translate lblOrderRejected}" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                     </StackLayout>
                                 </StackLayout>
                             </DataTemplate>

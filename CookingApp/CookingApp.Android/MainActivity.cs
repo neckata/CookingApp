@@ -135,7 +135,12 @@ namespace CookingApp.Droid
                     notification.NotificationSentTime = DateTime.Parse(NotificationSentTime);
 
                     if (!DataBase.Instance.Query<NotificationDTO>().Any(x => x.NotificationID == notification.NotificationID))
+                    {
+                        if (notification.NotificationType == NotificationsTypesEnum.Order)
+                            notification.IsOrderPending = true;
+                    
                         DataBase.Instance.Add(notification);
+                    }
 
                     NavigateNotification(notification.NotificationType, notification.NotificationID);
                 }
@@ -157,7 +162,8 @@ namespace CookingApp.Droid
                                 NotificationBody = NotificationBody,
                                 NotificationSentTime = DateTime.Parse(NotificationSentTime),
                                 NotificationTitle = Title,
-                                NotificationType = NotificationType
+                                NotificationType = NotificationType,
+                                IsOrderPending = NotificationType == NotificationsTypesEnum.Order ? true : false
                             });
                         }
                     }
@@ -180,7 +186,13 @@ namespace CookingApp.Droid
                     string NotificationSentTime = this.Intent.Extras.GetString("NotificationSentTime");
                     notification.NotificationSentTime = DateTime.Parse(NotificationSentTime);
 
-                    DataBase.Instance.Add(notification);
+                    if (!DataBase.Instance.Query<NotificationDTO>().Any(x => x.NotificationID == notification.NotificationID))
+                    {
+                        if (notification.NotificationType == NotificationsTypesEnum.Order)
+                            notification.IsOrderPending = true;
+
+                        DataBase.Instance.Add(notification);
+                    }
 
                     NavigateNotification(notification.NotificationType, notification.NotificationID);
                 }
@@ -202,7 +214,8 @@ namespace CookingApp.Droid
                                 NotificationBody = NotificationBody,
                                 NotificationSentTime = DateTime.Parse(NotificationSentTime),
                                 NotificationTitle = Title,
-                                NotificationType = NotificationType
+                                NotificationType = NotificationType,
+                                IsOrderPending = NotificationType == NotificationsTypesEnum.Order ? true : false
                             });
                         }
                     }

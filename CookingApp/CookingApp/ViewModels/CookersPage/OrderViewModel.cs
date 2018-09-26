@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace CookingApp.ViewModels.CookersPage
 {
@@ -18,9 +19,11 @@ namespace CookingApp.ViewModels.CookersPage
     {
         public OrderViewModel(int cookerID, string cookerName)
         {
-            LoadData();
             _cookerID = cookerID;
             _cookerName = cookerName;
+            FromDate = Utility.FirstDateOfWeek(DateTime.Today.Year, Utility.GetWeekOfYear(DateTime.Now), CultureInfo.CurrentCulture);
+            ToDate = FromDate.AddDays(6);
+            LoadData();
         }
 
         private int _cookerID;
@@ -67,6 +70,10 @@ namespace CookingApp.ViewModels.CookersPage
 
         public DateTime MinimumDate { get; set; }
 
+        public DateTime FromDate { get; set; }
+
+        public DateTime ToDate { get; set; }
+
         public string SelectedAddress
         {
             get
@@ -106,6 +113,30 @@ namespace CookingApp.ViewModels.CookersPage
         }
 
         public ObservableCollection<string> Addresses { get; set; }
+
+        public List<TimeTableRowViewModel> TimeTable { get; set; }
+
+        public ICommand LeftDate
+        {
+            get
+            {
+                return new Command(() =>
+                {
+                    GetTimeTable(-7);
+                });
+            }
+        }
+
+        public ICommand RightDate
+        {
+            get
+            {
+                return new Command(() =>
+                {
+                    GetTimeTable(7);
+                });
+            }
+        }
 
         public ICommand Order
         {
@@ -208,6 +239,25 @@ namespace CookingApp.ViewModels.CookersPage
                 Addresses.Add(item.AddressName);
 
             OnPropertyChangedModel(nameof(Addresses));
+
+            GetTimeTable(0);
+        }
+
+        private async void GetTimeTable(int weekChange)
+        {
+            IsBusy = true;
+            OnPropertyChangedModel(nameof(IsBusy));
+
+            FromDate = FromDate.AddDays(weekChange);
+            ToDate = ToDate.AddDays(weekChange);
+            TimeTable = await _model.GetTimeTable(_cookerID, FromDate);
+
+            OnPropertyChangedModel(nameof(TimeTable));
+            OnPropertyChangedModel(nameof(FromDate));
+            OnPropertyChangedModel(nameof(ToDate));
+
+            IsBusy = false;
+            OnPropertyChangedModel(nameof(IsBusy));
         }
     }
 }

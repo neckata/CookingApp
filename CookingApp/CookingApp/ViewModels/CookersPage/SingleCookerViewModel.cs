@@ -111,7 +111,7 @@ namespace CookingApp.ViewModels.CookersPage
             OnPropertyChangedModel(nameof(IsBusy));
         }
 
-        public async void GetTimeTable(int weekChange)
+        private async void GetTimeTable(int weekChange)
         {
             IsBusy = true;
             OnPropertyChangedModel(nameof(IsBusy));

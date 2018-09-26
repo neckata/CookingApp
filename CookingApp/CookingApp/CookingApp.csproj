@@ -49,6 +49,7 @@
     <Compile Include="Enums\CuisineTypeEnums.cs" />
     <Compile Include="Enums\RestfulMethodsEnum.cs" />
     <Compile Include="Enums\UserTypesEnum.cs" />
+    <Compile Include="Enums\OrdersEnum.cs" />
     <Compile Include="Enums\WeekDaysEnum.cs" />
     <Compile Include="Helpers\DataBase.cs" />
     <Compile Include="Helpers\RestfulClient.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Models\CuisineDTO.cs" />
     <Compile Include="Models\RecipeCookerDTO.cs" />
     <Compile Include="Models\RegisterUserDTO.cs" />
+    <Compile Include="Models\ReplyOrderDTO.cs" />
+    <Compile Include="Models\ReponseDTO.cs" />
     <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\SubscriptionDTO.cs" />
     <Compile Include="Models\ChatDTO.cs" />
@@ -104,6 +107,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.ru.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\NotificationsModel.cs" />
     <Compile Include="Services\OrdersModel.cs" />
     <Compile Include="Services\CookersModel.cs" />
     <Compile Include="Services\RecipesModel.cs" />

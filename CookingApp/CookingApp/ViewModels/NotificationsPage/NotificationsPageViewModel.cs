@@ -1,6 +1,9 @@
-﻿using CookingApp.Enums;
+﻿using Acr.UserDialogs;
+using CookingApp.Enums;
 using CookingApp.Helpers;
 using CookingApp.Models;
+using CookingApp.Resources;
+using CookingApp.Services;
 using CookingApp.ViewModels.CookersPage;
 using CookingApp.ViewModels.MainPage;
 using CookingApp.ViewModels.RecipesPage;
@@ -18,18 +21,47 @@ namespace CookingApp.ViewModels.NotificationsPage
     {
         public NotificationsPageViewModel()
         {
+            _model = new NotificationsModel();
+
             var data = DataBase.Instance.Query<NotificationDTO>();
             Notifications = new List<NotificationViewModel>();
             foreach (var item in data)
             {
-                Notifications.Add(new NotificationViewModel()
+                var vm = new NotificationViewModel()
                 {
                     NotificationBody = item.NotificationBody,
                     NotificationID = item.NotificationID,
                     NotificationSentTime = item.NotificationSentTime,
                     NotificationTitle = item.NotificationTitle,
-                    NotificationType = item.NotificationType
-                });
+                    NotificationType = item.NotificationType,
+                    IsOrderPending = item.IsOrderPending,
+                    IsOrderProcessed = item.IsOrderAccepted || item.IsOrderRejected,
+                    IsOrderAccepted = item.IsOrderAccepted,
+                    IsOrderRejected = item.IsOrderRejected
+                };
+
+                if(vm.NotificationType == NotificationsTypesEnum.Cooker)
+                {
+                    vm.NotificationColor = Color.Blue;
+                }
+                else if (vm.NotificationType == NotificationsTypesEnum.Recipe)
+                {
+                    vm.NotificationColor = Color.Purple;
+                }
+                else if (vm.NotificationType == NotificationsTypesEnum.Order)
+                {
+                    if(vm.IsOrderPending)
+                    vm.NotificationColor = Color.Yellow;
+                    else
+                    {
+                        if(item.IsOrderAccepted)
+                            vm.NotificationColor = Color.LightGreen;
+                        else
+                            vm.NotificationColor = Color.Red;
+                    }
+                }
+
+                Notifications.Add(vm);
             }
 
             if (Notifications.Count == 0)
@@ -38,6 +70,8 @@ namespace CookingApp.ViewModels.NotificationsPage
                 OnPropertyChangedModel(nameof(NoNotifications));
             }
         }
+
+        private NotificationsModel _model;
 
         public bool IsBusy { get; set; }
 
@@ -90,6 +124,54 @@ namespace CookingApp.ViewModels.NotificationsPage
                         };
 
                         await PageTemplate.CurrentPage.NavigateAsync(new SingleRecipePage(recipe) { Title = recipe.Title });
+                    }
+                });
+            }
+        }
+
+        public ICommand Confirm
+        {
+            get
+            {
+                return new Command<int>(async (para) =>
+                {
+                    IsBusy = true;
+                    OnPropertyChangedModel(nameof(IsBusy));
+
+                    if (await _model.Confirm(para))
+                    {
+                        var item = Notifications.First(x => x.NotificationID == para);
+                        item.ChangeColor(Color.Green);
+
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderAcceptedSuccess"));
+                    }
+                    else
+                    {
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderAcceptedNotSuccess"));
+                    }
+
+                    IsBusy = false;
+                    OnPropertyChangedModel(nameof(IsBusy));
+                });
+            }
+        }
+
+        public ICommand Reject
+        {
+            get
+            {
+                return new Command<int>(async (para) =>
+                {
+                    if (await _model.Reject(para))
+                    {
+                        var item = Notifications.First(x => x.NotificationID == para);
+                        item.ChangeColor(Color.Red);
+
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderAcceptedSuccess"));
+                    }
+                    else
+                    {
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderRejectedNotSuccess"));
                     }
                 });
             }

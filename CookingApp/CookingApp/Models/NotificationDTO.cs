@@ -22,5 +22,14 @@ namespace CookingApp.Models
 
         [Column(nameof(NotificationBody))]
         public string NotificationBody { get; set; }
+
+        [Column(nameof(IsOrderPending))]
+        public bool IsOrderPending { get; set; }
+
+        [Column(nameof(IsOrderRejected))]
+        public bool IsOrderRejected { get; set; }
+
+        [Column(nameof(IsOrderAccepted))]
+        public bool IsOrderAccepted { get; set; }
     }
 }
