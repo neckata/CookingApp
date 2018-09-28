@@ -136,6 +136,7 @@ namespace CookingApp.Helpers
             else
             {
                 model.FillAddresses();
+                model.UpdateFCMAgain();
             }
         }
     }

@@ -25,6 +25,7 @@
         SaveCooker,
         DeleteAddress,
         GetAddresses,
-        ReplyOrder
+        ReplyOrder,
+        UpdateFCM
     }
 }

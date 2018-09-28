@@ -167,7 +167,7 @@ namespace CookingApp.ViewModels.NotificationsPage
                         var item = Notifications.First(x => x.NotificationID == para);
                         item.ChangeColor(Color.Red);
 
-                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderAcceptedSuccess"));
+                        await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderRejectedSuccess"));
                     }
                     else
                     {

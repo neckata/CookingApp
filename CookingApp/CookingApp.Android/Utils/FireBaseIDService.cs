@@ -1,7 +1,6 @@
 ﻿using Android.App;
 using Firebase.Iid;
-using CookingApp.Helpers;
-using CookingApp.Models;
+using CookingApp.Services;
 
 namespace CookingApp.Droid.Utils
 {
@@ -11,12 +10,8 @@ namespace CookingApp.Droid.Utils
     {
         public override void OnTokenRefresh()
         {
-            using (var client = new RestfulClient())
-            {
-                UserDTO user = DataBase.Instance.Query<UserDTO>().FirstOrDefault();
-                user.FCM = FirebaseInstanceId.Instance.Token;
-                DataBase.Instance.Update(user);
-            }
+            UserModel model = new UserModel();
+            model.UpdateUserFCM(FirebaseInstanceId.Instance.Token);
         }
     }
 }

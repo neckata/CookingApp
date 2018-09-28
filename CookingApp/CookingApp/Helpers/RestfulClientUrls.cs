@@ -81,6 +81,9 @@ namespace CookingApp.Helpers
                 case PostActionMethods.ReplyOrder:
                     actionUrl = "reply-order";
                     break;
+                case PostActionMethods.UpdateFCM:
+                    actionUrl = "fcm-edit";
+                    break;
                 default:
                     break;
             }

@@ -23,6 +23,45 @@ namespace CookingApp.Services
             return user.UserType == UserTypesEnum.Cooker;
         }
 
+        public async void UpdateUserFCM(string fcm)
+        {
+            using (var client = new RestfulClient())
+            {
+                UserDTO user = DataBase.Instance.Query<UserDTO>().FirstOrDefault();
+                user.FCM = fcm;
+                user.ISFCMDeprecated = true;
+                DataBase.Instance.Update(user);
+
+                if (user.IsRegistered)
+                {
+                    RegisterUserDTO register = new RegisterUserDTO() { FcmId = user.FCM };
+                    ResponseModel model = await _rc.PostDataAsync(PostActionMethods.UpdateFCM, register);
+                    if (model.IsSuccessStatusCode)
+                    {
+                        user.ISFCMDeprecated = false;
+                        DataBase.Instance.Update(user);
+                    }
+                }
+            }
+        }
+
+        public async void UpdateFCMAgain()
+        {
+            UserDTO user = DataBase.Instance.Query<UserDTO>().FirstOrDefault();
+
+            if (user.ISFCMDeprecated)
+            {
+                RegisterUserDTO register = new RegisterUserDTO() { FcmId = user.FCM };
+                ResponseModel model = await _rc.PostDataAsync(PostActionMethods.UpdateFCM, register);
+                if (model.IsSuccessStatusCode)
+                {
+                    user.ISFCMDeprecated = false;
+                    DataBase.Instance.Update(user);
+                }
+
+            }
+        }
+
         public async void RegisterUser()
         {
             UserDTO user = DataBase.Instance.Query<UserDTO>().First();

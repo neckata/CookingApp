@@ -62,6 +62,9 @@ namespace CookingApp.Models
         [Column(nameof(IsRegistered))]
         public bool IsRegistered { get; set; }
 
+        [Column(nameof(ISFCMDeprecated))]
+        public bool ISFCMDeprecated { get; set; }
+
         [Column(nameof(HasNotifications))]
         public bool HasNotifications { get; set; }
 
