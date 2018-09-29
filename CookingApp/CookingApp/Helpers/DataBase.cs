@@ -3,6 +3,7 @@ using CookingApp.Interfaces;
 using CookingApp.Models;
 using CookingApp.Services;
 using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
@@ -21,7 +22,7 @@ namespace CookingApp.Helpers
             service = DependencyService.Get<IFileHelper>();
             _connection = new SQLiteConnection(service.GetLocalFilePath("cooking.db"));
             CreateTables();
-           
+
         }
 
         public static DataBase Instance
@@ -91,52 +92,69 @@ namespace CookingApp.Helpers
 
         public async void LoadNomenclatures()
         {
-            RestfulClient client = new RestfulClient();
-
-            List<CuisineFilterDTO> cuisineFilterDTOs = await client.GetDataAsync<List<CuisineFilterDTO>>(GetActionMethods.CuisinesFilters);
-            if (cuisineFilterDTOs.Count > 0)
+            try
             {
-                foreach (var item in Instance.Query<CuisineFilterDTO>())
-                    Instance.Delete<CuisineFilterDTO>(item.Code);
+                RestfulClient client = new RestfulClient();
 
-                foreach (var item in cuisineFilterDTOs)
-                    Instance.Add(item);
-            }
-
-            List<CuisineDTO> cuisineDTOs = await client.GetDataAsync<List<CuisineDTO>>(GetActionMethods.Cuisines);
-            if (cuisineDTOs.Count > 0)
-            {
-                var selectedCuisines = Instance.Query<CuisineSelectedDTO>().ToList();
-
-                foreach (var item in Instance.Query<CuisineDTO>())
-                    Instance.Delete<CuisineDTO>(item.Code);
-
-                foreach (var item in cuisineDTOs)
+                List<CuisineFilterDTO> cuisineFilterDTOs = await client.GetDataAsync<List<CuisineFilterDTO>>(GetActionMethods.CuisinesFilters);
+                if (cuisineFilterDTOs.Count > 0)
                 {
-                    Instance.Add(item);
+                    foreach (CuisineFilterDTO item in Instance.Query<CuisineFilterDTO>())
+                    {
+                        Instance.Delete<CuisineFilterDTO>(item.Code);
+                    }
 
-                    for (int i = 0; i < selectedCuisines.Count; i++)
-                        if (selectedCuisines[i].Code == item.Code)
-                        {
-                            selectedCuisines.Remove(selectedCuisines[0]);
-                            i--;
-                        }
+                    foreach (CuisineFilterDTO item in cuisineFilterDTOs)
+                    {
+                        Instance.Add(item);
+                    }
                 }
 
-                foreach (var item in selectedCuisines)
-                    Instance.Delete<CuisineSelectedDTO>(item.Code);
-            }
+                List<CuisineDTO> cuisineDTOs = await client.GetDataAsync<List<CuisineDTO>>(GetActionMethods.Cuisines);
+                if (cuisineDTOs.Count > 0)
+                {
+                    List<CuisineSelectedDTO> selectedCuisines = Instance.Query<CuisineSelectedDTO>().ToList();
 
-            UserDTO user = Instance.Query<UserDTO>().First();
-            UserModel model = new UserModel();
-            if (!user.IsRegistered)
-            {
-                model.RegisterUser();
+                    foreach (CuisineDTO item in Instance.Query<CuisineDTO>())
+                    {
+                        Instance.Delete<CuisineDTO>(item.Code);
+                    }
+
+                    foreach (CuisineDTO item in cuisineDTOs)
+                    {
+                        Instance.Add(item);
+
+                        for (int i = 0; i < selectedCuisines.Count; i++)
+                        {
+                            if (selectedCuisines[i].Code == item.Code)
+                            {
+                                selectedCuisines.Remove(selectedCuisines[0]);
+                                i--;
+                            }
+                        }
+                    }
+
+                    foreach (CuisineSelectedDTO item in selectedCuisines)
+                    {
+                        Instance.Delete<CuisineSelectedDTO>(item.Code);
+                    }
+                }
+
+                UserDTO user = Instance.Query<UserDTO>().First();
+                UserModel model = new UserModel();
+                if (!user.IsRegistered)
+                {
+                    model.RegisterUser();
+                }
+                else
+                {
+                    model.FillAddresses();
+                    model.UpdateFCMAgain();
+                }
             }
-            else
+            catch (Exception)
             {
-                model.FillAddresses();
-                model.UpdateFCMAgain();
+                //Exception ??
             }
         }
     }

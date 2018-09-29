@@ -6,8 +6,15 @@ using Android.Gms.Common;
 using Android.OS;
 using Android.Views;
 using CookingApp.Droid.Utils;
+using CookingApp.Enums;
 using CookingApp.Helpers;
 using CookingApp.Models;
+using CookingApp.Services;
+using CookingApp.ViewModels.CookersPage;
+using CookingApp.ViewModels.RecipesPage;
+using CookingApp.Views.CookersPage;
+using CookingApp.Views.MainPage;
+using CookingApp.Views.RecipesPage;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
 using Plugin.Connectivity.Abstractions;
@@ -15,14 +22,6 @@ using Plugin.CurrentActivity;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Firebase;
-using CookingApp.Enums;
-using CookingApp.ViewModels.CookersPage;
-using CookingApp.Views.MainPage;
-using CookingApp.Views.CookersPage;
-using CookingApp.ViewModels.RecipesPage;
-using CookingApp.Views.RecipesPage;
-using CookingApp.Services;
 
 namespace CookingApp.Droid
 {
@@ -108,9 +107,13 @@ namespace CookingApp.Droid
         private void AppBeforeLoad()
         {
             if (CrossConnectivity.Current.IsConnected)
+            {
                 DataBase.Instance.LoadNomenclatures();
+            }
             else
+            {
                 CrossConnectivity.Current.ConnectivityChanged += Current_ConnectivityChanged;
+            }
         }
 
         private void Current_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
@@ -127,47 +130,56 @@ namespace CookingApp.Droid
             base.OnNewIntent(intent);
             if (intent?.Extras != null)
             {
-                string data = intent?.Extras.GetString("data");
-                if (data != null)
+                try
                 {
-                    NotificationDTO notification = JsonConvert.DeserializeObject<NotificationDTO>(data);
-                    string NotificationSentTime = intent?.Extras.GetString("NotificationSentTime");
-                    notification.NotificationSentTime = DateTime.Parse(NotificationSentTime);
-
-                    if (!DataBase.Instance.Query<NotificationDTO>().Any(x => x.NotificationID == notification.NotificationID))
+                    string data = intent?.Extras.GetString("data");
+                    if (data != null)
                     {
-                        if (notification.NotificationType == NotificationsTypesEnum.Order)
-                            notification.IsOrderPending = true;
-                    
-                        DataBase.Instance.Add(notification);
-                    }
+                        NotificationDTO notification = JsonConvert.DeserializeObject<NotificationDTO>(data);
+                        string NotificationSentTime = intent?.Extras.GetString("NotificationSentTime");
+                        notification.NotificationSentTime = DateTime.Parse(NotificationSentTime);
 
-                    NavigateNotification(notification.NotificationType, notification.NotificationID);
-                }
-                else
-                {
-                    string NotificationID = intent?.Extras.GetString("notificationID");
-                    NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), intent?.Extras.GetString("notificationType"), true);
-                    if (!string.IsNullOrEmpty(NotificationID))
-                    {
-                        if (DataBase.Instance.Query<NotificationDTO>().FirstOrDefault(x => x.NotificationID == int.Parse(NotificationID)) != null)
+                        if (!DataBase.Instance.Query<NotificationDTO>().Any(x => x.NotificationID == notification.NotificationID))
                         {
-                            string NotificationSentTime = intent?.Extras.GetString("notificationSentTime");
-                            string NotificationTitle = intent?.Extras.GetString("notificationTitle");
-                            string NotificationBody = intent?.Extras.GetString("notificationBody");
-
-                            DataBase.Instance.Add(new NotificationDTO()
+                            if (notification.NotificationType == NotificationsTypesEnum.Order)
                             {
-                                NotificationID = int.Parse(NotificationID),
-                                NotificationBody = NotificationBody,
-                                NotificationSentTime = DateTime.Parse(NotificationSentTime),
-                                NotificationTitle = Title,
-                                NotificationType = NotificationType,
-                                IsOrderPending = NotificationType == NotificationsTypesEnum.Order ? true : false
-                            });
+                                notification.IsOrderPending = true;
+                            }
+
+                            DataBase.Instance.Add(notification);
                         }
+
+                        NavigateNotification(notification.NotificationType, notification.NotificationID);
                     }
-                    NavigateNotification(NotificationType, int.Parse(NotificationID));
+                    else
+                    {
+                        string NotificationID = intent?.Extras.GetString("notificationID");
+                        NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), intent?.Extras.GetString("notificationType"), true);
+                        if (!string.IsNullOrEmpty(NotificationID))
+                        {
+                            if (DataBase.Instance.Query<NotificationDTO>().FirstOrDefault(x => x.NotificationID == int.Parse(NotificationID)) != null)
+                            {
+                                string NotificationSentTime = intent?.Extras.GetString("notificationSentTime");
+                                string NotificationTitle = intent?.Extras.GetString("notificationTitle");
+                                string NotificationBody = intent?.Extras.GetString("notificationBody");
+
+                                DataBase.Instance.Add(new NotificationDTO()
+                                {
+                                    NotificationID = int.Parse(NotificationID),
+                                    NotificationBody = NotificationBody,
+                                    NotificationSentTime = DateTime.Parse(NotificationSentTime),
+                                    NotificationTitle = Title,
+                                    NotificationType = NotificationType,
+                                    IsOrderPending = NotificationType == NotificationsTypesEnum.Order ? true : false
+                                });
+                            }
+                        }
+                        NavigateNotification(NotificationType, int.Parse(NotificationID));
+                    }
+                }
+                catch (Exception)
+                {
+                    //Error ?
                 }
             }
         }
@@ -175,51 +187,60 @@ namespace CookingApp.Droid
         protected override void OnResume()
         {
             base.OnResume();
-            if (this.Intent?.Extras != null)
+            if (Intent?.Extras != null)
             {
-                string data = this.Intent?.Extras.GetString("data");
-                if (data != null)
+                try
                 {
-                    this.Intent.RemoveExtra("data");
-
-                    NotificationDTO notification = JsonConvert.DeserializeObject<NotificationDTO>(data);
-                    string NotificationSentTime = this.Intent.Extras.GetString("NotificationSentTime");
-                    notification.NotificationSentTime = DateTime.Parse(NotificationSentTime);
-
-                    if (!DataBase.Instance.Query<NotificationDTO>().Any(x => x.NotificationID == notification.NotificationID))
+                    string data = Intent?.Extras.GetString("data");
+                    if (data != null)
                     {
-                        if (notification.NotificationType == NotificationsTypesEnum.Order)
-                            notification.IsOrderPending = true;
+                        Intent.RemoveExtra("data");
 
-                        DataBase.Instance.Add(notification);
-                    }
+                        NotificationDTO notification = JsonConvert.DeserializeObject<NotificationDTO>(data);
+                        string NotificationSentTime = Intent.Extras.GetString("NotificationSentTime");
+                        notification.NotificationSentTime = DateTime.Parse(NotificationSentTime);
 
-                    NavigateNotification(notification.NotificationType, notification.NotificationID);
-                }
-                else
-                {
-                    string NotificationID = this.Intent.Extras.GetString("notificationID");
-                    NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), this.Intent.Extras.GetString("notificationType"), true);
-                    if (!string.IsNullOrEmpty(NotificationID))
-                    {
-                        if (DataBase.Instance.Query<NotificationDTO>().FirstOrDefault(x => x.NotificationID == int.Parse(NotificationID)) != null)
+                        if (!DataBase.Instance.Query<NotificationDTO>().Any(x => x.NotificationID == notification.NotificationID))
                         {
-                            string NotificationSentTime = this.Intent.Extras.GetString("notificationSentTime");
-                            string NotificationTitle = this.Intent.Extras.GetString("notificationTitle");
-                            string NotificationBody = this.Intent.Extras.GetString("notificationBody");
-
-                            DataBase.Instance.Add(new NotificationDTO()
+                            if (notification.NotificationType == NotificationsTypesEnum.Order)
                             {
-                                NotificationID = int.Parse(NotificationID),
-                                NotificationBody = NotificationBody,
-                                NotificationSentTime = DateTime.Parse(NotificationSentTime),
-                                NotificationTitle = Title,
-                                NotificationType = NotificationType,
-                                IsOrderPending = NotificationType == NotificationsTypesEnum.Order ? true : false
-                            });
+                                notification.IsOrderPending = true;
+                            }
+
+                            DataBase.Instance.Add(notification);
                         }
+
+                        NavigateNotification(notification.NotificationType, notification.NotificationID);
                     }
-                    NavigateNotification(NotificationType, int.Parse(NotificationID));
+                    else
+                    {
+                        string NotificationID = Intent.Extras.GetString("notificationID");
+                        NotificationsTypesEnum NotificationType = (NotificationsTypesEnum)Enum.Parse(typeof(NotificationsTypesEnum), Intent.Extras.GetString("notificationType"), true);
+                        if (!string.IsNullOrEmpty(NotificationID))
+                        {
+                            if (DataBase.Instance.Query<NotificationDTO>().FirstOrDefault(x => x.NotificationID == int.Parse(NotificationID)) != null)
+                            {
+                                string NotificationSentTime = Intent.Extras.GetString("notificationSentTime");
+                                string NotificationTitle = Intent.Extras.GetString("notificationTitle");
+                                string NotificationBody = Intent.Extras.GetString("notificationBody");
+
+                                DataBase.Instance.Add(new NotificationDTO()
+                                {
+                                    NotificationID = int.Parse(NotificationID),
+                                    NotificationBody = NotificationBody,
+                                    NotificationSentTime = DateTime.Parse(NotificationSentTime),
+                                    NotificationTitle = Title,
+                                    NotificationType = NotificationType,
+                                    IsOrderPending = NotificationType == NotificationsTypesEnum.Order ? true : false
+                                });
+                            }
+                        }
+                        NavigateNotification(NotificationType, int.Parse(NotificationID));
+                    }
+                }
+                catch (Exception)
+                {
+                    //Exception ?
                 }
             }
         }

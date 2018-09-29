@@ -286,7 +286,7 @@
     <value>Нов Адрес</value>
   </data>
   <data name="lblOrderFail" xml:space="preserve">
-    <value>Неуспешно изпращане на поръчка</value>
+    <value>Неуспешно изпращане на поръчка (проверете графика на готвача)</value>
   </data>
   <data name="lblAddress" xml:space="preserve">
     <value>Адрес :</value>

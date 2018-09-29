@@ -141,7 +141,7 @@ namespace CookingApp.ViewModels.NotificationsPage
                     if (await _model.Confirm(para))
                     {
                         var item = Notifications.First(x => x.NotificationID == para);
-                        item.ChangeColor(Color.Green);
+                        item.ChangeColor(Color.LightGreen);
 
                         await UserDialogs.Instance.AlertAsync(AppResources.ResourceManager.GetString("lblOrderAcceptedSuccess"));
                     }
