@@ -89,7 +89,7 @@ namespace CookingApp.ViewModels.CookersPage
                     AddressName = address.AddressName;
                     Neighborhood = address.Neighborhood;
                     City = address.City;
-                    Street = address.City;
+                    Street = address.Street;
                     IsAddresEnabled = false;
                 }
                 else

@@ -60,6 +60,10 @@ namespace CookingApp.ViewModels.NotificationsPage
                             vm.NotificationColor = Color.Red;
                     }
                 }
+                else
+                {
+                    vm.NotificationColor = Color.Aqua;
+                }
 
                 Notifications.Add(vm);
             }
